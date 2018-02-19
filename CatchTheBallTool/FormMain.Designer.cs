@@ -36,13 +36,15 @@
 			this.元に戻すUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.やり直しRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ウィンドウWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ウィンドウレイアウトToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
 			this.ビューVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.マップチップMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.設定SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ウィンドウレイアウトToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.デフォルトレイアウトを復元ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ユーザーレイアウトの保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.DockPanelMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+			this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.dockPanelSuiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -52,7 +54,8 @@
             this.ファイルToolStripMenuItem,
             this.編集EToolStripMenuItem,
             this.ウィンドウWToolStripMenuItem,
-            this.ウィンドウレイアウトToolStripMenuItem});
+            this.ウィンドウレイアウトToolStripMenuItem,
+            this.ヘルプHToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
@@ -92,7 +95,7 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(254, 6);
 			// 
 			// 上書き保存SToolStripMenuItem
 			// 
@@ -159,6 +162,27 @@
 			this.ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
 			this.ウィンドウWToolStripMenuItem.Text = "ウィンドウ(&W)";
 			// 
+			// ビューVToolStripMenuItem
+			// 
+			this.ビューVToolStripMenuItem.Name = "ビューVToolStripMenuItem";
+			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.ビューVToolStripMenuItem.Text = "ビュー(&V)";
+			this.ビューVToolStripMenuItem.Click += new System.EventHandler(this.ビューVToolStripMenuItem_Click);
+			// 
+			// マップチップMToolStripMenuItem
+			// 
+			this.マップチップMToolStripMenuItem.Name = "マップチップMToolStripMenuItem";
+			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.マップチップMToolStripMenuItem.Text = "マップチップ(&M)";
+			this.マップチップMToolStripMenuItem.Click += new System.EventHandler(this.マップチップMToolStripMenuItem_Click);
+			// 
+			// 設定SToolStripMenuItem
+			// 
+			this.設定SToolStripMenuItem.Name = "設定SToolStripMenuItem";
+			this.設定SToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.設定SToolStripMenuItem.Text = "設定(&S)";
+			this.設定SToolStripMenuItem.Click += new System.EventHandler(this.設定SToolStripMenuItem_Click);
+			// 
 			// ウィンドウレイアウトToolStripMenuItem
 			// 
 			this.ウィンドウレイアウトToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -168,55 +192,49 @@
 			this.ウィンドウレイアウトToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
 			this.ウィンドウレイアウトToolStripMenuItem.Text = "ウィンドウレイアウト";
 			// 
-			// dockPanel1
-			// 
-			this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dockPanel1.Location = new System.Drawing.Point(0, 24);
-			this.dockPanel1.Name = "dockPanel1";
-			this.dockPanel1.Size = new System.Drawing.Size(1008, 705);
-			this.dockPanel1.TabIndex = 1;
-			// 
-			// ビューVToolStripMenuItem
-			// 
-			this.ビューVToolStripMenuItem.Name = "ビューVToolStripMenuItem";
-			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.ビューVToolStripMenuItem.Text = "ビュー(&V)";
-			this.ビューVToolStripMenuItem.Click += new System.EventHandler(this.ビューVToolStripMenuItem_Click);
-			// 
-			// マップチップMToolStripMenuItem
-			// 
-			this.マップチップMToolStripMenuItem.Name = "マップチップMToolStripMenuItem";
-			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.マップチップMToolStripMenuItem.Text = "マップチップ(&M)";
-			this.マップチップMToolStripMenuItem.Click += new System.EventHandler(this.マップチップMToolStripMenuItem_Click);
-			// 
-			// 設定SToolStripMenuItem
-			// 
-			this.設定SToolStripMenuItem.Name = "設定SToolStripMenuItem";
-			this.設定SToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.設定SToolStripMenuItem.Text = "設定(&S)";
-			this.設定SToolStripMenuItem.Click += new System.EventHandler(this.設定SToolStripMenuItem_Click);
-			// 
 			// デフォルトレイアウトを復元ToolStripMenuItem
 			// 
 			this.デフォルトレイアウトを復元ToolStripMenuItem.Name = "デフォルトレイアウトを復元ToolStripMenuItem";
-			this.デフォルトレイアウトを復元ToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.デフォルトレイアウトを復元ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.デフォルトレイアウトを復元ToolStripMenuItem.Text = "デフォルトレイアウトを復元";
 			this.デフォルトレイアウトを復元ToolStripMenuItem.Click += new System.EventHandler(this.デフォルトレイアウトを復元ToolStripMenuItem_Click);
 			// 
 			// ユーザーレイアウトの保存ToolStripMenuItem
 			// 
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Name = "ユーザーレイアウトの保存ToolStripMenuItem";
-			this.ユーザーレイアウトの保存ToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.ユーザーレイアウトの保存ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Text = "ユーザーレイアウトの保存";
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Click += new System.EventHandler(this.ユーザーレイアウトの保存ToolStripMenuItem_Click);
+			// 
+			// DockPanelMain
+			// 
+			this.DockPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.DockPanelMain.Location = new System.Drawing.Point(0, 24);
+			this.DockPanelMain.Name = "DockPanelMain";
+			this.DockPanelMain.Size = new System.Drawing.Size(1008, 705);
+			this.DockPanelMain.TabIndex = 1;
+			// 
+			// ヘルプHToolStripMenuItem
+			// 
+			this.ヘルプHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dockPanelSuiteToolStripMenuItem});
+			this.ヘルプHToolStripMenuItem.Name = "ヘルプHToolStripMenuItem";
+			this.ヘルプHToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+			this.ヘルプHToolStripMenuItem.Text = "ヘルプ(&H)";
+			// 
+			// dockPanelSuiteToolStripMenuItem
+			// 
+			this.dockPanelSuiteToolStripMenuItem.Name = "dockPanelSuiteToolStripMenuItem";
+			this.dockPanelSuiteToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.dockPanelSuiteToolStripMenuItem.Text = "DockPanelSuite...";
+			this.dockPanelSuiteToolStripMenuItem.Click += new System.EventHandler(this.dockPanelSuiteToolStripMenuItem_Click);
 			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 729);
-			this.Controls.Add(this.dockPanel1);
+			this.Controls.Add(this.DockPanelMain);
 			this.Controls.Add(this.menuStrip1);
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.menuStrip1;
@@ -246,12 +264,14 @@
 		private System.Windows.Forms.ToolStripMenuItem やり直しRToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ウィンドウWToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ウィンドウレイアウトToolStripMenuItem;
-		private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
+		private WeifenLuo.WinFormsUI.Docking.DockPanel DockPanelMain;
 		private System.Windows.Forms.ToolStripMenuItem ビューVToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem マップチップMToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 設定SToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem デフォルトレイアウトを復元ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの保存ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem dockPanelSuiteToolStripMenuItem;
 	}
 }
 
