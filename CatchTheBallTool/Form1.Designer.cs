@@ -1,5 +1,5 @@
 ﻿namespace CatchTheBallTool {
-	partial class Form1 {
+	partial class FormMain {
 		/// <summary>
 		/// 必要なデザイナー変数です。
 		/// </summary>
@@ -23,9 +23,17 @@
 		/// コード エディターで変更しないでください。
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
+			this.SuspendLayout();
+			// 
+			// FormMain
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Text = "Form1";
+			this.ClientSize = new System.Drawing.Size(1008, 729);
+			this.Name = "FormMain";
+			this.Text = "CatchTheBallStageTool";
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion
