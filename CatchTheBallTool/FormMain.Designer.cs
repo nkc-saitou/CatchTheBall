@@ -23,7 +23,7 @@
 		/// コード エディターで変更しないでください。
 		/// </summary>
 		private void InitializeComponent() {
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.MenuMain = new System.Windows.Forms.MenuStrip();
 			this.ファイルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.新規ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,25 +42,28 @@
 			this.ウィンドウレイアウトToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.デフォルトレイアウトを復元ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ユーザーレイアウトの保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DockPanelMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
 			this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dockPanelSuiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuStrip1.SuspendLayout();
+			this.DockPanelMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+			this.SaveLayoutDialog = new System.Windows.Forms.SaveFileDialog();
+			this.OpenLayoutDialog = new System.Windows.Forms.OpenFileDialog();
+			this.ユーザーレイアウトの読み込みToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// menuStrip1
+			// MenuMain
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.MenuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ファイルToolStripMenuItem,
             this.編集EToolStripMenuItem,
             this.ウィンドウWToolStripMenuItem,
             this.ウィンドウレイアウトToolStripMenuItem,
             this.ヘルプHToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
+			this.MenuMain.Location = new System.Drawing.Point(0, 0);
+			this.MenuMain.Name = "MenuMain";
+			this.MenuMain.Size = new System.Drawing.Size(1008, 24);
+			this.MenuMain.TabIndex = 0;
+			this.MenuMain.Text = "menuStrip1";
 			// 
 			// ファイルToolStripMenuItem
 			// 
@@ -187,7 +190,8 @@
 			// 
 			this.ウィンドウレイアウトToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.デフォルトレイアウトを復元ToolStripMenuItem,
-            this.ユーザーレイアウトの保存ToolStripMenuItem});
+            this.ユーザーレイアウトの保存ToolStripMenuItem,
+            this.ユーザーレイアウトの読み込みToolStripMenuItem});
 			this.ウィンドウレイアウトToolStripMenuItem.Name = "ウィンドウレイアウトToolStripMenuItem";
 			this.ウィンドウレイアウトToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
 			this.ウィンドウレイアウトToolStripMenuItem.Text = "ウィンドウレイアウト";
@@ -206,14 +210,6 @@
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Text = "ユーザーレイアウトの保存";
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Click += new System.EventHandler(this.ユーザーレイアウトの保存ToolStripMenuItem_Click);
 			// 
-			// DockPanelMain
-			// 
-			this.DockPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.DockPanelMain.Location = new System.Drawing.Point(0, 24);
-			this.DockPanelMain.Name = "DockPanelMain";
-			this.DockPanelMain.Size = new System.Drawing.Size(1008, 705);
-			this.DockPanelMain.TabIndex = 1;
-			// 
 			// ヘルプHToolStripMenuItem
 			// 
 			this.ヘルプHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -229,20 +225,50 @@
 			this.dockPanelSuiteToolStripMenuItem.Text = "DockPanelSuite...";
 			this.dockPanelSuiteToolStripMenuItem.Click += new System.EventHandler(this.dockPanelSuiteToolStripMenuItem_Click);
 			// 
+			// DockPanelMain
+			// 
+			this.DockPanelMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			this.DockPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.DockPanelMain.Location = new System.Drawing.Point(0, 24);
+			this.DockPanelMain.Name = "DockPanelMain";
+			this.DockPanelMain.Size = new System.Drawing.Size(1008, 705);
+			this.DockPanelMain.TabIndex = 1;
+			// 
+			// SaveLayoutDialog
+			// 
+			this.SaveLayoutDialog.DefaultExt = "xml";
+			this.SaveLayoutDialog.FileName = "userLayout";
+			this.SaveLayoutDialog.Filter = "レイアウト|*.xml";
+			this.SaveLayoutDialog.Title = "レイアウトを保存";
+			// 
+			// OpenLayoutDialog
+			// 
+			this.OpenLayoutDialog.DefaultExt = "xml";
+			this.OpenLayoutDialog.FileName = "openFileDialog1";
+			this.OpenLayoutDialog.Filter = "レイアウト|*.xml";
+			this.OpenLayoutDialog.Title = "レイアウトを読み込み";
+			// 
+			// ユーザーレイアウトの読み込みToolStripMenuItem
+			// 
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Name = "ユーザーレイアウトの読み込みToolStripMenuItem";
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Text = "ユーザーレイアウトの読み込み";
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Click += new System.EventHandler(this.ユーザーレイアウトの読み込みToolStripMenuItem_Click);
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 729);
 			this.Controls.Add(this.DockPanelMain);
-			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.MenuMain);
 			this.IsMdiContainer = true;
-			this.MainMenuStrip = this.menuStrip1;
+			this.MainMenuStrip = this.MenuMain;
 			this.Name = "FormMain";
 			this.Text = "CatchTheBallStageTool";
 			this.Load += new System.EventHandler(this.FormMain_Load);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
+			this.MenuMain.ResumeLayout(false);
+			this.MenuMain.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -250,7 +276,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip MenuMain;
 		private System.Windows.Forms.ToolStripMenuItem ファイルToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 新規ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 開くToolStripMenuItem;
@@ -272,6 +298,9 @@
 		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの保存ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem dockPanelSuiteToolStripMenuItem;
+		private System.Windows.Forms.SaveFileDialog SaveLayoutDialog;
+		private System.Windows.Forms.OpenFileDialog OpenLayoutDialog;
+		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの読み込みToolStripMenuItem;
 	}
 }
 

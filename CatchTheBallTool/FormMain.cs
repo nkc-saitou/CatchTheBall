@@ -7,11 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CatchTheBallTool {
 	public partial class FormMain : Form {
 
+		const string DEFAULT_LAYOUT_DIRECTORY = "./Settings/";
+		const string DEFAULT_LAYOUT_FILE = "DefaultLayout.xml";
+
+		static string defaultLayoutPath = DEFAULT_LAYOUT_DIRECTORY + DEFAULT_LAYOUT_FILE;
+
+		public static FormMain instance;
 		public static bool isEdit = false;
+
+		FormView formView;
+		FormMapChip formMapChip;
+		FormNavigation formNavigation;
 
 		public FormMain() {
 			InitializeComponent();
@@ -24,23 +35,67 @@ namespace CatchTheBallTool {
 		/// 初期化処理
 		/// </summary>
 		void Init() {
-			//各フォームを生成しておくが、見えなくする
+
+			instance = this;
+
+			if(File.Exists(defaultLayoutPath)) {
+
+				//デフォルトのレイアウトを適用
+				LoadWindowLayout(defaultLayoutPath);
+			}
+			else {
+				MessageBox.Show(
+					"デフォルトレイアウトが見つかりませんでした",
+					"デフォルトレイアウト読み込みエラー",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+
+				//初期化
+				formView       = new FormView();
+				formMapChip    = new FormMapChip();
+				formNavigation = new FormNavigation();
+
+				if(!Directory.Exists(DEFAULT_LAYOUT_DIRECTORY)) Directory.CreateDirectory(DEFAULT_LAYOUT_DIRECTORY);
+				SaveWindowLayout(defaultLayoutPath);
+			}
 		}
 
 		/// <summary>
 		/// レイアウトを保存する
 		/// </summary>
 		/// <param name="path"></param>
-		void SaveWindowLayout(string path) {
+		bool SaveWindowLayout(string path) {
 			DockPanelMain.SaveAsXml(path);
+			return true;
 		}
 
 		/// <summary>
 		/// レイアウトを読み込んで適用する
 		/// </summary>
 		/// <param name="path"></param>
-		void LoadWindowLayout(string path) {
+		bool LoadWindowLayout(string path) {
 
+			//閉じて再生成しないと初期化エラーになる
+			if(formView != null)       formView.Close();
+			if(formMapChip != null)    formMapChip.Close();
+			if(formNavigation != null) formNavigation.Close();
+
+			formView       = new FormView();
+			formMapChip    = new FormMapChip();
+			formNavigation = new FormNavigation();
+
+			//レイアウトの読み込み
+			DockPanelMain.LoadFromXml(path, (string persistString) => {
+				switch(persistString) {
+					case "FormView":       return formView;
+					case "FormMapChip":    return formMapChip;
+					case "FormNavigation": return formNavigation;
+
+				}
+				return null;
+			});
+
+			return true;
 		}
 
 		#region MenuBar
@@ -91,15 +146,15 @@ namespace CatchTheBallTool {
 
 		#region Layout
 		private void デフォルトレイアウトを復元ToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			LoadWindowLayout(defaultLayoutPath);
 		}
-
 		private void ユーザーレイアウトの保存ToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			if(SaveLayoutDialog.ShowDialog() != DialogResult.OK) return;
+			SaveWindowLayout(SaveLayoutDialog.FileName);
 		}
-
 		private void ユーザーレイアウトの読み込みToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			if(OpenLayoutDialog.ShowDialog() != DialogResult.OK) return;
+			LoadWindowLayout(OpenLayoutDialog.FileName);
 		}
 		#endregion
 
