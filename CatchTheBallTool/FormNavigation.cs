@@ -9,13 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-	public partial class FormNavigation : WeifenLuo.WinFormsUI.Docking.DockContent {
-		public FormNavigation() {
-			InitializeComponent();
-		}
+	public partial class FormNavigation : FormWindowBase {
 
-		protected override string GetPersistString() {
-			return "FormNavigation";
+		public FormNavigation(ToolStripMenuItem item) : base(item) {
+			InitializeComponent();
+
 		}
 	}
 }

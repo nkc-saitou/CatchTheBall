@@ -9,17 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-	public partial class FormView : WeifenLuo.WinFormsUI.Docking.DockContent {
-		public FormView() {
+	public partial class FormView : FormWindowBase {
+
+		public FormView(ToolStripMenuItem item) : base(item) {
 			InitializeComponent();
+
 		}
 
 		private void FormView_Load(object sender, EventArgs e) {
 
-		}
-
-		protected override string GetPersistString() {
-			return "FormView";
 		}
 	}
 }

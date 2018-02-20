@@ -12,8 +12,8 @@ using System.IO;
 namespace CatchTheBallTool {
 	public partial class FormMain : Form {
 
-		const string DEFAULT_LAYOUT_DIRECTORY = "./Settings/";
-		const string DEFAULT_LAYOUT_FILE = "DefaultLayout.xml";
+		const string DEFAULT_LAYOUT_DIRECTORY = @"./Settings/";
+		const string DEFAULT_LAYOUT_FILE = @"DefaultLayout.xml";
 
 		static string defaultLayoutPath = DEFAULT_LAYOUT_DIRECTORY + DEFAULT_LAYOUT_FILE;
 
@@ -38,6 +38,7 @@ namespace CatchTheBallTool {
 
 			instance = this;
 
+			//レイアウト
 			if(File.Exists(defaultLayoutPath)) {
 
 				//デフォルトのレイアウトを適用
@@ -51,13 +52,21 @@ namespace CatchTheBallTool {
 					MessageBoxIcon.Error);
 
 				//初期化
-				formView       = new FormView();
-				formMapChip    = new FormMapChip();
-				formNavigation = new FormNavigation();
+				WindowInit();
 
 				if(!Directory.Exists(DEFAULT_LAYOUT_DIRECTORY)) Directory.CreateDirectory(DEFAULT_LAYOUT_DIRECTORY);
 				SaveWindowLayout(defaultLayoutPath);
 			}
+
+		}
+
+		void WindowInit() {
+
+
+			formView       = new FormView(ビューVToolStripMenuItem);
+			formMapChip    = new FormMapChip(マップチップMToolStripMenuItem);
+			formNavigation = new FormNavigation(ナビゲーションNToolStripMenuItem);
+
 		}
 
 		/// <summary>
@@ -80,9 +89,7 @@ namespace CatchTheBallTool {
 			if(formMapChip != null)    formMapChip.Close();
 			if(formNavigation != null) formNavigation.Close();
 
-			formView       = new FormView();
-			formMapChip    = new FormMapChip();
-			formNavigation = new FormNavigation();
+			WindowInit();
 
 			//レイアウトの読み込み
 			DockPanelMain.LoadFromXml(path, (string persistString) => {
@@ -134,13 +141,13 @@ namespace CatchTheBallTool {
 
 		#region Window
 		private void ビューVToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			formView.Show(DockPanelMain);
 		}
 		private void マップチップMToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			formMapChip.Show(DockPanelMain);
 		}
-		private void 設定SToolStripMenuItem_Click(object sender, EventArgs e) {
-
+		private void ナビゲーションNToolStripMenuItem_Click(object sender, EventArgs e) {
+			formNavigation.Show(DockPanelMain);
 		}
 		#endregion
 

@@ -7,13 +7,20 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-	public partial class FormMapChip : WeifenLuo.WinFormsUI.Docking.DockContent {
-		public FormMapChip() {
+	public partial class FormMapChip : FormWindowBase {
+
+		const string MAPCHIP_PATH = @"";	//マップチップのパス
+		const int MAPCHIP_SIZE = 64;		//マップチップのサイズ(px)
+
+		Graphics g;
+
+		public FormMapChip(ToolStripMenuItem item) : base(item) {
 			InitializeComponent();
+
 		}
 
-		protected override string GetPersistString() {
-			return "FormMapChip";
+		private void toolStripDropDownButton1_Click(object sender, EventArgs e) {
+
 		}
 	}
 }

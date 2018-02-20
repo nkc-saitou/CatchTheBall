@@ -38,16 +38,16 @@
 			this.ウィンドウWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ビューVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.マップチップMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.設定SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ナビゲーションNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ウィンドウレイアウトToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.デフォルトレイアウトを復元ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ユーザーレイアウトの保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ユーザーレイアウトの読み込みToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dockPanelSuiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DockPanelMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
 			this.SaveLayoutDialog = new System.Windows.Forms.SaveFileDialog();
 			this.OpenLayoutDialog = new System.Windows.Forms.OpenFileDialog();
-			this.ユーザーレイアウトの読み込みToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -160,7 +160,7 @@
 			this.ウィンドウWToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ビューVToolStripMenuItem,
             this.マップチップMToolStripMenuItem,
-            this.設定SToolStripMenuItem});
+            this.ナビゲーションNToolStripMenuItem});
 			this.ウィンドウWToolStripMenuItem.Name = "ウィンドウWToolStripMenuItem";
 			this.ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
 			this.ウィンドウWToolStripMenuItem.Text = "ウィンドウ(&W)";
@@ -168,23 +168,23 @@
 			// ビューVToolStripMenuItem
 			// 
 			this.ビューVToolStripMenuItem.Name = "ビューVToolStripMenuItem";
-			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.ビューVToolStripMenuItem.Text = "ビュー(&V)";
 			this.ビューVToolStripMenuItem.Click += new System.EventHandler(this.ビューVToolStripMenuItem_Click);
 			// 
 			// マップチップMToolStripMenuItem
 			// 
 			this.マップチップMToolStripMenuItem.Name = "マップチップMToolStripMenuItem";
-			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.マップチップMToolStripMenuItem.Text = "マップチップ(&M)";
 			this.マップチップMToolStripMenuItem.Click += new System.EventHandler(this.マップチップMToolStripMenuItem_Click);
 			// 
-			// 設定SToolStripMenuItem
+			// ナビゲーションNToolStripMenuItem
 			// 
-			this.設定SToolStripMenuItem.Name = "設定SToolStripMenuItem";
-			this.設定SToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-			this.設定SToolStripMenuItem.Text = "設定(&S)";
-			this.設定SToolStripMenuItem.Click += new System.EventHandler(this.設定SToolStripMenuItem_Click);
+			this.ナビゲーションNToolStripMenuItem.Name = "ナビゲーションNToolStripMenuItem";
+			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ナビゲーションNToolStripMenuItem.Text = "ナビゲーション(&N)";
+			this.ナビゲーションNToolStripMenuItem.Click += new System.EventHandler(this.ナビゲーションNToolStripMenuItem_Click);
 			// 
 			// ウィンドウレイアウトToolStripMenuItem
 			// 
@@ -199,16 +199,23 @@
 			// デフォルトレイアウトを復元ToolStripMenuItem
 			// 
 			this.デフォルトレイアウトを復元ToolStripMenuItem.Name = "デフォルトレイアウトを復元ToolStripMenuItem";
-			this.デフォルトレイアウトを復元ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.デフォルトレイアウトを復元ToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.デフォルトレイアウトを復元ToolStripMenuItem.Text = "デフォルトレイアウトを復元";
 			this.デフォルトレイアウトを復元ToolStripMenuItem.Click += new System.EventHandler(this.デフォルトレイアウトを復元ToolStripMenuItem_Click);
 			// 
 			// ユーザーレイアウトの保存ToolStripMenuItem
 			// 
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Name = "ユーザーレイアウトの保存ToolStripMenuItem";
-			this.ユーザーレイアウトの保存ToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.ユーザーレイアウトの保存ToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Text = "ユーザーレイアウトの保存";
 			this.ユーザーレイアウトの保存ToolStripMenuItem.Click += new System.EventHandler(this.ユーザーレイアウトの保存ToolStripMenuItem_Click);
+			// 
+			// ユーザーレイアウトの読み込みToolStripMenuItem
+			// 
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Name = "ユーザーレイアウトの読み込みToolStripMenuItem";
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Text = "ユーザーレイアウトの読み込み";
+			this.ユーザーレイアウトの読み込みToolStripMenuItem.Click += new System.EventHandler(this.ユーザーレイアウトの読み込みToolStripMenuItem_Click);
 			// 
 			// ヘルプHToolStripMenuItem
 			// 
@@ -248,13 +255,6 @@
 			this.OpenLayoutDialog.Filter = "レイアウト|*.xml";
 			this.OpenLayoutDialog.Title = "レイアウトを読み込み";
 			// 
-			// ユーザーレイアウトの読み込みToolStripMenuItem
-			// 
-			this.ユーザーレイアウトの読み込みToolStripMenuItem.Name = "ユーザーレイアウトの読み込みToolStripMenuItem";
-			this.ユーザーレイアウトの読み込みToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-			this.ユーザーレイアウトの読み込みToolStripMenuItem.Text = "ユーザーレイアウトの読み込み";
-			this.ユーザーレイアウトの読み込みToolStripMenuItem.Click += new System.EventHandler(this.ユーザーレイアウトの読み込みToolStripMenuItem_Click);
-			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -293,7 +293,7 @@
 		private WeifenLuo.WinFormsUI.Docking.DockPanel DockPanelMain;
 		private System.Windows.Forms.ToolStripMenuItem ビューVToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem マップチップMToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 設定SToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ナビゲーションNToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem デフォルトレイアウトを復元ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの保存ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
