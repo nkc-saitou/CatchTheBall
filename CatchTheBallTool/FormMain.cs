@@ -20,9 +20,7 @@ namespace CatchTheBallTool {
 		public static FormMain instance;
 		public static bool isEdit = false;
 
-		FormView formView;
-		FormMapChip formMapChip;
-		FormNavigation formNavigation;
+		Dictionary<string, FormWindowBase> formWindowDictionary;
 
 		public FormMain() {
 			InitializeComponent();
@@ -60,12 +58,22 @@ namespace CatchTheBallTool {
 
 		}
 
+		/// <summary>
+		/// 各ウィンドウを初期化する
+		/// </summary>
 		void WindowInit() {
 
+			if(formWindowDictionary != null) {
+				foreach(var item in formWindowDictionary) {
+					if(item.Value != null) item.Value.Dispose();
+				}
+			}
 
-			formView       = new FormView(ビューVToolStripMenuItem);
-			formMapChip    = new FormMapChip(マップチップMToolStripMenuItem);
-			formNavigation = new FormNavigation(ナビゲーションNToolStripMenuItem);
+			formWindowDictionary = new Dictionary<string, FormWindowBase>();
+
+			formWindowDictionary.Add("FormView", new FormView(ビューVToolStripMenuItem));
+			formWindowDictionary.Add("FormMapChip", new FormMapChip(マップチップMToolStripMenuItem));
+			formWindowDictionary.Add("FormNavigation", new FormNavigation(ナビゲーションNToolStripMenuItem));
 
 		}
 
@@ -84,22 +92,15 @@ namespace CatchTheBallTool {
 		/// <param name="path"></param>
 		bool LoadWindowLayout(string path) {
 
-			//閉じて再生成しないと初期化エラーになる
-			if(formView != null)       formView.Close();
-			if(formMapChip != null)    formMapChip.Close();
-			if(formNavigation != null) formNavigation.Close();
-
+			//初期化しないとエラーになる
 			WindowInit();
 
 			//レイアウトの読み込み
 			DockPanelMain.LoadFromXml(path, (string persistString) => {
-				switch(persistString) {
-					case "FormView":       return formView;
-					case "FormMapChip":    return formMapChip;
-					case "FormNavigation": return formNavigation;
 
-				}
-				return null;
+				return formWindowDictionary.Values
+				.Where(item => item != null)
+				.FirstOrDefault(item => item.Text == persistString);
 			});
 
 			return true;
@@ -141,13 +142,13 @@ namespace CatchTheBallTool {
 
 		#region Window
 		private void ビューVToolStripMenuItem_Click(object sender, EventArgs e) {
-			formView.Show(DockPanelMain);
+			formWindowDictionary["FormView"].Activate();
 		}
 		private void マップチップMToolStripMenuItem_Click(object sender, EventArgs e) {
-			formMapChip.Show(DockPanelMain);
+			formWindowDictionary["FormMapChip"].Activate();
 		}
 		private void ナビゲーションNToolStripMenuItem_Click(object sender, EventArgs e) {
-			formNavigation.Show(DockPanelMain);
+			formWindowDictionary["FormNavigation"].Activate();
 		}
 		#endregion
 

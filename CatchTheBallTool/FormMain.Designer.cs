@@ -244,14 +244,14 @@
 			// SaveLayoutDialog
 			// 
 			this.SaveLayoutDialog.DefaultExt = "xml";
-			this.SaveLayoutDialog.FileName = "userLayout";
+			this.SaveLayoutDialog.FileName = "UserLayout";
 			this.SaveLayoutDialog.Filter = "レイアウト|*.xml";
 			this.SaveLayoutDialog.Title = "レイアウトを保存";
 			// 
 			// OpenLayoutDialog
 			// 
 			this.OpenLayoutDialog.DefaultExt = "xml";
-			this.OpenLayoutDialog.FileName = "openFileDialog1";
+			this.OpenLayoutDialog.FileName = "UserLayout";
 			this.OpenLayoutDialog.Filter = "レイアウト|*.xml";
 			this.OpenLayoutDialog.Title = "レイアウトを読み込み";
 			// 

@@ -11,15 +11,15 @@ using System.Windows.Forms;
 namespace CatchTheBallTool {
 	public partial class FormWindowBase : WeifenLuo.WinFormsUI.Docking.DockContent {
 
-		private FormWindowBase() {
+		protected FormWindowBase() {
 			InitializeComponent();
 
 		}
 
 		public FormWindowBase(ToolStripMenuItem item) {
 
-			Shown += (_, __) => {
-				item.Checked = true;
+			VisibleChanged += (object sender, EventArgs e) => {
+				item.Checked = Visible;
 			};
 
 			FormClosing += (object sender, FormClosingEventArgs e) => {
@@ -28,9 +28,12 @@ namespace CatchTheBallTool {
 				if(e.CloseReason == CloseReason.MdiFormClosing) return;
 
 				e.Cancel = true;
-				item.Checked = false;
 				Hide();
 			};
+		}
+
+		protected override string GetPersistString() {
+			return Text;
 		}
 	}
 }

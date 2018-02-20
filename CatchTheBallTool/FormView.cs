@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-	public partial class FormView : FormWindowBase {
+	public partial class FormView : FormResizableWindow {
 
 		public FormView(ToolStripMenuItem item) : base(item) {
 			InitializeComponent();
