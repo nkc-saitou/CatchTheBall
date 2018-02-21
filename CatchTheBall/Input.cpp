@@ -69,8 +69,7 @@ bool Input::ButtonFree(int keyCode)
 /////////////////////////////////////////////////////
 void Input::ButtonSetting()
 {
-	//現在のキーの入力状態を格納
-	buf[256];
+
 	//キーの入力状態を得る
 	GetHitKeyStateAll(buf);
 

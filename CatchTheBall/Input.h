@@ -24,11 +24,10 @@
 class Input : public Singleton <Input>
 {
 	//キーの入力状態を格納
-	char buf[256];
 	int key[256];
+	char buf[256];
 
 	int tempButton; //１フレーム前の入力情報(押されたかどうか)
-	int nowButton; //現在の入力情報
 
 	void ButtonSetting();
 
