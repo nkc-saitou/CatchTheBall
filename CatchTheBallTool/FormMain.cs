@@ -18,6 +18,9 @@ namespace CatchTheBallTool {
 
 		const string DEFAULT_LAYOUT_DIRECTORY = @"./Settings/";
 		const string DEFAULT_LAYOUT_FILE = @"DefaultLayout.xml";
+		const string DEFAULT_MAPCHIP_PATH = @"image/DefaultMapChip";
+
+		const int MAPCHIP_SIZE = 64;
 
 		static string defaultLayoutPath = DEFAULT_LAYOUT_DIRECTORY + DEFAULT_LAYOUT_FILE;
 
@@ -39,6 +42,8 @@ namespace CatchTheBallTool {
 		void Init() {
 
 			instance = this;
+
+			ResourceLoad();
 
 			//レイアウト
 			if(File.Exists(defaultLayoutPath)) {
@@ -79,6 +84,13 @@ namespace CatchTheBallTool {
 			formWindowDictionary.Add("FormView", new FormView(ビューVToolStripMenuItem));
 			formWindowDictionary.Add("FormMapChip", new FormMapChip(マップチップMToolStripMenuItem));
 			formWindowDictionary.Add("FormNavigation", new FormNavigation(ナビゲーションNToolStripMenuItem));
+
+		}
+
+		/// <summary>
+		/// 各種データをロードする
+		/// </summary>
+		void ResourceLoad() {
 
 		}
 

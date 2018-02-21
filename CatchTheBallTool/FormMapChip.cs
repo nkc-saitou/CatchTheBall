@@ -13,9 +13,6 @@ namespace CatchTheBallTool {
 	/// </summary>
 	public partial class FormMapChip : FormResizableWindow {
 
-		const string MAPCHIP_PATH = @"";	//マップチップのパス
-		const int MAPCHIP_SIZE = 64;		//マップチップのサイズ(px)
-
 		Graphics g;
 
 		public FormMapChip(ToolStripMenuItem item) : base(item) {
