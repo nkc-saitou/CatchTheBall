@@ -18,6 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Classes\Collision.cpp" />
+    <ClCompile Include="Classes\CollisionManager.cpp" />
+    <ClCompile Include="Classes\Config.cpp" />
+    <ClCompile Include="Classes\Game.cpp" />
+    <ClCompile Include="Classes\Input.cpp" />
+    <ClCompile Include="Classes\Keyboard.cpp" />
+    <ClCompile Include="Classes\Main.cpp" />
+    <ClCompile Include="Classes\Menu.cpp" />
+    <ClCompile Include="Classes\Object.cpp" />
+    <ClCompile Include="Classes\ObjectManager.cpp" />
+    <ClCompile Include="Classes\SceneMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes\Collision.h" />
+    <ClInclude Include="Classes\CollisionManager.h" />
+    <ClInclude Include="Classes\Config.h" />
+    <ClInclude Include="Classes\Game.h" />
+    <ClInclude Include="Classes\Input.h" />
+    <ClInclude Include="Classes\Keyboard.h" />
+    <ClInclude Include="Classes\Menu.h" />
+    <ClInclude Include="Classes\Object.h" />
+    <ClInclude Include="Classes\ObjectManager.h" />
+    <ClInclude Include="Classes\SceneMgr.h" />
+    <ClInclude Include="Classes\Singleton.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CBC9D6E-DAAA-4149-8076-6F56ACCDB5FD}</ProjectGuid>
     <RootNamespace>CatchTheBall</RootNamespace>
@@ -27,7 +53,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -117,32 +143,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Classes\Source\Collision.cpp" />
-    <ClCompile Include="Classes\Source\CollisionManager.cpp" />
-    <ClCompile Include="Classes\Source\Config.cpp" />
-    <ClCompile Include="Classes\Source\Game.cpp" />
-    <ClCompile Include="Classes\Source\Input.cpp" />
-    <ClCompile Include="Classes\Source\Keyboard.cpp" />
-    <ClCompile Include="Classes\Source\Main.cpp" />
-    <ClCompile Include="Classes\Source\Menu.cpp" />
-    <ClCompile Include="Classes\Source\Object.cpp" />
-    <ClCompile Include="Classes\Source\ObjectManager.cpp" />
-    <ClCompile Include="Classes\Source\SceneMgr.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Classes\Header\Collision.h" />
-    <ClInclude Include="Classes\Header\CollisionManager.h" />
-    <ClInclude Include="Classes\Header\Config.h" />
-    <ClInclude Include="Classes\Header\Game.h" />
-    <ClInclude Include="Classes\Header\Input.h" />
-    <ClInclude Include="Classes\Header\Keyboard.h" />
-    <ClInclude Include="Classes\Header\Menu.h" />
-    <ClInclude Include="Classes\Header\Object.h" />
-    <ClInclude Include="Classes\Header\ObjectManager.h" />
-    <ClInclude Include="Classes\Header\SceneMgr.h" />
-    <ClInclude Include="Classes\Header\Singleton.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
