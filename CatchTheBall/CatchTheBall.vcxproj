@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,26 +27,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -118,7 +118,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Classes\Source\Collision.cpp" />
+    <ClCompile Include="Classes\Source\CollisionManager.cpp" />
+    <ClCompile Include="Classes\Source\Config.cpp" />
+    <ClCompile Include="Classes\Source\Game.cpp" />
+    <ClCompile Include="Classes\Source\Input.cpp" />
+    <ClCompile Include="Classes\Source\Keyboard.cpp" />
+    <ClCompile Include="Classes\Source\Main.cpp" />
+    <ClCompile Include="Classes\Source\Menu.cpp" />
+    <ClCompile Include="Classes\Source\Object.cpp" />
+    <ClCompile Include="Classes\Source\ObjectManager.cpp" />
+    <ClCompile Include="Classes\Source\SceneMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes\Header\Collision.h" />
+    <ClInclude Include="Classes\Header\CollisionManager.h" />
+    <ClInclude Include="Classes\Header\Config.h" />
+    <ClInclude Include="Classes\Header\Game.h" />
+    <ClInclude Include="Classes\Header\Input.h" />
+    <ClInclude Include="Classes\Header\Keyboard.h" />
+    <ClInclude Include="Classes\Header\Menu.h" />
+    <ClInclude Include="Classes\Header\Object.h" />
+    <ClInclude Include="Classes\Header\ObjectManager.h" />
+    <ClInclude Include="Classes\Header\SceneMgr.h" />
+    <ClInclude Include="Classes\Header\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

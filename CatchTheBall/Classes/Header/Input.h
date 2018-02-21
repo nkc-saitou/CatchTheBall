@@ -1,5 +1,5 @@
 #pragma once
-#include "Dxlib.h"
+#include "DxLib.h"
 #include <string>
 #include "Singleton.h"
 
