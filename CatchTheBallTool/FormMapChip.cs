@@ -7,6 +7,10 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
+
+	/// <summary>
+	/// マップチップを選択できるウィンドウ
+	/// </summary>
 	public partial class FormMapChip : FormResizableWindow {
 
 		const string MAPCHIP_PATH = @"";	//マップチップのパス

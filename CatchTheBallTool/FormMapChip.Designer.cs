@@ -41,7 +41,7 @@
 			this.ClientSize = new System.Drawing.Size(533, 434);
 			this.Controls.Add(this.MapChipPictureBox);
 			this.Name = "FormMapChip";
-			this.Text = "MapChip";
+			this.Text = "マップチップ";
 			this.Controls.SetChildIndex(this.MapChipPictureBox, 0);
 			((System.ComponentModel.ISupportInitialize)(this.MapChipPictureBox)).EndInit();
 			this.ResumeLayout(false);

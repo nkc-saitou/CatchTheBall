@@ -10,6 +10,10 @@ using System.Windows.Forms;
 using System.IO;
 
 namespace CatchTheBallTool {
+
+	/// <summary>
+	/// メインフォーム
+	/// </summary>
 	public partial class FormMain : Form {
 
 		const string DEFAULT_LAYOUT_DIRECTORY = @"./Settings/";
@@ -49,7 +53,7 @@ namespace CatchTheBallTool {
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error);
 
-				//初期化
+				//ウィンドウの初期化
 				WindowInit();
 
 				if(!Directory.Exists(DEFAULT_LAYOUT_DIRECTORY)) Directory.CreateDirectory(DEFAULT_LAYOUT_DIRECTORY);
@@ -71,6 +75,7 @@ namespace CatchTheBallTool {
 
 			formWindowDictionary = new Dictionary<string, FormWindowBase>();
 
+			//各ウィンドウの追加
 			formWindowDictionary.Add("FormView", new FormView(ビューVToolStripMenuItem));
 			formWindowDictionary.Add("FormMapChip", new FormMapChip(マップチップMToolStripMenuItem));
 			formWindowDictionary.Add("FormNavigation", new FormNavigation(ナビゲーションNToolStripMenuItem));
@@ -106,13 +111,15 @@ namespace CatchTheBallTool {
 			return true;
 		}
 
-		#region MenuBar
-
-		#region File
 
 		private void FormMain_Load(object sender, EventArgs e) {
 
 		}
+
+		#region MenuBar
+
+		#region File
+
 		private void 新規ToolStripMenuItem_Click(object sender, EventArgs e) {
 
 		}

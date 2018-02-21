@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-	public partial class FormNavigation : FormWindowBase {
+
+	/// <summary>
+	/// 全体を表示するウィンドウ
+	/// </summary>
+	public partial class FormNavigation : FormResizableWindow {
 
 		public FormNavigation(ToolStripMenuItem item) : base(item) {
 			InitializeComponent();

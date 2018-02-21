@@ -9,19 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-
-	/// <summary>
-	/// ステージを編集するウィンドウ
-	/// </summary>
-	public partial class FormView : FormResizableWindow {
-
-		public FormView(ToolStripMenuItem item) : base(item) {
+	public partial class FormNew : Form {
+		public FormNew() {
 			InitializeComponent();
-
-		}
-
-		private void FormView_Load(object sender, EventArgs e) {
-
 		}
 	}
 }

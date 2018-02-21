@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
+
+	/// <summary>
+	/// コンテンツの拡大率を設定できるウィンドウ
+	/// </summary>
 	public partial class FormResizableWindow : FormWindowBase {
 
 		const float DEFAULT_SIZE = 1;
@@ -26,18 +30,15 @@ namespace CatchTheBallTool {
 
 			CurrentSize = 1;
 
+			//マウスホイールを動かした時
 			MouseWheel += (object sender, MouseEventArgs e) => {
 				if((ModifierKeys & Keys.Control) == Keys.Control) {
-					ChanceSize(CurrentSize + e.Delta / Math.Abs(e.Delta) * CHANGE_SIZE_DELTA);
+					ChangeSize(CurrentSize + e.Delta / Math.Abs(e.Delta) * CHANGE_SIZE_DELTA);
 				}
 			};
 		}
 
-		private void StatusButton_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e) {
-			ChanceSize(float.Parse((string)e.ClickedItem.Tag));
-		}
-
-		void ChanceSize(float newSize) {
+		void ChangeSize(float newSize) {
 
 			newSize = Math.Max(newSize, MIN_SIZE);
 			newSize = Math.Min(newSize, MAX_SIZE);
@@ -49,5 +50,10 @@ namespace CatchTheBallTool {
 
 
 		protected virtual void OnSizeChanged() { }
+
+		private void StatusButton_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e) {
+			ChangeSize(float.Parse((string)e.ClickedItem.Tag));
+		}
+
 	}
 }

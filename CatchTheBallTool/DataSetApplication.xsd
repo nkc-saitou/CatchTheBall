@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FileData" msprop:Generator_TableClassName="FileDataDataTable" msprop:Generator_TableVarName="tableFileData" msprop:Generator_TablePropName="FileData" msprop:Generator_RowDeletingName="FileDataRowDeleting" msprop:Generator_RowChangingName="FileDataRowChanging" msprop:Generator_RowEvHandlerName="FileDataRowChangeEventHandler" msprop:Generator_RowDeletedName="FileDataRowDeleted" msprop:Generator_UserTableName="FileData" msprop:Generator_RowChangedName="FileDataRowChanged" msprop:Generator_RowEvArgName="FileDataRowChangeEvent" msprop:Generator_RowClassName="FileDataRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FileName" msprop:Generator_ColumnVarNameInTable="columnFileName" msprop:Generator_ColumnPropNameInRow="FileName" msprop:Generator_ColumnPropNameInTable="FileNameColumn" msprop:Generator_UserColumnName="FileName" type="xs:string" minOccurs="0" />
+              <xs:element name="Path" msprop:Generator_ColumnVarNameInTable="columnPath" msprop:Generator_ColumnPropNameInRow="Path" msprop:Generator_ColumnPropNameInTable="PathColumn" msprop:Generator_UserColumnName="Path" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="StageData" msprop:Generator_TableClassName="StageDataDataTable" msprop:Generator_TableVarName="tableStageData" msprop:Generator_TablePropName="StageData" msprop:Generator_RowDeletingName="StageDataRowDeleting" msprop:Generator_RowChangingName="StageDataRowChanging" msprop:Generator_RowEvHandlerName="StageDataRowChangeEventHandler" msprop:Generator_RowDeletedName="StageDataRowDeleted" msprop:Generator_UserTableName="StageData" msprop:Generator_RowChangedName="StageDataRowChanged" msprop:Generator_RowEvArgName="StageDataRowChangeEvent" msprop:Generator_RowClassName="StageDataRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StageName" msprop:Generator_ColumnVarNameInTable="columnStageName" msprop:Generator_ColumnPropNameInRow="StageName" msprop:Generator_ColumnPropNameInTable="StageNameColumn" msprop:Generator_UserColumnName="StageName" type="xs:string" minOccurs="0" />
+              <xs:element name="StageSize" msdata:DataType="System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" msprop:Generator_ColumnVarNameInTable="columnStageSize" msprop:Generator_ColumnPropNameInRow="StageSize" msprop:Generator_ColumnPropNameInTable="StageSizeColumn" msprop:Generator_UserColumnName="StageSize" type="xs:anyType" minOccurs="0" />
+              <xs:element name="Map" msdata:DataType="System.Byte[,], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnMap" msprop:Generator_ColumnPropNameInRow="Map" msprop:Generator_ColumnPropNameInTable="MapColumn" msprop:Generator_UserColumnName="Map" type="xs:anyType" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SystemData" msprop:Generator_TableClassName="SystemDataDataTable" msprop:Generator_TableVarName="tableSystemData" msprop:Generator_TablePropName="SystemData" msprop:Generator_RowDeletingName="SystemDataRowDeleting" msprop:Generator_RowChangingName="SystemDataRowChanging" msprop:Generator_RowEvHandlerName="SystemDataRowChangeEventHandler" msprop:Generator_RowDeletedName="SystemDataRowDeleted" msprop:Generator_UserTableName="SystemData" msprop:Generator_RowChangedName="SystemDataRowChanged" msprop:Generator_RowEvArgName="SystemDataRowChangeEvent" msprop:Generator_RowClassName="SystemDataRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IsEdit" msprop:Generator_ColumnVarNameInTable="columnIsEdit" msprop:Generator_ColumnPropNameInRow="IsEdit" msprop:Generator_ColumnPropNameInTable="IsEditColumn" msprop:Generator_UserColumnName="IsEdit" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ViewRect" msdata:DataType="System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" msprop:Generator_ColumnVarNameInTable="columnViewRect" msprop:Generator_ColumnPropNameInRow="ViewRect" msprop:Generator_ColumnPropNameInTable="ViewRectColumn" msprop:Generator_UserColumnName="ViewRect" type="xs:anyType" minOccurs="0" />
+              <xs:element name="MapChipTexture" msdata:DataType="System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" msprop:Generator_ColumnVarNameInTable="columnMapChipTexture" msprop:Generator_ColumnPropNameInRow="MapChipTexture" msprop:Generator_ColumnPropNameInTable="MapChipTextureColumn" msprop:Generator_UserColumnName="MapChipTexture" type="xs:anyType" minOccurs="0" />
+              <xs:element name="SelectAreaTexture" msdata:DataType="System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" msprop:Generator_ColumnVarNameInTable="columnSelectAreaTexture" msprop:Generator_ColumnPropNameInRow="SelectAreaTexture" msprop:Generator_ColumnPropNameInTable="SelectAreaTextureColumn" msprop:Generator_UserColumnName="SelectAreaTexture" type="xs:anyType" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
