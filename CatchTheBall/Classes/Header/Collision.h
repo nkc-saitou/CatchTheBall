@@ -14,8 +14,8 @@ public:
 	Collision(float x, float y, float sizeX, float sizeY, CollisionType type, void* object);
 	float getX() { return x; }
 	float getY() { return y; }
-	float getSize() { return sizeX; }
-	float getSize() { return sizeY; }
+	float getSizeX() { return sizeX; }
+	float getSizeY() { return sizeY; }
 	CollisionType getType() { return type; }
 	void* getObject() { return object; }
 

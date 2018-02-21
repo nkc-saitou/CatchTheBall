@@ -1,4 +1,3 @@
-#include "DxLib.h"
 #include "Collision.h"
 
 Collision::Collision(float x, float y, float sizeX, float sizeY, CollisionType type, void* object)
