@@ -118,16 +118,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Classes\Source\Collision.cpp" />
+    <ClCompile Include="Classes\Source\CollisionManager.cpp" />
+    <ClCompile Include="Classes\Source\Config.cpp" />
+    <ClCompile Include="Classes\Source\Game.cpp" />
+    <ClCompile Include="Classes\Source\Input.cpp" />
+    <ClCompile Include="Classes\Source\Keyboard.cpp" />
+    <ClCompile Include="Classes\Source\Main.cpp" />
+    <ClCompile Include="Classes\Source\Menu.cpp" />
+    <ClCompile Include="Classes\Source\Object.cpp" />
+    <ClCompile Include="Classes\Source\ObjectManager.cpp" />
+    <ClCompile Include="Classes\Source\SceneMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Classes\Header\Collision.h" />
+    <ClInclude Include="Classes\Header\CollisionManager.h" />
+    <ClInclude Include="Classes\Header\Config.h" />
+    <ClInclude Include="Classes\Header\Game.h" />
+    <ClInclude Include="Classes\Header\Input.h" />
+    <ClInclude Include="Classes\Header\Keyboard.h" />
+    <ClInclude Include="Classes\Header\Menu.h" />
+    <ClInclude Include="Classes\Header\Object.h" />
+    <ClInclude Include="Classes\Header\ObjectManager.h" />
+    <ClInclude Include="Classes\Header\SceneMgr.h" />
+    <ClInclude Include="Classes\Header\Singleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
