@@ -48,6 +48,8 @@
 			this.DockPanelMain = new WeifenLuo.WinFormsUI.Docking.DockPanel();
 			this.SaveLayoutDialog = new System.Windows.Forms.SaveFileDialog();
 			this.OpenLayoutDialog = new System.Windows.Forms.OpenFileDialog();
+			this.OpenFileStageData = new System.Windows.Forms.OpenFileDialog();
+			this.SaveFileStageData = new System.Windows.Forms.SaveFileDialog();
 			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -168,21 +170,21 @@
 			// ビューVToolStripMenuItem
 			// 
 			this.ビューVToolStripMenuItem.Name = "ビューVToolStripMenuItem";
-			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.ビューVToolStripMenuItem.Text = "ビュー(&V)";
 			this.ビューVToolStripMenuItem.Click += new System.EventHandler(this.ビューVToolStripMenuItem_Click);
 			// 
 			// マップチップMToolStripMenuItem
 			// 
 			this.マップチップMToolStripMenuItem.Name = "マップチップMToolStripMenuItem";
-			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.マップチップMToolStripMenuItem.Text = "マップチップ(&M)";
 			this.マップチップMToolStripMenuItem.Click += new System.EventHandler(this.マップチップMToolStripMenuItem_Click);
 			// 
 			// ナビゲーションNToolStripMenuItem
 			// 
 			this.ナビゲーションNToolStripMenuItem.Name = "ナビゲーションNToolStripMenuItem";
-			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.ナビゲーションNToolStripMenuItem.Text = "ナビゲーション(&N)";
 			this.ナビゲーションNToolStripMenuItem.Click += new System.EventHandler(this.ナビゲーションNToolStripMenuItem_Click);
 			// 
@@ -255,6 +257,16 @@
 			this.OpenLayoutDialog.Filter = "レイアウト|*.xml";
 			this.OpenLayoutDialog.Title = "レイアウトを読み込み";
 			// 
+			// OpenFileStageData
+			// 
+			this.OpenFileStageData.FileName = "StageData";
+			this.OpenFileStageData.Title = "ステージデータを開く";
+			// 
+			// SaveFileStageData
+			// 
+			this.SaveFileStageData.FileName = "StageData";
+			this.SaveFileStageData.Title = "ステージデータを保存する";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -266,6 +278,7 @@
 			this.MainMenuStrip = this.MenuMain;
 			this.Name = "FormMain";
 			this.Text = "CatchTheBallStageTool";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
 			this.Load += new System.EventHandler(this.FormMain_Load);
 			this.MenuMain.ResumeLayout(false);
 			this.MenuMain.PerformLayout();
@@ -301,6 +314,8 @@
 		private System.Windows.Forms.SaveFileDialog SaveLayoutDialog;
 		private System.Windows.Forms.OpenFileDialog OpenLayoutDialog;
 		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの読み込みToolStripMenuItem;
+		private System.Windows.Forms.OpenFileDialog OpenFileStageData;
+		private System.Windows.Forms.SaveFileDialog SaveFileStageData;
 	}
 }
 

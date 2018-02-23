@@ -16,15 +16,7 @@ namespace CatchTheBallTool {
 	/// </summary>
 	public partial class FormMain : Form {
 
-		const string DEFAULT_LAYOUT_DIRECTORY = @"./Settings/";
-		const string DEFAULT_LAYOUT_FILE = @"DefaultLayout.xml";
-		const string DEFAULT_MAPCHIP_PATH = @"image/DefaultMapChip";
-
-		const int MAPCHIP_SIZE = 64;
-
-		static string defaultLayoutPath = DEFAULT_LAYOUT_DIRECTORY + DEFAULT_LAYOUT_FILE;
-
-		public static FormMain instance;
+		public static FormMain Instance { get; private set; }
 		public static bool isEdit = false;
 
 		Dictionary<string, FormWindowBase> formWindowDictionary;
@@ -36,37 +28,29 @@ namespace CatchTheBallTool {
 			Init();
 		}
 
+		#region Initialize
 		/// <summary>
 		/// 初期化処理
 		/// </summary>
 		void Init() {
 
-			instance = this;
+			//設定
+			Instance = this;
 
-			ResourceLoad();
+			//拡張子に合わせて変更
+			OpenFileStageData.DefaultExt = StageData.STAGE_DATA_EXT;
+			SaveFileStageData.DefaultExt = StageData.STAGE_DATA_EXT;
 
-			//レイアウト
-			if(File.Exists(defaultLayoutPath)) {
+			var filter = "ステージデータ|*." + StageData.STAGE_DATA_EXT;
+			OpenFileStageData.Filter = filter;
+			SaveFileStageData.Filter = filter;
 
-				//デフォルトのレイアウトを適用
-				LoadWindowLayout(defaultLayoutPath);
-			}
-			else {
-				MessageBox.Show(
-					"デフォルトレイアウトが見つかりませんでした",
-					"デフォルトレイアウト読み込みエラー",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
+			//メニュー操作フラグ更新
 
-				//ウィンドウの初期化
-				WindowInit();
-
-				if(!Directory.Exists(DEFAULT_LAYOUT_DIRECTORY)) Directory.CreateDirectory(DEFAULT_LAYOUT_DIRECTORY);
-				SaveWindowLayout(defaultLayoutPath);
-			}
+			//デフォルトレイアウト読み込み
+			LayoutInit();
 
 		}
-
 		/// <summary>
 		/// 各ウィンドウを初期化する
 		/// </summary>
@@ -86,14 +70,40 @@ namespace CatchTheBallTool {
 			formWindowDictionary.Add("FormNavigation", new FormNavigation(ナビゲーションNToolStripMenuItem));
 
 		}
-
 		/// <summary>
-		/// 各種データをロードする
+		/// レイアウトの初期設定
 		/// </summary>
-		void ResourceLoad() {
+		void LayoutInit() {
 
+			var path = SystemData.DEFAULT_LAYOUT_PATH;
+			if(File.Exists(path)) {
+
+				//デフォルトのレイアウトを適用
+				LoadWindowLayout(path);
+			}
+			else {
+
+				MessageBox.Show(
+					"デフォルトレイアウトが見つかりませんでした",
+					"デフォルトレイアウト読み込みエラー",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+
+				//ウィンドウの初期化
+				WindowInit();
+
+				var directory = SystemData.DEFAULT_LAYOUT_DIRECTORY;
+
+				//ディレクトリがない場合は作成
+				if(!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+
+				//とりあえず現状を保存
+				SaveWindowLayout(path);
+			}
 		}
+		#endregion
 
+		#region Layout
 		/// <summary>
 		/// レイアウトを保存する
 		/// </summary>
@@ -102,7 +112,6 @@ namespace CatchTheBallTool {
 			DockPanelMain.SaveAsXml(path);
 			return true;
 		}
-
 		/// <summary>
 		/// レイアウトを読み込んで適用する
 		/// </summary>
@@ -122,32 +131,121 @@ namespace CatchTheBallTool {
 
 			return true;
 		}
+		#endregion
 
+		#region File
+		/// <summary>
+		/// ステージデータを新規作成する
+		/// </summary>
+		/// <returns></returns>
+		bool NewFile() {
+			if(SystemData.Instance.IsEdit) {
+				//編集状態なので保存を促す
+				DialogResult result = ShowEditFileClosingMessage();
+				switch(ShowEditFileClosingMessage()) {
+					case DialogResult.Yes: if(SaveFile()) break; else return false;
+					case DialogResult.No: break;
+					default: return false;
+				}
+			}
+
+			//新規作成
+			return new FormNew().ShowDialog() == DialogResult.OK;
+		}
+		/// <summary>
+		/// ステージデータを開く
+		/// </summary>
+		/// <returns></returns>
+		bool OpenFile() {
+
+			if(OpenFileStageData.ShowDialog() != DialogResult.OK) return false;
+			if(!StageData.Instance.Import(FileIO.LoadFile(OpenFileStageData.FileName))) return false;
+
+			//パスを保存
+			StageData.Instance.StagePath = OpenFileStageData.FileName;
+			StageData.Instance.StageName = StageData.Instance.StagePath.GetFileName();
+
+			return true;
+		}
+		/// <summary>
+		/// ステージデータを上書き保存する
+		/// </summary>
+		/// <returns></returns>
+		bool SaveFile() {
+
+			if(StageData.Instance.StagePath == "") return SaveFileAs();
+			if(!FileIO.SaveFile(StageData.Instance.StagePath, StageData.Instance.Export())) return false;
+
+			//編集フラグを消す
+			SystemData.Instance.IsEdit = false;
+
+			return true;
+		}
+		/// <summary>
+		/// ステージデータを別名で保存する
+		/// </summary>
+		/// <returns></returns>
+		bool SaveFileAs() {
+
+			if(SaveFileStageData.ShowDialog() != DialogResult.OK) return false;
+
+			//パスを保存
+			StageData.Instance.StagePath = SaveFileStageData.FileName;
+			StageData.Instance.StageName = StageData.Instance.StagePath.GetFileName();
+
+			return SaveFile();
+		}
+		#endregion
+
+		//bool EditFileCloseMenu() {
+
+		//}
+
+		/// <summary>
+		/// データ変更中に閉じるときに訊く
+		/// </summary>
+		/// <returns></returns>
+		DialogResult ShowEditFileClosingMessage() {
+			return MessageBox.Show("編集中のデータがあります。\n保存しますか?", 
+				"データ編集中警告", 
+				MessageBoxButtons.YesNoCancel);
+		}
 
 		private void FormMain_Load(object sender, EventArgs e) {
 
 		}
 
+		private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
+
+			if(SystemData.Instance.IsEdit) {
+				//編集状態なので保存を促す
+				DialogResult result = ShowEditFileClosingMessage();
+				switch(ShowEditFileClosingMessage()) {
+					case DialogResult.Yes: if(SaveFile()) break; else e.Cancel = true; break;
+					case DialogResult.No: break;
+					default: break;
+				}
+			}
+		}
+
 		#region MenuBar
 
 		#region File
-
 		private void 新規ToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			NewFile();
 		}
 		private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			OpenFile();
 		}
 		private void 上書き保存SToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			SaveFile();
 		}
 		private void 名前を付けて保存AToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			SaveFileAs();
 		}
 		private void 閉じるXToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			Close();
 		}
-
 		#endregion
 
 		#region Edit
@@ -173,7 +271,7 @@ namespace CatchTheBallTool {
 
 		#region Layout
 		private void デフォルトレイアウトを復元ToolStripMenuItem_Click(object sender, EventArgs e) {
-			LoadWindowLayout(defaultLayoutPath);
+			LoadWindowLayout(SystemData.DEFAULT_LAYOUT_PATH);
 		}
 		private void ユーザーレイアウトの保存ToolStripMenuItem_Click(object sender, EventArgs e) {
 			if(SaveLayoutDialog.ShowDialog() != DialogResult.OK) return;
@@ -186,7 +284,6 @@ namespace CatchTheBallTool {
 		#endregion
 
 		#region Help
-
 		private void dockPanelSuiteToolStripMenuItem_Click(object sender, EventArgs e) {
 
 			var stringBuilder = new StringBuilder();
@@ -200,8 +297,6 @@ namespace CatchTheBallTool {
 			MessageBox.Show(stringBuilder.ToString(), "DockPanelSuite Licence", MessageBoxButtons.OK);
 
 		}
-
-
 		#endregion
 
 		#endregion
