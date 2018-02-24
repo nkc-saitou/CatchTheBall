@@ -63,12 +63,6 @@ namespace CatchTheBallTool {
 			}
 
 			formWindowDictionary = new Dictionary<string, FormWindowBase>();
-
-			//各ウィンドウの追加
-			formWindowDictionary.Add("FormView", new FormView(ビューVToolStripMenuItem));
-			formWindowDictionary.Add("FormMapChip", new FormMapChip(マップチップMToolStripMenuItem));
-			formWindowDictionary.Add("FormNavigation", new FormNavigation(ナビゲーションNToolStripMenuItem));
-
 		}
 		/// <summary>
 		/// レイアウトの初期設定
@@ -91,6 +85,11 @@ namespace CatchTheBallTool {
 
 				//ウィンドウの初期化
 				WindowInit();
+
+				//各ウィンドウの追加
+				foreach(var item in WindowDefinition.windowDictionary) {
+					formWindowDictionary.Add(item.Key, item.Value(DockPanelMain));
+				}
 
 				var directory = SystemData.DEFAULT_LAYOUT_DIRECTORY;
 
@@ -124,10 +123,20 @@ namespace CatchTheBallTool {
 			//レイアウトの読み込み
 			DockPanelMain.LoadFromXml(path, (string persistString) => {
 
-				return formWindowDictionary.Values
-				.Where(item => item != null)
-				.FirstOrDefault(item => item.Text == persistString);
+				if(!WindowDefinition.windowDictionary.ContainsKey(persistString))
+					return null;
+
+				var window = WindowDefinition.windowDictionary[persistString](DockPanelMain);
+				formWindowDictionary.Add(persistString, window);
+				return window;
 			});
+
+			//生成していないものがあれば生成
+			foreach(var item in WindowDefinition.windowDictionary) {
+				if(!formWindowDictionary.ContainsKey(item.Key))
+					formWindowDictionary.Add(item.Key, item.Value(DockPanelMain));
+
+			}
 
 			return true;
 		}
@@ -254,18 +263,6 @@ namespace CatchTheBallTool {
 		}
 		private void やり直しRToolStripMenuItem_Click(object sender, EventArgs e) {
 
-		}
-		#endregion
-
-		#region Window
-		private void ビューVToolStripMenuItem_Click(object sender, EventArgs e) {
-			formWindowDictionary["FormView"].Activate();
-		}
-		private void マップチップMToolStripMenuItem_Click(object sender, EventArgs e) {
-			formWindowDictionary["FormMapChip"].Activate();
-		}
-		private void ナビゲーションNToolStripMenuItem_Click(object sender, EventArgs e) {
-			formWindowDictionary["FormNavigation"].Activate();
 		}
 		#endregion
 

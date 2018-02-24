@@ -170,23 +170,20 @@
 			// ビューVToolStripMenuItem
 			// 
 			this.ビューVToolStripMenuItem.Name = "ビューVToolStripMenuItem";
-			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.ビューVToolStripMenuItem.Text = "ビュー(&V)";
-			this.ビューVToolStripMenuItem.Click += new System.EventHandler(this.ビューVToolStripMenuItem_Click);
 			// 
 			// マップチップMToolStripMenuItem
 			// 
 			this.マップチップMToolStripMenuItem.Name = "マップチップMToolStripMenuItem";
-			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.マップチップMToolStripMenuItem.Text = "マップチップ(&M)";
-			this.マップチップMToolStripMenuItem.Click += new System.EventHandler(this.マップチップMToolStripMenuItem_Click);
 			// 
 			// ナビゲーションNToolStripMenuItem
 			// 
 			this.ナビゲーションNToolStripMenuItem.Name = "ナビゲーションNToolStripMenuItem";
-			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.ナビゲーションNToolStripMenuItem.Text = "ナビゲーション(&N)";
-			this.ナビゲーションNToolStripMenuItem.Click += new System.EventHandler(this.ナビゲーションNToolStripMenuItem_Click);
 			// 
 			// ウィンドウレイアウトToolStripMenuItem
 			// 
@@ -304,9 +301,6 @@
 		private System.Windows.Forms.ToolStripMenuItem ウィンドウWToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ウィンドウレイアウトToolStripMenuItem;
 		private WeifenLuo.WinFormsUI.Docking.DockPanel DockPanelMain;
-		private System.Windows.Forms.ToolStripMenuItem ビューVToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem マップチップMToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ナビゲーションNToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem デフォルトレイアウトを復元ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの保存ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
@@ -316,6 +310,9 @@
 		private System.Windows.Forms.ToolStripMenuItem ユーザーレイアウトの読み込みToolStripMenuItem;
 		private System.Windows.Forms.OpenFileDialog OpenFileStageData;
 		private System.Windows.Forms.SaveFileDialog SaveFileStageData;
+		public System.Windows.Forms.ToolStripMenuItem ビューVToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem マップチップMToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem ナビゲーションNToolStripMenuItem;
 	}
 }
 

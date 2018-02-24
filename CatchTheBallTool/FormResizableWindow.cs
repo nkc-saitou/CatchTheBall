@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace CatchTheBallTool {
 
@@ -25,7 +26,7 @@ namespace CatchTheBallTool {
 		protected FormResizableWindow() {
 			InitializeComponent();
 		}
-		public FormResizableWindow(ToolStripMenuItem item) : base(item) {
+		public FormResizableWindow(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
 			CurrentSize = 1;

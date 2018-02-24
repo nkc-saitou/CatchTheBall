@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace CatchTheBallTool {
 
@@ -15,7 +16,7 @@ namespace CatchTheBallTool {
 
 		Graphics g;
 
-		public FormMapChip(ToolStripMenuItem item) : base(item) {
+		public FormMapChip(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
 		}

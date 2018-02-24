@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace CatchTheBallTool {
 
@@ -15,7 +16,7 @@ namespace CatchTheBallTool {
 	/// </summary>
 	public partial class FormNavigation : FormResizableWindow {
 
-		public FormNavigation(ToolStripMenuItem item) : base(item) {
+		public FormNavigation(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
 		}

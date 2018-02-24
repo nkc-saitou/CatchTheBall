@@ -87,6 +87,11 @@ namespace CatchTheBallTool {
 
 		#region IO
 
+		/// <summary>
+		/// ステージデータを読み込む
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
 		public bool Import(string data) {
 
 			var count = 0;				//文字のカウンター
