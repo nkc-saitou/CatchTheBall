@@ -14,7 +14,7 @@ namespace CatchTheBallTool {
 
 		public const string STAGE_DATA_EXT = "ctbst";
 
-		readonly Size DEFAULT_MAPSIZE = new Size(1, 1);
+		readonly Size DEFAULT_MAPSIZE = new Size(10, 5);
 
 		public string StageName { get; set; }			//ファイル名
 		public string StagePath { get; set; }			//拡張子付き
@@ -31,13 +31,16 @@ namespace CatchTheBallTool {
 			StageName = "";
 
 			MapSize = DEFAULT_MAPSIZE;
-			Map = new List<List<int>>();
 			ObjectList = new List<Object>();
 
 			MapSize = DEFAULT_MAPSIZE;
+
+			Load();
 		}
 
 		public void Load() {
+
+			Map = new List<List<int>>();
 
 			for(int i = 0;i < MapSize.Height;i++) {
 

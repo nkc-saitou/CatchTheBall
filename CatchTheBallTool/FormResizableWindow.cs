@@ -33,7 +33,7 @@ namespace CatchTheBallTool {
 
 			//マウスホイールを動かした時
 			MouseWheel += (object sender, MouseEventArgs e) => {
-				if((ModifierKeys & Keys.Control) == Keys.Control) {
+				if((ModifierKeys & Keys.Alt) == Keys.Alt) {
 					ChangeSize(CurrentSize + e.Delta / Math.Abs(e.Delta) * CHANGE_SIZE_DELTA);
 				}
 			};

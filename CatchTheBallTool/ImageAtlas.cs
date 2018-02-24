@@ -12,33 +12,33 @@ namespace CatchTheBallTool {
 	/// </summary>
 	public class ImageAtlas {
 
-		public Bitmap atlasImage { get; }
+		public Bitmap AtlasImage { get; }
 		public Bitmap this[int index] {
 			get { return GetBitmapFromID(index); }
 		}
-		public Size chipSize { get; }
-
-		public int count { get { return (atlasImage.Size.Width / chipSize.Width) * (atlasImage.Size.Height / chipSize.Height); } }
+		public Size ChipSize { get; }
+		public Size ChipCount { get; }
 
 		public ImageAtlas(Image image, Size chipSize) {
-			this.atlasImage = new Bitmap(image);
-			this.chipSize = chipSize;
+			AtlasImage = new Bitmap(image);
+			ChipSize = chipSize;
+			ChipCount = new Size(AtlasImage.Size.Width / ChipSize.Width, AtlasImage.Size.Height / ChipSize.Height);
 		}
 
 		public Bitmap GetBitmapFromID(int id) {
 
 			//例外
-			if(id < 0 || id >= count) return null;
+			if(id < 0 || id >= ChipCount.Width * ChipCount.Height) return null;
 
-			int xCount = atlasImage.Size.Width / chipSize.Width;
-			Point startPoint = new Point(id / xCount, id - xCount * (id / xCount));
+			var startPoint = 
+				new Point(id % ChipCount.Width * ChipSize.Width, id / ChipCount.Width * ChipSize.Height);
 
-			return atlasImage.Clone(new Rectangle(startPoint, chipSize), atlasImage.PixelFormat);
+			return AtlasImage.Clone(new Rectangle(startPoint, ChipSize), AtlasImage.PixelFormat);
 
 		}
 
 		~ImageAtlas() {
-			atlasImage.Dispose();
+			AtlasImage.Dispose();
 		}
 	}
 }

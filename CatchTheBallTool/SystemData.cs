@@ -17,12 +17,15 @@ namespace CatchTheBallTool {
 		public const string DEFAULT_LAYOUT_FILE = @"DefaultLayout.xml";
 		public const string DEFAULT_LAYOUT_PATH = DEFAULT_LAYOUT_DIRECTORY + DEFAULT_LAYOUT_FILE;
 
+		public const int MAPCHIP_SIZE = 64;
+		public const int MAPCHIP_COUNT = 16;
+
 		const string DEFAULT_MAPCHIP_PATH = @"\image\DefaultMapChip.png";
-		const int CHIP_SIZE = 64;
 
 		public string MapChipPath { get; set; }
 		public ImageAtlas MapChip { get; set; }
 		public Rectangle FocusRect { get; set; }
+		public Image RenderView { get; set; }
 
 		bool isEdit = false;
 		public bool IsEdit {
@@ -41,10 +44,12 @@ namespace CatchTheBallTool {
 			base.Initialize();
 
 			MapChipPath = Directory.GetCurrentDirectory() + DEFAULT_MAPCHIP_PATH;
+
+			Load();
 		}
 
 		public void Load() {
-			MapChip = new ImageAtlas(Image.FromFile(MapChipPath), new Size(CHIP_SIZE, CHIP_SIZE));
+			MapChip = new ImageAtlas(Image.FromFile(MapChipPath), new Size(MAPCHIP_SIZE, MAPCHIP_SIZE));
 		}
 
 	}

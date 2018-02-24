@@ -19,6 +19,8 @@ namespace CatchTheBallTool {
 		public static FormMain Instance { get; private set; }
 		public static bool isEdit = false;
 
+		public event Action StageLoaded;
+
 		Dictionary<string, FormWindowBase> formWindowDictionary;
 
 		public FormMain() {
@@ -172,7 +174,11 @@ namespace CatchTheBallTool {
 
 			//パスを保存
 			StageData.Instance.StagePath = OpenFileStageData.FileName;
-			StageData.Instance.StageName = StageData.Instance.StagePath.GetFileName();
+			Text = StageData.Instance.StageName = StageData.Instance.StagePath.GetFileName();
+
+
+			//ロードイベント起動
+			if(StageLoaded != null) StageLoaded();
 
 			return true;
 		}

@@ -14,7 +14,7 @@ namespace CatchTheBallTool {
 	/// <summary>
 	/// 子ウィンドウでの共通の処理を記述
 	/// </summary>
-	public abstract partial class FormWindowBase : DockContent {
+	public partial class FormWindowBase : DockContent {
 
 		DockPanel mainDockPanel;
 		ToolStripMenuItem menuItem;

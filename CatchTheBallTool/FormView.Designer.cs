@@ -25,19 +25,25 @@
 		private void InitializeComponent() {
 			this.TabControlView = new System.Windows.Forms.TabControl();
 			this.TabPreview = new System.Windows.Forms.TabPage();
-			this.PictureBoxView = new System.Windows.Forms.PictureBox();
+			this.PictureBoxPreview = new System.Windows.Forms.PictureBox();
 			this.TabMapping = new System.Windows.Forms.TabPage();
-			this.TabEvent = new System.Windows.Forms.TabPage();
+			this.PictureBoxMapChip = new System.Windows.Forms.PictureBox();
+			this.TabObject = new System.Windows.Forms.TabPage();
+			this.PictureBoxObject = new System.Windows.Forms.PictureBox();
 			this.TabControlView.SuspendLayout();
 			this.TabPreview.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxPreview)).BeginInit();
+			this.TabMapping.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxMapChip)).BeginInit();
+			this.TabObject.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxObject)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// TabControlView
 			// 
 			this.TabControlView.Controls.Add(this.TabPreview);
 			this.TabControlView.Controls.Add(this.TabMapping);
-			this.TabControlView.Controls.Add(this.TabEvent);
+			this.TabControlView.Controls.Add(this.TabObject);
 			this.TabControlView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TabControlView.Font = new System.Drawing.Font("MS UI Gothic", 12F);
 			this.TabControlView.Location = new System.Drawing.Point(0, 0);
@@ -45,44 +51,64 @@
 			this.TabControlView.SelectedIndex = 0;
 			this.TabControlView.Size = new System.Drawing.Size(682, 454);
 			this.TabControlView.TabIndex = 4;
+			this.TabControlView.SelectedIndexChanged += new System.EventHandler(this.TabControlView_SelectedIndexChanged);
 			// 
 			// TabPreview
 			// 
-			this.TabPreview.Controls.Add(this.PictureBoxView);
+			this.TabPreview.Controls.Add(this.PictureBoxPreview);
 			this.TabPreview.Location = new System.Drawing.Point(4, 26);
 			this.TabPreview.Name = "TabPreview";
-			this.TabPreview.Padding = new System.Windows.Forms.Padding(3);
 			this.TabPreview.Size = new System.Drawing.Size(674, 424);
 			this.TabPreview.TabIndex = 0;
 			this.TabPreview.Text = "プレビュー";
 			this.TabPreview.UseVisualStyleBackColor = true;
 			// 
-			// PictureBoxView
+			// PictureBoxPreview
 			// 
-			this.PictureBoxView.Location = new System.Drawing.Point(3, 3);
-			this.PictureBoxView.Name = "PictureBoxView";
-			this.PictureBoxView.Size = new System.Drawing.Size(100, 50);
-			this.PictureBoxView.TabIndex = 0;
-			this.PictureBoxView.TabStop = false;
+			this.PictureBoxPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.PictureBoxPreview.Location = new System.Drawing.Point(0, 0);
+			this.PictureBoxPreview.Name = "PictureBoxPreview";
+			this.PictureBoxPreview.Size = new System.Drawing.Size(674, 424);
+			this.PictureBoxPreview.TabIndex = 0;
+			this.PictureBoxPreview.TabStop = false;
 			// 
 			// TabMapping
 			// 
+			this.TabMapping.Controls.Add(this.PictureBoxMapChip);
 			this.TabMapping.Location = new System.Drawing.Point(4, 26);
 			this.TabMapping.Name = "TabMapping";
-			this.TabMapping.Padding = new System.Windows.Forms.Padding(3);
 			this.TabMapping.Size = new System.Drawing.Size(674, 424);
 			this.TabMapping.TabIndex = 1;
 			this.TabMapping.Text = "マップチップ配置";
 			this.TabMapping.UseVisualStyleBackColor = true;
 			// 
-			// TabEvent
+			// PictureBoxMapChip
 			// 
-			this.TabEvent.Location = new System.Drawing.Point(4, 26);
-			this.TabEvent.Name = "TabEvent";
-			this.TabEvent.Size = new System.Drawing.Size(674, 424);
-			this.TabEvent.TabIndex = 2;
-			this.TabEvent.Text = "キャラクター";
-			this.TabEvent.UseVisualStyleBackColor = true;
+			this.PictureBoxMapChip.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.PictureBoxMapChip.Location = new System.Drawing.Point(0, 0);
+			this.PictureBoxMapChip.Name = "PictureBoxMapChip";
+			this.PictureBoxMapChip.Size = new System.Drawing.Size(674, 424);
+			this.PictureBoxMapChip.TabIndex = 1;
+			this.PictureBoxMapChip.TabStop = false;
+			// 
+			// TabObject
+			// 
+			this.TabObject.Controls.Add(this.PictureBoxObject);
+			this.TabObject.Location = new System.Drawing.Point(4, 26);
+			this.TabObject.Name = "TabObject";
+			this.TabObject.Size = new System.Drawing.Size(674, 424);
+			this.TabObject.TabIndex = 2;
+			this.TabObject.Text = "オブジェクト";
+			this.TabObject.UseVisualStyleBackColor = true;
+			// 
+			// PictureBoxObject
+			// 
+			this.PictureBoxObject.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.PictureBoxObject.Location = new System.Drawing.Point(0, 0);
+			this.PictureBoxObject.Name = "PictureBoxObject";
+			this.PictureBoxObject.Size = new System.Drawing.Size(674, 424);
+			this.PictureBoxObject.TabIndex = 1;
+			this.PictureBoxObject.TabStop = false;
 			// 
 			// FormView
 			// 
@@ -93,10 +119,15 @@
 			this.Name = "FormView";
 			this.Text = "ビュー";
 			this.Load += new System.EventHandler(this.FormView_Load);
+			this.SizeChanged += new System.EventHandler(this.FormView_SizeChanged);
 			this.Controls.SetChildIndex(this.TabControlView, 0);
 			this.TabControlView.ResumeLayout(false);
 			this.TabPreview.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxPreview)).EndInit();
+			this.TabMapping.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxMapChip)).EndInit();
+			this.TabObject.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxObject)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -107,7 +138,9 @@
 		private System.Windows.Forms.TabControl TabControlView;
 		private System.Windows.Forms.TabPage TabPreview;
 		private System.Windows.Forms.TabPage TabMapping;
-		private System.Windows.Forms.TabPage TabEvent;
-		private System.Windows.Forms.PictureBox PictureBoxView;
+		private System.Windows.Forms.TabPage TabObject;
+		private System.Windows.Forms.PictureBox PictureBoxPreview;
+		private System.Windows.Forms.PictureBox PictureBoxMapChip;
+		private System.Windows.Forms.PictureBox PictureBoxObject;
 	}
 }

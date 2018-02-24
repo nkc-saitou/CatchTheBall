@@ -27,7 +27,7 @@ namespace CatchTheBallTool {
 		/// <returns>ファイル名</returns>
 		public static string GetFileName(this string s) {
 
-			var buff = s.Split('/', '.');
+			var buff = s.Split('\\', '.');
 			return buff[buff.Length - 2];
 		}
 
