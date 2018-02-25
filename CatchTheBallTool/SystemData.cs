@@ -27,6 +27,9 @@ namespace CatchTheBallTool {
 		public Rectangle FocusRect { get; set; }
 		public Image RenderView { get; set; }
 
+		public event Action<float> ViewMagnificationChanged;
+		public event Action StageDraw;
+
 		bool isEdit = false;
 		public bool IsEdit {
 			get { return isEdit; }
@@ -38,6 +41,18 @@ namespace CatchTheBallTool {
 			}
 		}
 
+		float viewMagnification = 1;
+		public float ViewMagnification {
+			get { return viewMagnification; }
+			set {
+				if(viewMagnification == value) return;
+
+				viewMagnification = value;
+				if(ViewMagnificationChanged != null) ViewMagnificationChanged(viewMagnification);
+			}
+		}
+
+
 		public SystemData() { }
 
 		protected override void Initialize() {
@@ -46,6 +61,10 @@ namespace CatchTheBallTool {
 			MapChipPath = Directory.GetCurrentDirectory() + DEFAULT_MAPCHIP_PATH;
 
 			Load();
+		}
+
+		public void OnStageDraw() {
+			if(StageDraw != null) StageDraw();
 		}
 
 		public void Load() {

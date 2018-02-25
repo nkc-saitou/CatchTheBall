@@ -45,9 +45,17 @@ namespace CatchTheBallTool {
 			ChangeViewMode(DrawMode.Preview);
 
 			//ステージ読み込み時に描画
-			FormMain.Instance.StageLoaded += () => {
-				Draw();
-			};
+			FormMain.Instance.StageLoaded += Draw;
+			//サイズ変更時に自分も変更
+			SystemData.Instance.ViewMagnificationChanged += ViewMagnificationChanged;
+
+		}
+
+		~FormView() {
+
+			//イベントの削除
+			FormMain.Instance.StageLoaded -= Draw;
+			SystemData.Instance.ViewMagnificationChanged -= ViewMagnificationChanged;
 		}
 
 		#region Draw
@@ -96,6 +104,9 @@ namespace CatchTheBallTool {
 			currentDraw.Image = viewCanvas;
 
 			currentDraw.ResumeLayout();
+
+			//Drawイベント発火
+			SystemData.Instance.OnStageDraw();
 
 			//解放
 			g.Dispose();
@@ -150,12 +161,6 @@ namespace CatchTheBallTool {
 		}
 		#endregion
 
-		protected override void OnSizeChanged() {
-			base.OnSizeChanged();
-
-			Draw();
-		}
-
 		/// <summary>
 		/// 描画モードを変更する
 		/// </summary>
@@ -178,7 +183,10 @@ namespace CatchTheBallTool {
 				default:
 					break;
 			}
+			Draw();
+		}
 
+		void ViewMagnificationChanged(float viewMaginification) {
 			Draw();
 		}
 

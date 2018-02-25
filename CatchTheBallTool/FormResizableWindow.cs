@@ -37,20 +37,26 @@ namespace CatchTheBallTool {
 					ChangeSize(CurrentSize + e.Delta / Math.Abs(e.Delta) * CHANGE_SIZE_DELTA);
 				}
 			};
+
+			//ビューのサイズが変更されたら自分も変更する
+			SystemData.Instance.ViewMagnificationChanged += ChangeSize;
 		}
 
-		void ChangeSize(float newSize) {
+		~FormResizableWindow() {
+
+			//イベントの削除
+			SystemData.Instance.ViewMagnificationChanged -= ChangeSize;
+		}
+
+		protected void ChangeSize(float newSize) {
 
 			newSize = Math.Max(newSize, MIN_SIZE);
 			newSize = Math.Min(newSize, MAX_SIZE);
 
 			StatusButton.Text = (newSize * 100).ToString("##") + "%";
 			CurrentSize = newSize;
-			OnSizeChanged();
+			SystemData.Instance.ViewMagnification = newSize;
 		}
-
-
-		protected virtual void OnSizeChanged() { }
 
 		private void StatusButton_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e) {
 			ChangeSize(float.Parse((string)e.ClickedItem.Tag));
