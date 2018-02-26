@@ -27,21 +27,16 @@ namespace CatchTheBallTool {
 		readonly Color LINE_COLOR = Color.FromArgb(0xff, 0x88, 0x88, 0x88);
 		const float LINE_SIZE = 1;
 
-		PointF position;
+		Rectangle drawRect;
 
 		DrawMode mode;
 		PictureBox currentDraw;
 
-		Size DrawSize {
-			get {
-				return new Size(
-					StageData.Instance.MapSize.Width * SystemData.MAPCHIP_SIZE,
-					StageData.Instance.MapSize.Height * SystemData.MAPCHIP_SIZE);
-			}
-		}
-
 		public FormView(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
+
+			drawRect = new Rectangle();
+			CalcDrawSize();
 
 			ChangeViewMode(DrawMode.Preview);
 
@@ -50,6 +45,7 @@ namespace CatchTheBallTool {
 			//サイズ変更時に自分も変更
 			SystemData.Instance.ViewMagnificationChanged += ViewMagnificationChanged;
 
+			//マップサイズ変更時に再計算
 		}
 
 		~FormView() {
@@ -59,16 +55,19 @@ namespace CatchTheBallTool {
 			SystemData.Instance.ViewMagnificationChanged -= ViewMagnificationChanged;
 		}
 
+		void CalcDrawSize() {
+			drawRect.Size = new Size(
+				StageData.Instance.MapSize.Width * SystemData.MAPCHIP_SIZE,
+				StageData.Instance.MapSize.Height * SystemData.MAPCHIP_SIZE);
+		}
+
 		#region Draw
 		/// <summary>
 		/// 現在のステージデータを描画する
 		/// </summary>
 		void Draw() {
 
-			//初期設定
-			var drawSize = DrawSize;
-
-			var renderCanvas = new Bitmap(drawSize.Width, drawSize.Height);
+			var renderCanvas = new Bitmap(drawRect.Size.Width, drawRect.Size.Height);
 			var render = Graphics.FromImage(renderCanvas);
 
 			currentDraw.SuspendLayout();
@@ -97,11 +96,11 @@ namespace CatchTheBallTool {
 			SystemData.Instance.RenderView = renderCanvas;
 
 			//サイズを調整して表示
-			var viewSize = new SizeF(drawSize.Width * CurrentSize, drawSize.Height * CurrentSize);
+			var viewSize = new SizeF(drawRect.Size.Width * CurrentSize, drawRect.Size.Height * CurrentSize);
 			var viewCanvas = new Bitmap((int)viewSize.Width, (int)viewSize.Height);
 			var g = Graphics.FromImage(viewCanvas);
 
-			g.DrawImage(renderCanvas, new RectangleF(position.X, position.Y, viewSize.Width, viewSize.Height));
+			g.DrawImage(renderCanvas, new RectangleF(drawRect.Location.X, drawRect.Location.Y, viewSize.Width, viewSize.Height));
 			currentDraw.Image = viewCanvas;
 
 			currentDraw.ResumeLayout();
@@ -121,23 +120,20 @@ namespace CatchTheBallTool {
 		/// <param name="color"></param>
 		void DrawAll(Graphics g, Color color) {
 
-			var drawSize = DrawSize;
-
 			var brush = new SolidBrush(color);
-			g.FillRectangle(brush, 0, 0, drawSize.Width, drawSize.Height);
+			g.FillRectangle(brush, 0, 0, drawRect.Size.Width, drawRect.Size.Height);
 
 			brush.Dispose();
 		}
 		void DrawLine(Graphics g) {
 
-			var drawSize = DrawSize;
 			var pen = new Pen(LINE_COLOR, LINE_SIZE);
 
 			for(int i = 0;i < StageData.Instance.MapSize.Width;i++) {
-				g.DrawLine(pen, i * SystemData.MAPCHIP_SIZE, 0, i * SystemData.MAPCHIP_SIZE, drawSize.Height);
+				g.DrawLine(pen, i * SystemData.MAPCHIP_SIZE, 0, i * SystemData.MAPCHIP_SIZE, drawRect.Size.Height);
 			}
 			for(int i = 0;i < StageData.Instance.MapSize.Height;i++) {
-				g.DrawLine(pen, 0, i * SystemData.MAPCHIP_SIZE, drawSize.Width, i * SystemData.MAPCHIP_SIZE);
+				g.DrawLine(pen, 0, i * SystemData.MAPCHIP_SIZE, drawRect.Size.Width, i * SystemData.MAPCHIP_SIZE);
 			}
 
 			pen.Dispose();
@@ -202,6 +198,31 @@ namespace CatchTheBallTool {
 		private void TabControlView_SelectedIndexChanged(object sender, EventArgs e) {
 			//描画モード切り替え
 			ChangeViewMode((DrawMode)TabControlView.SelectedIndex);
+		}
+
+		private void PictureBoxPreview_MouseDown(object sender, MouseEventArgs e) {
+
+		}
+		private void PictureBoxMapChip_MouseDown(object sender, MouseEventArgs e) {
+
+			//マップチップ配置
+			var mapPosition = new PointF(
+				(e.X + drawRect.Location.X) / CurrentSize,
+				(e.Y + drawRect.Location.Y) / CurrentSize);
+
+			var position = new Point(
+				(int)(mapPosition.X / drawRect.Width * StageData.Instance.MapSize.Width),
+				(int)(mapPosition.Y / drawRect.Height * StageData.Instance.MapSize.Height));
+
+			StageData.Instance.SetStageData(position, SystemData.Instance.SelectMapChip);
+
+			Draw();
+
+			//編集フラグを変える
+			SystemData.Instance.IsEdit = true;
+		}
+		private void PictureBoxObject_MouseDown(object sender, MouseEventArgs e) {
+
 		}
 		#endregion
 

@@ -19,7 +19,7 @@ namespace CatchTheBallTool {
 		public string StageName { get; set; }			//ファイル名
 		public string StagePath { get; set; }			//拡張子付き
 		public Size MapSize { get; set; }
-		public List<List<int>> Map { get; set; }
+		public List<List<int>> Map { get; private set; }
 		public List<Object> ObjectList { get; set; }
 
 		public StageData() { }
@@ -88,8 +88,32 @@ namespace CatchTheBallTool {
 			MapSize = newSize;
 		}
 
-		#region IO
+		/// <summary>
+		/// 指定した位置にマップチップを配置する
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="mapchipNum"></param>
+		/// <returns></returns>
+		public bool SetStageData(Point position, int mapchipNum) {
+			if(!CheckInsideMap(position)) return false;
 
+			Map[position.Y][position.X] = mapchipNum;
+
+			return true;
+		}
+
+		/// <summary>
+		/// 指定した位置がマップ内か
+		/// </summary>
+		/// <returns></returns>
+		bool CheckInsideMap(Point position) {
+			if(position.X < 0 || position.X >= MapSize.Width) return false;
+			if(position.Y < 0 || position.Y >= MapSize.Height) return false;
+
+			return true;
+		}
+
+		#region IO
 		/// <summary>
 		/// ステージデータを読み込む
 		/// </summary>
@@ -142,7 +166,6 @@ namespace CatchTheBallTool {
 
 			return true;
 		}
-
 		/// <summary>
 		/// ステージデータのファイル用文字列を取得する
 		/// </summary>
@@ -182,7 +205,6 @@ namespace CatchTheBallTool {
 
 			return sb.ToString();
 		}
-
 		#endregion
 	}
 }

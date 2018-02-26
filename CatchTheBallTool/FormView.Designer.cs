@@ -71,6 +71,7 @@
 			this.PictureBoxPreview.Size = new System.Drawing.Size(674, 424);
 			this.PictureBoxPreview.TabIndex = 0;
 			this.PictureBoxPreview.TabStop = false;
+			this.PictureBoxPreview.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPreview_MouseDown);
 			// 
 			// TabMapping
 			// 
@@ -90,6 +91,7 @@
 			this.PictureBoxMapChip.Size = new System.Drawing.Size(674, 424);
 			this.PictureBoxMapChip.TabIndex = 1;
 			this.PictureBoxMapChip.TabStop = false;
+			this.PictureBoxMapChip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMapChip_MouseDown);
 			// 
 			// TabObject
 			// 
@@ -109,6 +111,7 @@
 			this.PictureBoxObject.Size = new System.Drawing.Size(674, 424);
 			this.PictureBoxObject.TabIndex = 1;
 			this.PictureBoxObject.TabStop = false;
+			this.PictureBoxObject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxObject_MouseDown);
 			// 
 			// FormView
 			// 
