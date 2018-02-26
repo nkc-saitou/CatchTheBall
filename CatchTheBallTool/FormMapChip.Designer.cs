@@ -32,9 +32,10 @@
 			this.PictureBoxView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.PictureBoxView.Location = new System.Drawing.Point(0, 0);
 			this.PictureBoxView.Name = "PictureBoxView";
-			this.PictureBoxView.Size = new System.Drawing.Size(533, 412);
+			this.PictureBoxView.Size = new System.Drawing.Size(533, 434);
 			this.PictureBoxView.TabIndex = 0;
 			this.PictureBoxView.TabStop = false;
+			this.PictureBoxView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxView_MouseDown);
 			// 
 			// FormMapChip
 			// 
@@ -43,10 +44,8 @@
 			this.Controls.Add(this.PictureBoxView);
 			this.Name = "FormMapChip";
 			this.Text = "マップチップ";
-			this.Controls.SetChildIndex(this.PictureBoxView, 0);
 			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 

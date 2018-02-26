@@ -16,10 +16,10 @@ namespace CatchTheBallTool {
 
 		readonly Color BACK_GROUND_COLOR = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 		readonly Color SELECT_CHIP_COLOR = Color.FromArgb(0xff, 0xff, 0x00, 0x00);
-		const float SELECT_CHIP_SIZE = 2;
+		const float SELECT_CHIP_PENSIZE = 5;
 
 		Rectangle drawRect;
-		Size mapChipSize;
+		Size drawChipSize;
 
 		public FormMapChip(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
@@ -54,31 +54,47 @@ namespace CatchTheBallTool {
 			var mapChipImage = SystemData.Instance.MapChip.AtlasImage;
 
 			//縦が1のときの横のサイズ
-			var renderImageRatio = (float)mapChipImage.Size.Width / mapChipImage.Size.Height;
-			var viewSizeRatio = (float)viewSize.Width / viewSize.Height;
+			var renderImageAspect = (float)mapChipImage.Size.Width / mapChipImage.Size.Height;
+			var viewSizeAspect = (float)viewSize.Width / viewSize.Height;
 
 			//描画位置・サイズを求める
 			drawRect = new Rectangle();
-			if(renderImageRatio > viewSizeRatio) {
+			if(renderImageAspect > viewSizeAspect) {
 				//横が最大
 				drawRect.Size =
-					new Size(viewSize.Width, (int)(viewSize.Width / renderImageRatio));
+					new Size(viewSize.Width, (int)(viewSize.Width / renderImageAspect));
 				drawRect.Location = new Point(0, (viewSize.Height - drawRect.Size.Height) / 2);
 			}
 			else {
 				//縦が最大
 				drawRect.Size =
-					new Size((int)(viewSize.Height * renderImageRatio), viewSize.Height);
+					new Size((int)(viewSize.Height * renderImageAspect), viewSize.Height);
 				drawRect.Location = new Point((viewSize.Width - drawRect.Size.Width) / 2, 0);
 			}
 
 			//1つのチップのサイズを計算しておく
 			var mapChip = SystemData.Instance.MapChip;
-
-			mapChipSize = new Size(
+			drawChipSize = new Size(
 				drawRect.Size.Width / mapChip.ChipCount.Width,
 				drawRect.Size.Height / mapChip.ChipCount.Height);
 
+			Draw();
+		}
+
+		/// <summary>
+		/// マップチップを選択する
+		/// </summary>
+		/// <param name="position">MapChip上のマウス位置</param>
+		void SelectMapChip(Point position) {
+
+			var chipCount = SystemData.Instance.MapChip.ChipCount;
+
+			var selectPoint = new Point(
+				(int)((float)position.X / drawRect.Width * chipCount.Width),
+				(int)((float)position.Y / drawRect.Height * chipCount.Height));
+
+			SystemData.Instance.SelectMapChip = selectPoint.X + chipCount.Width * selectPoint.Y;
+			
 			Draw();
 		}
 
@@ -90,23 +106,46 @@ namespace CatchTheBallTool {
 			//初期設定
 			var canvas = new Bitmap(PictureBoxView.Size.Width, PictureBoxView.Size.Height);
 			var g = Graphics.FromImage(canvas);
-			var brush = new SolidBrush(BACK_GROUND_COLOR);
 
 			PictureBoxView.SuspendLayout();
 
 			//背景を描画
+			var brush = new SolidBrush(BACK_GROUND_COLOR);
 			g.FillRectangle(brush, drawRect);
+			brush.Dispose();
+
 			//マップチップを描画
 			g.DrawImage(SystemData.Instance.MapChip.AtlasImage, drawRect);
+
 			//選択を描画
-			//g.draw
+			var pen = new Pen(SELECT_CHIP_COLOR, SELECT_CHIP_PENSIZE);
+			var mapChipRect = SystemData.Instance.MapChip.GetRectangleFromID(SystemData.Instance.SelectMapChip);
+
+			var selectPoint = new Point(
+				drawRect.X + (int)((float)mapChipRect.X / mapChipRect.Width * drawChipSize.Width),
+				drawRect.Y + (int)((float)mapChipRect.Y / mapChipRect.Height * drawChipSize.Height));
+
+			g.DrawRectangle(pen, new Rectangle(selectPoint, drawChipSize));
+			pen.Dispose();
 
 			PictureBoxView.Image = canvas;
 			PictureBoxView.ResumeLayout();
 
 			//解放
 			g.Dispose();
-			brush.Dispose();
 		}
+
+		#region Event
+		private void PictureBoxView_MouseDown(object sender, MouseEventArgs e) {
+
+			//マップチップ上を選択していなかったら終了
+			if(!drawRect.Contains(e.X, e.Y)) return;
+
+			//マップチップを選択
+			SelectMapChip(new Point(e.X - drawRect.X, e.Y - drawRect.Y));
+		}
+		#endregion
+
+
 	}
 }

@@ -24,21 +24,33 @@ namespace CatchTheBallTool {
 			ChipSize = chipSize;
 			ChipCount = new Size(AtlasImage.Size.Width / ChipSize.Width, AtlasImage.Size.Height / ChipSize.Height);
 		}
+		~ImageAtlas() {
+			AtlasImage.Dispose();
+		}
 
 		public Bitmap GetBitmapFromID(int id) {
 
 			//例外
-			if(id < 0 || id >= ChipCount.Width * ChipCount.Height) return null;
+			if(!CheckInsideID(id)) return null;
 
-			var startPoint = 
+			return AtlasImage.Clone(GetRectangleFromID(id), AtlasImage.PixelFormat);
+
+		}
+
+		public Rectangle GetRectangleFromID(int id) {
+
+			//例外
+			if(!CheckInsideID(id)) return new Rectangle();
+
+			var startPoint =
 				new Point(id % ChipCount.Width * ChipSize.Width, id / ChipCount.Width * ChipSize.Height);
 
-			return AtlasImage.Clone(new Rectangle(startPoint, ChipSize), AtlasImage.PixelFormat);
-
+			return new Rectangle(startPoint, ChipSize);
 		}
 
-		~ImageAtlas() {
-			AtlasImage.Dispose();
+		public bool CheckInsideID(int id) {
+			return id >= 0 || id < ChipCount.Width * ChipCount.Height;
 		}
+
 	}
 }
