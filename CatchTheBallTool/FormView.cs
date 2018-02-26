@@ -158,6 +158,28 @@ namespace CatchTheBallTool {
 		}
 		#endregion
 
+		#region Control
+		void SetMapchip(Point position) {
+
+			StageData.Instance.SetStageData(position, SystemData.Instance.SelectMapChip);
+
+			Draw();
+
+			//編集フラグを変える
+			SystemData.Instance.IsEdit = true;
+
+		}
+		void EraseMapChip(Point position) {
+
+			StageData.Instance.SetStageData(position, -1);
+
+			Draw();
+
+			//編集フラグを変える
+			SystemData.Instance.IsEdit = true;
+		}
+		#endregion
+
 		/// <summary>
 		/// 描画モードを変更する
 		/// </summary>
@@ -214,12 +236,18 @@ namespace CatchTheBallTool {
 				(int)(mapPosition.X / drawRect.Width * StageData.Instance.MapSize.Width),
 				(int)(mapPosition.Y / drawRect.Height * StageData.Instance.MapSize.Height));
 
-			StageData.Instance.SetStageData(position, SystemData.Instance.SelectMapChip);
-
-			Draw();
-
-			//編集フラグを変える
-			SystemData.Instance.IsEdit = true;
+			switch(e.Button) {
+				case MouseButtons.Left:
+					SetMapchip(position);
+					break;
+				case MouseButtons.Right:
+					EraseMapChip(position);
+					break;
+				case MouseButtons.Middle:
+					break;
+				default:
+					break;
+			}
 		}
 		private void PictureBoxObject_MouseDown(object sender, MouseEventArgs e) {
 
