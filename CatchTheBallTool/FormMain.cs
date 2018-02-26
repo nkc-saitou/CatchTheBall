@@ -235,10 +235,12 @@ namespace CatchTheBallTool {
 			if(SystemData.Instance.IsEdit) {
 				//編集状態なので保存を促す
 				switch(ShowEditFileClosingMessage()) {
-					case DialogResult.Yes: if(SaveFile()) break; else e.Cancel = true; break;
-					case DialogResult.No: break;
+					case DialogResult.Yes: if(SaveFile()) break; break;
+					case DialogResult.No: return;
 					default: break;
 				}
+
+				e.Cancel = true;
 			}
 		}
 
