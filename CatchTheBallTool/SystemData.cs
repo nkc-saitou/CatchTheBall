@@ -23,9 +23,13 @@ namespace CatchTheBallTool {
 		const string DEFAULT_MAPCHIP_PATH = @"\image\DefaultMapChip.png";
 
 		public string MapChipPath { get; set; }
-		public ImageAtlas MapChip { get; set; }
+
 		public Rectangle FocusRect { get; set; }
 		public Image RenderView { get; set; }
+
+		public int SelectMapChip { get; set; }
+
+		public event Action MapChipLoaded;
 
 		public event Action<float> ViewMagnificationChanged;
 		public event Action StageDraw;
@@ -38,6 +42,15 @@ namespace CatchTheBallTool {
 				isEdit = value;
 
 				FormMain.Instance.Text = StageData.Instance.StageName + (isEdit ? "*" : "");
+			}
+		}
+
+		ImageAtlas mapChip;
+		public ImageAtlas MapChip {
+			get { return mapChip; }
+			set {
+				mapChip = value;
+				if(MapChipLoaded != null) MapChipLoaded();
 			}
 		}
 

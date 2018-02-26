@@ -23,27 +23,28 @@
 		/// コード エディターで変更しないでください。
 		/// </summary>
 		private void InitializeComponent() {
-			this.MapChipPictureBox = new System.Windows.Forms.PictureBox();
-			((System.ComponentModel.ISupportInitialize)(this.MapChipPictureBox)).BeginInit();
+			this.PictureBoxView = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// MapChipPictureBox
+			// PictureBoxView
 			// 
-			this.MapChipPictureBox.Location = new System.Drawing.Point(12, 12);
-			this.MapChipPictureBox.Name = "MapChipPictureBox";
-			this.MapChipPictureBox.Size = new System.Drawing.Size(283, 248);
-			this.MapChipPictureBox.TabIndex = 0;
-			this.MapChipPictureBox.TabStop = false;
+			this.PictureBoxView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.PictureBoxView.Location = new System.Drawing.Point(0, 0);
+			this.PictureBoxView.Name = "PictureBoxView";
+			this.PictureBoxView.Size = new System.Drawing.Size(533, 412);
+			this.PictureBoxView.TabIndex = 0;
+			this.PictureBoxView.TabStop = false;
 			// 
 			// FormMapChip
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.ClientSize = new System.Drawing.Size(533, 434);
-			this.Controls.Add(this.MapChipPictureBox);
+			this.Controls.Add(this.PictureBoxView);
 			this.Name = "FormMapChip";
 			this.Text = "マップチップ";
-			this.Controls.SetChildIndex(this.MapChipPictureBox, 0);
-			((System.ComponentModel.ISupportInitialize)(this.MapChipPictureBox)).EndInit();
+			this.Controls.SetChildIndex(this.PictureBoxView, 0);
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -51,6 +52,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.PictureBox MapChipPictureBox;
+		private System.Windows.Forms.PictureBox PictureBoxView;
 	}
 }

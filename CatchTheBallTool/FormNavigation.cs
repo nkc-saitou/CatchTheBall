@@ -51,6 +51,9 @@ namespace CatchTheBallTool {
 
 		}
 
+		/// <summary>
+		/// ステージデータの表示位置・サイズを計算する
+		/// </summary>
 		void CalcDrawRect() {
 
 			var viewSize = PictureBoxView.Size;
@@ -77,11 +80,12 @@ namespace CatchTheBallTool {
 				drawRect.Location = new Point((viewSize.Width - drawRect.Size.Width) / 2, 0);
 			}
 
-			Console.WriteLine(drawRect);
-
 			Draw();
 		}
 
+		/// <summary>
+		/// 描画する
+		/// </summary>
 		void Draw() {
 
 			//初期設定
@@ -90,6 +94,7 @@ namespace CatchTheBallTool {
 
 			PictureBoxView.SuspendLayout();
 
+			//保存済みの描画を表示
 			g.DrawImage(SystemData.Instance.RenderView, drawRect);
 			PictureBoxView.Image = canvas;
 
