@@ -48,6 +48,10 @@ namespace CatchTheBallTool {
 			SystemData.Instance.ViewMagnificationChanged -= ChangeSize;
 		}
 
+		/// <summary>
+		/// サイズを変更する
+		/// </summary>
+		/// <param name="newSize"></param>
 		protected void ChangeSize(float newSize) {
 
 			newSize = Math.Max(newSize, MIN_SIZE);
@@ -55,6 +59,7 @@ namespace CatchTheBallTool {
 
 			StatusButton.Text = (newSize * 100).ToString("##") + "%";
 			CurrentSize = newSize;
+
 			SystemData.Instance.ViewMagnification = newSize;
 		}
 

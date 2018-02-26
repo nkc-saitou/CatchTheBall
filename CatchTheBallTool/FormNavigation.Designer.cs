@@ -23,20 +23,36 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.PictureBoxView = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// PictureBoxView
+			// 
+			this.PictureBoxView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.PictureBoxView.Location = new System.Drawing.Point(0, 0);
+			this.PictureBoxView.Name = "PictureBoxView";
+			this.PictureBoxView.Size = new System.Drawing.Size(284, 239);
+			this.PictureBoxView.TabIndex = 4;
+			this.PictureBoxView.TabStop = false;
 			// 
 			// FormNavigation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 261);
+			this.Controls.Add(this.PictureBoxView);
 			this.Name = "FormNavigation";
 			this.Text = "ナビゲーション";
+			this.Controls.SetChildIndex(this.PictureBoxView, 0);
+			((System.ComponentModel.ISupportInitialize)(this.PictureBoxView)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
+
+		private System.Windows.Forms.PictureBox PictureBoxView;
 	}
 }

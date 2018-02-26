@@ -25,6 +25,7 @@ namespace CatchTheBallTool {
 		readonly Color BACK_GROUND_COLOR = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
 		readonly Color FADE_MASK_COLOR = Color.FromArgb(0x55, 0x00, 0x00, 0x00);
 		readonly Color LINE_COLOR = Color.FromArgb(0xff, 0x88, 0x88, 0x88);
+		const float LINE_SIZE = 1;
 
 		PointF position;
 
@@ -95,7 +96,7 @@ namespace CatchTheBallTool {
 			//描画を保存
 			SystemData.Instance.RenderView = renderCanvas;
 
-			//サイズを調整して描画
+			//サイズを調整して表示
 			var viewSize = new SizeF(drawSize.Width * CurrentSize, drawSize.Height * CurrentSize);
 			var viewCanvas = new Bitmap((int)viewSize.Width, (int)viewSize.Height);
 			var g = Graphics.FromImage(viewCanvas);
@@ -130,7 +131,7 @@ namespace CatchTheBallTool {
 		void DrawLine(Graphics g) {
 
 			var drawSize = DrawSize;
-			var pen = new Pen(LINE_COLOR, 1 / CurrentSize);
+			var pen = new Pen(LINE_COLOR, LINE_SIZE);
 
 			for(int i = 0;i < StageData.Instance.MapSize.Width;i++) {
 				g.DrawLine(pen, i * SystemData.MAPCHIP_SIZE, 0, i * SystemData.MAPCHIP_SIZE, drawSize.Height);
