@@ -21,7 +21,7 @@ namespace CatchTheBallTool {
 
 		public event Action StageLoaded;
 
-		Dictionary<string, FormWindowBase> formWindowDictionary;
+		public Dictionary<string, FormWindowBase> formWindowDictionary { get; private set; }
 
 		public FormMain() {
 			InitializeComponent();
@@ -52,6 +52,10 @@ namespace CatchTheBallTool {
 			//デフォルトレイアウト読み込み
 			LayoutInit();
 
+			//コマンド系
+			CommandStream.Instance.ClearCommand();
+			元に戻すUToolStripMenuItem.Checked = false;
+			やり直しRToolStripMenuItem.Checked = false;
 		}
 		/// <summary>
 		/// 各ウィンドウを初期化する
@@ -161,7 +165,17 @@ namespace CatchTheBallTool {
 			}
 
 			//新規作成
-			return new FormNew().ShowDialog() == DialogResult.OK;
+			if(new FormNew().ShowDialog() == DialogResult.OK) {
+
+				//コマンド系をリセット
+				CommandStream.Instance.ClearCommand();
+				元に戻すUToolStripMenuItem.Checked = false;
+				やり直しRToolStripMenuItem.Checked = false;
+
+				return true;
+			}
+
+			return false;
 		}
 		/// <summary>
 		/// ステージデータを開く
@@ -266,10 +280,12 @@ namespace CatchTheBallTool {
 
 		#region Edit
 		private void 元に戻すUToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			CommandStream.Instance.UndoCommand();
+			元に戻すUToolStripMenuItem.Checked = CommandStream.Instance.CanUndo();
 		}
 		private void やり直しRToolStripMenuItem_Click(object sender, EventArgs e) {
-
+			CommandStream.Instance.RedoCommand();
+			やり直しRToolStripMenuItem.Checked = CommandStream.Instance.CanRedo();
 		}
 		#endregion
 

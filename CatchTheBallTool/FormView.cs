@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using CatchTheBallTool.Commnad;
 
 namespace CatchTheBallTool {
 
@@ -69,7 +70,7 @@ namespace CatchTheBallTool {
 		/// <summary>
 		/// 現在のステージデータを描画する
 		/// </summary>
-		void Draw() {
+		public void Draw() {
 
 			var renderCanvas = new Bitmap(drawRect.Size.Width, drawRect.Size.Height);
 			var render = Graphics.FromImage(renderCanvas);
@@ -167,34 +168,6 @@ namespace CatchTheBallTool {
 		}
 		#endregion
 
-		#region Control
-		/// <summary>
-		/// 指定した位置にマップチップを置く
-		/// </summary>
-		/// <param name="position"></param>
-		void SetMapchip(Point position) {
-
-			StageData.Instance.SetStageData(position, SystemData.Instance.SelectMapChip);
-
-			Draw();
-
-			//編集フラグを変える
-			SystemData.Instance.IsEdit = true;
-
-		}
-		/// <summary>
-		/// 指定した位置のマップチップを削除する
-		/// </summary>
-		/// <param name="position"></param>
-		void EraseMapChip(Point position) {
-
-			StageData.Instance.SetStageData(position, -1);
-
-			Draw();
-
-			//編集フラグを変える
-			SystemData.Instance.IsEdit = true;
-		}
 		/// <summary>
 		/// スクロールする
 		/// </summary>
@@ -208,7 +181,6 @@ namespace CatchTheBallTool {
 				page.AutoScrollPosition.X + deltaPosition.Y);
 
 		}
-		#endregion
 
 		#region Mouse
 		/// <summary>
@@ -364,10 +336,12 @@ namespace CatchTheBallTool {
 
 			switch(e.Button) {
 				case MouseButtons.Left:
-					SetMapchip(position);
+					CommandStream.Instance.ExecuteCommand(
+						new CommandSetMapChip(position, SystemData.Instance.SelectMapChip));
 					break;
 				case MouseButtons.Right:
-					EraseMapChip(position);
+					CommandStream.Instance.ExecuteCommand(
+						new CommandSetMapChip(position, -1));
 					break;
 				case MouseButtons.Middle:
 					//ScrollPage(mouse)
@@ -402,6 +376,19 @@ namespace CatchTheBallTool {
 
 		private void FormView_MouseDown(object sender, MouseEventArgs e) {
 
+		}
+
+		public static void DrawView() {
+
+			var windowDict = FormMain.Instance.formWindowDictionary;
+			var key = typeof(FormView).ToString();
+
+			if(!windowDict.ContainsKey(key)) return;
+
+			var instance = windowDict[key];
+			if(instance == null) return;
+
+			((FormView)instance).Draw();
 		}
 	}
 }
