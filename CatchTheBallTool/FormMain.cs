@@ -21,7 +21,7 @@ namespace CatchTheBallTool {
 
 		public event Action StageLoaded;
 
-		public Dictionary<string, FormWindowBase> formWindowDictionary { get; private set; }
+		Dictionary<string, FormWindowBase> formWindowDictionary;
 
 		public FormMain() {
 			InitializeComponent();
@@ -47,15 +47,19 @@ namespace CatchTheBallTool {
 			OpenFileStageData.Filter = filter;
 			SaveFileStageData.Filter = filter;
 
-			//メニュー操作フラグ更新
-
 			//デフォルトレイアウト読み込み
 			LayoutInit();
 
 			//コマンド系
-			CommandStream.Instance.ClearCommand();
-			元に戻すUToolStripMenuItem.Checked = false;
-			やり直しRToolStripMenuItem.Checked = false;
+			ResetCommand();
+			CommandStream.Instance.ExecuteCommandEvent += () => {
+				元に戻すUToolStripMenuItem.Enabled = CommandStream.Instance.CanUndo();
+				やり直しRToolStripMenuItem.Enabled = CommandStream.Instance.CanRedo();
+			};
+			CommandStream.Instance.UndoCommandEvent += () => {
+				元に戻すUToolStripMenuItem.Enabled = CommandStream.Instance.CanUndo();
+				やり直しRToolStripMenuItem.Enabled = CommandStream.Instance.CanRedo();
+			};
 		}
 		/// <summary>
 		/// 各ウィンドウを初期化する
@@ -105,6 +109,11 @@ namespace CatchTheBallTool {
 				//とりあえず現状を保存
 				SaveWindowLayout(path);
 			}
+		}
+		void ResetCommand() {
+			CommandStream.Instance.ClearCommand();
+			元に戻すUToolStripMenuItem.Enabled = false;
+			やり直しRToolStripMenuItem.Enabled = false;
 		}
 		#endregion
 
@@ -168,9 +177,7 @@ namespace CatchTheBallTool {
 			if(new FormNew().ShowDialog() == DialogResult.OK) {
 
 				//コマンド系をリセット
-				CommandStream.Instance.ClearCommand();
-				元に戻すUToolStripMenuItem.Checked = false;
-				やり直しRToolStripMenuItem.Checked = false;
+				ResetCommand();
 
 				return true;
 			}
@@ -190,9 +197,11 @@ namespace CatchTheBallTool {
 			StageData.Instance.StagePath = OpenFileStageData.FileName;
 			Text = StageData.Instance.StageName = StageData.Instance.StagePath.GetFileName();
 
-
 			//ロードイベント起動
 			if(StageLoaded != null) StageLoaded();
+
+			//コマンド系をリセット
+			ResetCommand();
 
 			return true;
 		}
@@ -226,20 +235,7 @@ namespace CatchTheBallTool {
 		}
 		#endregion
 
-		//bool EditFileCloseMenu() {
-
-		//}
-
-		/// <summary>
-		/// データ変更中に閉じるときに訊く
-		/// </summary>
-		/// <returns></returns>
-		DialogResult ShowEditFileClosingMessage() {
-			return MessageBox.Show("編集中のデータがあります。\n保存しますか?", 
-				"データ編集中警告", 
-				MessageBoxButtons.YesNoCancel);
-		}
-
+		#region Event
 		private void FormMain_Load(object sender, EventArgs e) {
 
 		}
@@ -257,6 +253,7 @@ namespace CatchTheBallTool {
 				e.Cancel = true;
 			}
 		}
+		#endregion
 
 		#region MenuBar
 
@@ -281,11 +278,9 @@ namespace CatchTheBallTool {
 		#region Edit
 		private void 元に戻すUToolStripMenuItem_Click(object sender, EventArgs e) {
 			CommandStream.Instance.UndoCommand();
-			元に戻すUToolStripMenuItem.Checked = CommandStream.Instance.CanUndo();
 		}
 		private void やり直しRToolStripMenuItem_Click(object sender, EventArgs e) {
 			CommandStream.Instance.RedoCommand();
-			やり直しRToolStripMenuItem.Checked = CommandStream.Instance.CanRedo();
 		}
 		#endregion
 
@@ -320,5 +315,27 @@ namespace CatchTheBallTool {
 		#endregion
 
 		#endregion
+
+		/// <summary>
+		/// データ変更中に閉じるときに訊く
+		/// </summary>
+		/// <returns></returns>
+		DialogResult ShowEditFileClosingMessage() {
+			return MessageBox.Show("編集中のデータがあります。\n保存しますか?",
+				"データ編集中警告",
+				MessageBoxButtons.YesNoCancel);
+		}
+
+		public T GetWindow<T>() where T : FormWindowBase {
+
+			var windowDict = Instance.formWindowDictionary;
+			var key = typeof(T).ToString();
+
+			if(!windowDict.ContainsKey(key)) return null;
+
+			var instance = windowDict[key];
+			return (T)instance;
+			
+		}
 	}
 }

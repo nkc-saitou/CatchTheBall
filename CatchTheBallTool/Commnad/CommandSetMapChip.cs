@@ -12,22 +12,39 @@ namespace CatchTheBallTool.Commnad {
 	/// </summary>
 	public class CommandSetMapChip : ICommand {
 
-		Point position;
-		int mapChip;
-		int prevMapChip;
+		public int[] prevMapChip { get; set; }
+
+		Point[] position;
+		int[] mapChip;
 
 		public CommandSetMapChip(Point position, int mapChip) {
-			this.position = position;
-			this.mapChip = mapChip;
+			this.position = new Point[] { position };
+			this.mapChip = new int[] { mapChip };
+		}
+
+		public CommandSetMapChip(Point[] position, int mapChip) {
+			this.position = new Point[position.Length];
+			position.CopyTo(this.position, 0);
+			this.mapChip = Enumerable.Repeat(mapChip, position.Length).ToArray();
+		}
+
+		public CommandSetMapChip(Point[] position, int[] mapChip) {
+			this.position = new Point[position.Length];
+			position.CopyTo(this.position, 0);
+			this.mapChip = new int[mapChip.Length];
+			mapChip.CopyTo(this.mapChip, 0);
 		}
 
 		public void Execute() {
 
 			var map = StageData.Instance.Map;
-			prevMapChip = map[position.Y][position.X];
-			map[position.Y][position.X] = mapChip;
+			prevMapChip = new int[position.Length];
+			for(int i = 0;i < position.Length;i++) {
+				prevMapChip[i] = map[position[i].Y][position[i].X];
+				map[position[i].Y][position[i].X] = mapChip[i];
+			}
 
-			FormView.DrawView();
+			FormMain.Instance.GetWindow<FormView>().Draw();
 
 			//編集フラグを変更
 			SystemData.Instance.IsEdit = true;
@@ -35,9 +52,12 @@ namespace CatchTheBallTool.Commnad {
 
 		public void Undo() {
 
-			StageData.Instance.Map[position.Y][position.X] = prevMapChip;
+			var map = StageData.Instance.Map;
+			for(int i = 0;i < position.Length;i++) {
+				map[position[i].Y][position[i].X] = prevMapChip[i];
+			}
 
-			FormView.DrawView();
+			FormMain.Instance.GetWindow<FormView>().Draw();
 
 			//編集フラグを変更
 			SystemData.Instance.IsEdit = true;

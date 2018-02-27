@@ -35,7 +35,16 @@ namespace CatchTheBallTool {
 		public void ExecuteCommand(ICommand command) {
 
 			command.Execute();
+			AddStream(command);
 
+			if(ExecuteCommandEvent != null) ExecuteCommandEvent();
+		}
+
+		/// <summary>
+		/// ストリームに実行済みコマンドを追加
+		/// </summary>
+		/// <param name="command"></param>
+		public void AddStream(ICommand command) {
 			//後のコマンドを削除する
 			if(stream.Count > Current + 1) {
 				stream.RemoveRange(Current + 1, stream.Count - (Current + 1));
@@ -49,9 +58,7 @@ namespace CatchTheBallTool {
 		}
 
 		public void Retry() {
-			stream[Current].Execute();
-
-			if(ExecuteCommandEvent != null) ExecuteCommandEvent();
+			ExecuteCommand(stream[Current]);
 		}
 
 		public void UndoCommand() {

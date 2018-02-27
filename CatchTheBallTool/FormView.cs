@@ -36,6 +36,8 @@ namespace CatchTheBallTool {
 		Point prevMousePosition;
 		MouseButtons clickButton;
 
+		IDrawTool drawTool;
+
 		public FormView(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
@@ -51,6 +53,7 @@ namespace CatchTheBallTool {
 
 			//マップサイズ変更時に再計算
 
+			drawTool = new DrawTool.DrawToolPen();
 		}
 
 		~FormView() {
@@ -180,6 +183,16 @@ namespace CatchTheBallTool {
 				page.AutoScrollPosition.X + deltaPosition.X,
 				page.AutoScrollPosition.X + deltaPosition.Y);
 
+		}
+
+		public Point CalcMapPosition(Point mousePosition) {
+			var mapPosition = new PointF(
+				(mousePosition.X + drawRect.Location.X) / CurrentSize,
+				(mousePosition.Y + drawRect.Location.Y) / CurrentSize);
+
+			return new Point(
+				(int)(mapPosition.X / drawRect.Width * StageData.Instance.MapSize.Width),
+				(int)(mapPosition.Y / drawRect.Height * StageData.Instance.MapSize.Height));
 		}
 
 		#region Mouse
@@ -312,83 +325,42 @@ namespace CatchTheBallTool {
 
 		private void PictureBoxPreview_MouseDown(object sender, MouseEventArgs e) {
 			MouseDown(e.Location, e.Button);
-
 		}
 		private void PictureBoxPreview_MouseMove(object sender, MouseEventArgs e) {
 			MouseMove(e.Location);
-
 		}
 		private void PictureBoxPreview_MouseUp(object sender, MouseEventArgs e) {
 			MouseUp(e.Location, e.Button);
-
 		}
 
 		private void PictureBoxMapChip_MouseDown(object sender, MouseEventArgs e) {
 
-			//マップチップ配置
-			var mapPosition = new PointF(
-				(e.X + drawRect.Location.X) / CurrentSize,
-				(e.Y + drawRect.Location.Y) / CurrentSize);
-
-			var position = new Point(
-				(int)(mapPosition.X / drawRect.Width * StageData.Instance.MapSize.Width),
-				(int)(mapPosition.Y / drawRect.Height * StageData.Instance.MapSize.Height));
-
-			switch(e.Button) {
-				case MouseButtons.Left:
-					CommandStream.Instance.ExecuteCommand(
-						new CommandSetMapChip(position, SystemData.Instance.SelectMapChip));
-					break;
-				case MouseButtons.Right:
-					CommandStream.Instance.ExecuteCommand(
-						new CommandSetMapChip(position, -1));
-					break;
-				case MouseButtons.Middle:
-					//ScrollPage(mouse)
-					break;
-				default:
-					break;
-			}
+			drawTool.MouseDown(this, e.Location, e.Button);
 
 			MouseDown(e.Location, e.Button);
 		}
 		private void PictureBoxMapChip_MouseMove(object sender, MouseEventArgs e) {
+
+			drawTool.MouseMove(this, e.Location, e.Button);
+
 			MouseMove(e.Location);
 		}
 		private void PictureBoxMapChip_MouseUp(object sender, MouseEventArgs e) {
-			MouseUp(e.Location, e.Button);
 
+			drawTool.MouseUp(this, e.Location, e.Button);
+
+			MouseUp(e.Location, e.Button);
 		}
 
 		private void PictureBoxObject_MouseDown(object sender, MouseEventArgs e) {
 			MouseDown(e.Location, e.Button);
-
 		}
 		private void PictureBoxObject_MouseMove(object sender, MouseEventArgs e) {
 			MouseMove(e.Location);
-
 		}
 		private void PictureBoxObject_MouseUp(object sender, MouseEventArgs e) {
 			MouseUp(e.Location, e.Button);
-
 		}
 		#endregion
-
-		private void FormView_MouseDown(object sender, MouseEventArgs e) {
-
-		}
-
-		public static void DrawView() {
-
-			var windowDict = FormMain.Instance.formWindowDictionary;
-			var key = typeof(FormView).ToString();
-
-			if(!windowDict.ContainsKey(key)) return;
-
-			var instance = windowDict[key];
-			if(instance == null) return;
-
-			((FormView)instance).Draw();
-		}
 	}
 }
