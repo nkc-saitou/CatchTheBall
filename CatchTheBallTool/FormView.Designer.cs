@@ -55,6 +55,7 @@
 			// 
 			// TabPreview
 			// 
+			this.TabPreview.AutoScroll = true;
 			this.TabPreview.Controls.Add(this.PictureBoxPreview);
 			this.TabPreview.Location = new System.Drawing.Point(4, 26);
 			this.TabPreview.Name = "TabPreview";
@@ -65,16 +66,18 @@
 			// 
 			// PictureBoxPreview
 			// 
-			this.PictureBoxPreview.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.PictureBoxPreview.Location = new System.Drawing.Point(0, 0);
 			this.PictureBoxPreview.Name = "PictureBoxPreview";
-			this.PictureBoxPreview.Size = new System.Drawing.Size(674, 424);
+			this.PictureBoxPreview.Size = new System.Drawing.Size(208, 263);
 			this.PictureBoxPreview.TabIndex = 0;
 			this.PictureBoxPreview.TabStop = false;
 			this.PictureBoxPreview.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPreview_MouseDown);
+			this.PictureBoxPreview.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPreview_MouseMove);
+			this.PictureBoxPreview.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBoxPreview_MouseUp);
 			// 
 			// TabMapping
 			// 
+			this.TabMapping.AutoScroll = true;
 			this.TabMapping.Controls.Add(this.PictureBoxMapChip);
 			this.TabMapping.Location = new System.Drawing.Point(4, 26);
 			this.TabMapping.Name = "TabMapping";
@@ -85,16 +88,18 @@
 			// 
 			// PictureBoxMapChip
 			// 
-			this.PictureBoxMapChip.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.PictureBoxMapChip.Location = new System.Drawing.Point(0, 0);
 			this.PictureBoxMapChip.Name = "PictureBoxMapChip";
-			this.PictureBoxMapChip.Size = new System.Drawing.Size(674, 424);
+			this.PictureBoxMapChip.Size = new System.Drawing.Size(437, 306);
 			this.PictureBoxMapChip.TabIndex = 1;
 			this.PictureBoxMapChip.TabStop = false;
 			this.PictureBoxMapChip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMapChip_MouseDown);
+			this.PictureBoxMapChip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMapChip_MouseMove);
+			this.PictureBoxMapChip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMapChip_MouseUp);
 			// 
 			// TabObject
 			// 
+			this.TabObject.AutoScroll = true;
 			this.TabObject.Controls.Add(this.PictureBoxObject);
 			this.TabObject.Location = new System.Drawing.Point(4, 26);
 			this.TabObject.Name = "TabObject";
@@ -105,13 +110,14 @@
 			// 
 			// PictureBoxObject
 			// 
-			this.PictureBoxObject.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.PictureBoxObject.Location = new System.Drawing.Point(0, 0);
 			this.PictureBoxObject.Name = "PictureBoxObject";
-			this.PictureBoxObject.Size = new System.Drawing.Size(674, 424);
+			this.PictureBoxObject.Size = new System.Drawing.Size(548, 351);
 			this.PictureBoxObject.TabIndex = 1;
 			this.PictureBoxObject.TabStop = false;
 			this.PictureBoxObject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxObject_MouseDown);
+			this.PictureBoxObject.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxObject_MouseMove);
+			this.PictureBoxObject.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBoxObject_MouseUp);
 			// 
 			// FormView
 			// 

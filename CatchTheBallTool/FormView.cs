@@ -32,6 +32,9 @@ namespace CatchTheBallTool {
 		DrawMode mode;
 		PictureBox currentDraw;
 
+		Point prevMousePosition;
+		MouseButtons clickButton;
+
 		public FormView(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
@@ -46,6 +49,7 @@ namespace CatchTheBallTool {
 			SystemData.Instance.ViewMagnificationChanged += ViewMagnificationChanged;
 
 			//マップサイズ変更時に再計算
+
 		}
 
 		~FormView() {
@@ -96,8 +100,13 @@ namespace CatchTheBallTool {
 			SystemData.Instance.RenderView = renderCanvas;
 
 			//サイズを調整して表示
-			var viewSize = new SizeF(drawRect.Size.Width * CurrentSize, drawRect.Size.Height * CurrentSize);
-			var viewCanvas = new Bitmap((int)viewSize.Width, (int)viewSize.Height);
+			var viewSize = new Size(
+				(int)(drawRect.Size.Width * CurrentSize), 
+				(int)(drawRect.Size.Height * CurrentSize));
+
+			currentDraw.Size = viewSize;
+
+			var viewCanvas = new Bitmap(viewSize.Width, viewSize.Height);
 			var g = Graphics.FromImage(viewCanvas);
 
 			g.DrawImage(renderCanvas, new RectangleF(drawRect.Location.X, drawRect.Location.Y, viewSize.Width, viewSize.Height));
@@ -159,6 +168,10 @@ namespace CatchTheBallTool {
 		#endregion
 
 		#region Control
+		/// <summary>
+		/// 指定した位置にマップチップを置く
+		/// </summary>
+		/// <param name="position"></param>
 		void SetMapchip(Point position) {
 
 			StageData.Instance.SetStageData(position, SystemData.Instance.SelectMapChip);
@@ -169,6 +182,10 @@ namespace CatchTheBallTool {
 			SystemData.Instance.IsEdit = true;
 
 		}
+		/// <summary>
+		/// 指定した位置のマップチップを削除する
+		/// </summary>
+		/// <param name="position"></param>
 		void EraseMapChip(Point position) {
 
 			StageData.Instance.SetStageData(position, -1);
@@ -177,6 +194,79 @@ namespace CatchTheBallTool {
 
 			//編集フラグを変える
 			SystemData.Instance.IsEdit = true;
+		}
+		/// <summary>
+		/// スクロールする
+		/// </summary>
+		/// <param name="deltaPosition"></param>
+		void ScrollPage(Point deltaPosition) {
+
+			var page = GetPageFromMode(mode);
+
+			page.AutoScrollPosition = new Point(
+				page.AutoScrollPosition.X + deltaPosition.X,
+				page.AutoScrollPosition.X + deltaPosition.Y);
+
+		}
+		#endregion
+
+		#region Mouse
+		/// <summary>
+		/// マウスが押されたときの共通処理
+		/// </summary>
+		/// <param name="viewMousePosition"></param>
+		/// <param name="button"></param>
+		new void MouseDown(Point viewMousePosition, MouseButtons button) {
+
+			if(clickButton != MouseButtons.None) return;
+
+			prevMousePosition = MousePosition;
+			clickButton = button;
+		}
+		/// <summary>
+		/// マウスが動いた時の共通処理
+		/// </summary>
+		/// <param name="viewMousePosition"></param>
+		new void MouseMove(Point viewMousePosition) {
+
+			switch(clickButton) {
+				case MouseButtons.Left:
+					break;
+				case MouseButtons.Right:
+					break;
+				case MouseButtons.Middle:
+
+					//マウス移動に合わせてスクロール
+					var page = GetPageFromMode(mode);
+					var delta = new Point(
+						MousePosition.X - prevMousePosition.X,
+						MousePosition.Y - prevMousePosition.Y);
+
+					Console.WriteLine(delta);
+
+					page.AutoScrollPosition = new Point(
+						Math.Abs(page.AutoScrollPosition.X) - delta.X,
+						Math.Abs(page.AutoScrollPosition.Y) - delta.Y);
+
+					break;
+				default:
+					break;
+			}
+
+			prevMousePosition = MousePosition;
+
+		}
+		/// <summary>
+		/// マウスが離されたときの共通処理
+		/// </summary>
+		/// <param name="viewMousePosition"></param>
+		/// <param name="button"></param>
+		new void MouseUp(Point viewMousePosition, MouseButtons button) {
+
+			if(clickButton != button) return;
+
+			prevMousePosition = MousePosition;
+			clickButton = MouseButtons.None;
 		}
 		#endregion
 
@@ -205,6 +295,24 @@ namespace CatchTheBallTool {
 			Draw();
 		}
 
+		/// <summary>
+		/// DrawModeからPageを取得する
+		/// </summary>
+		/// <param name="mode"></param>
+		/// <returns></returns>
+		TabPage GetPageFromMode(DrawMode mode) {
+			switch(mode) {
+				case DrawMode.Preview:
+					return TabPreview;
+				case DrawMode.MapChip:
+					return TabMapping;
+				case DrawMode.Object:
+					return TabObject;
+				default:
+					return null;
+			}
+		}
+
 		void ViewMagnificationChanged(float viewMaginification) {
 			Draw();
 		}
@@ -218,13 +326,31 @@ namespace CatchTheBallTool {
 		}
 
 		private void TabControlView_SelectedIndexChanged(object sender, EventArgs e) {
+
+			var scrollPosition = GetPageFromMode(mode).AutoScrollPosition;
+
 			//描画モード切り替え
 			ChangeViewMode((DrawMode)TabControlView.SelectedIndex);
+
+			//スクロール位置を反映
+			TabControlView.SelectedTab.AutoScrollPosition =
+				new Point(Math.Abs(scrollPosition.X), Math.Abs(scrollPosition.Y));
+
 		}
 
 		private void PictureBoxPreview_MouseDown(object sender, MouseEventArgs e) {
+			MouseDown(e.Location, e.Button);
 
 		}
+		private void PictureBoxPreview_MouseMove(object sender, MouseEventArgs e) {
+			MouseMove(e.Location);
+
+		}
+		private void PictureBoxPreview_MouseUp(object sender, MouseEventArgs e) {
+			MouseUp(e.Location, e.Button);
+
+		}
+
 		private void PictureBoxMapChip_MouseDown(object sender, MouseEventArgs e) {
 
 			//マップチップ配置
@@ -244,15 +370,38 @@ namespace CatchTheBallTool {
 					EraseMapChip(position);
 					break;
 				case MouseButtons.Middle:
+					//ScrollPage(mouse)
 					break;
 				default:
 					break;
 			}
+
+			MouseDown(e.Location, e.Button);
 		}
+		private void PictureBoxMapChip_MouseMove(object sender, MouseEventArgs e) {
+			MouseMove(e.Location);
+		}
+		private void PictureBoxMapChip_MouseUp(object sender, MouseEventArgs e) {
+			MouseUp(e.Location, e.Button);
+
+		}
+
 		private void PictureBoxObject_MouseDown(object sender, MouseEventArgs e) {
+			MouseDown(e.Location, e.Button);
+
+		}
+		private void PictureBoxObject_MouseMove(object sender, MouseEventArgs e) {
+			MouseMove(e.Location);
+
+		}
+		private void PictureBoxObject_MouseUp(object sender, MouseEventArgs e) {
+			MouseUp(e.Location, e.Button);
 
 		}
 		#endregion
 
+		private void FormView_MouseDown(object sender, MouseEventArgs e) {
+
+		}
 	}
 }
