@@ -9,6 +9,8 @@ using System.Windows.Forms;
 namespace CatchTheBallTool {
 	public interface IDrawTool {
 
+		Image Icon { get; set; }
+
 		void MouseDown(FormView formView, Point mousePosition, MouseButtons button);
 		void MouseMove(FormView formView, Point mousePosition, MouseButtons button);
 		void MouseUp(FormView formView, Point mousePosition, MouseButtons button);

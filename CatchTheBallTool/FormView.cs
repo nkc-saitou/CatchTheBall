@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using CatchTheBallTool.Commnad;
+using CatchTheBallTool.DrawTool;
 
 namespace CatchTheBallTool {
 
@@ -36,8 +37,6 @@ namespace CatchTheBallTool {
 		Point prevMousePosition;
 		MouseButtons clickButton;
 
-		IDrawTool drawTool;
-
 		public FormView(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
@@ -52,8 +51,6 @@ namespace CatchTheBallTool {
 			SystemData.Instance.ViewMagnificationChanged += ViewMagnificationChanged;
 
 			//マップサイズ変更時に再計算
-
-			drawTool = new DrawTool.DrawToolPen();
 		}
 
 		~FormView() {
@@ -335,19 +332,19 @@ namespace CatchTheBallTool {
 
 		private void PictureBoxMapChip_MouseDown(object sender, MouseEventArgs e) {
 
-			drawTool.MouseDown(this, e.Location, e.Button);
+			FormTool.selectedTool.MouseDown(this, e.Location, e.Button);
 
 			MouseDown(e.Location, e.Button);
 		}
 		private void PictureBoxMapChip_MouseMove(object sender, MouseEventArgs e) {
 
-			drawTool.MouseMove(this, e.Location, e.Button);
+			FormTool.selectedTool.MouseMove(this, e.Location, e.Button);
 
 			MouseMove(e.Location);
 		}
 		private void PictureBoxMapChip_MouseUp(object sender, MouseEventArgs e) {
 
-			drawTool.MouseUp(this, e.Location, e.Button);
+			FormTool.selectedTool.MouseUp(this, e.Location, e.Button);
 
 			MouseUp(e.Location, e.Button);
 		}

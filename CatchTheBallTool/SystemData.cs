@@ -22,6 +22,8 @@ namespace CatchTheBallTool {
 
 		const string DEFAULT_MAPCHIP_PATH = @"\image\DefaultMapChip.png";
 
+
+
 		public string MapChipPath { get; set; }
 
 		public Rectangle FocusRect { get; set; }
@@ -83,6 +85,5 @@ namespace CatchTheBallTool {
 		public void Load() {
 			MapChip = new ImageAtlas(Image.FromFile(MapChipPath), new Size(MAPCHIP_SIZE, MAPCHIP_SIZE));
 		}
-
 	}
 }

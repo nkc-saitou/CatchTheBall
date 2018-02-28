@@ -17,13 +17,19 @@ namespace CatchTheBallTool.DrawTool {
 
 		int chip = 0;
 
+		public Image Icon { get; set; }
+
+		public DrawToolPen() {
+			Icon = Image.FromFile(@"./image/pen.png");
+		}
+
 		public void MouseDown(FormView formView, Point mousePosition, MouseButtons button) {
 			position = new List<Point>();
 			prevMapChip = new List<int>();
 			if(state != MouseButtons.None) return;
 
 			state = button;
-			chip = GetChip(button);
+			chip = GetMapChipFromButton(button);
 			SetMapChip(formView, mousePosition);
 		}
 
@@ -44,7 +50,12 @@ namespace CatchTheBallTool.DrawTool {
 			CommandStream.Instance.AddStream(command);
 		}
 
-		int GetChip(MouseButtons button) {
+		/// <summary>
+		/// マウスボタンから使用するマップチップを取得
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		int GetMapChipFromButton(MouseButtons button) {
 			return state == MouseButtons.Left ? SystemData.Instance.SelectMapChip : -1;
 		}
 
@@ -56,6 +67,7 @@ namespace CatchTheBallTool.DrawTool {
 			var stagePosition = formView.CalcMapPosition(mousePosition);
 
 			if(position.Any(item => item == stagePosition)) return;
+			if(!StageData.Instance.CheckInsideMap(stagePosition)) return;
 
 			prevMapChip.Add(StageData.Instance.Map[stagePosition.Y][stagePosition.X]);
 			position.Add(stagePosition);

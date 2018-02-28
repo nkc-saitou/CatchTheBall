@@ -106,7 +106,7 @@ namespace CatchTheBallTool {
 		/// 指定した位置がマップ内か
 		/// </summary>
 		/// <returns></returns>
-		bool CheckInsideMap(Point position) {
+		public bool CheckInsideMap(Point position) {
 			if(position.X < 0 || position.X >= MapSize.Width) return false;
 			if(position.Y < 0 || position.Y >= MapSize.Height) return false;
 

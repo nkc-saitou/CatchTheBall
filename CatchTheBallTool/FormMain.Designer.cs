@@ -50,6 +50,7 @@
 			this.OpenLayoutDialog = new System.Windows.Forms.OpenFileDialog();
 			this.OpenFileStageData = new System.Windows.Forms.OpenFileDialog();
 			this.SaveFileStageData = new System.Windows.Forms.SaveFileDialog();
+			this.ツールTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -162,7 +163,8 @@
 			this.ウィンドウWToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ビューVToolStripMenuItem,
             this.マップチップMToolStripMenuItem,
-            this.ナビゲーションNToolStripMenuItem});
+            this.ナビゲーションNToolStripMenuItem,
+            this.ツールTToolStripMenuItem});
 			this.ウィンドウWToolStripMenuItem.Name = "ウィンドウWToolStripMenuItem";
 			this.ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
 			this.ウィンドウWToolStripMenuItem.Text = "ウィンドウ(&W)";
@@ -264,6 +266,12 @@
 			this.SaveFileStageData.FileName = "StageData";
 			this.SaveFileStageData.Title = "ステージデータを保存する";
 			// 
+			// ツールTToolStripMenuItem
+			// 
+			this.ツールTToolStripMenuItem.Name = "ツールTToolStripMenuItem";
+			this.ツールTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ツールTToolStripMenuItem.Text = "ツール(&T)";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -313,6 +321,7 @@
 		public System.Windows.Forms.ToolStripMenuItem ビューVToolStripMenuItem;
 		public System.Windows.Forms.ToolStripMenuItem マップチップMToolStripMenuItem;
 		public System.Windows.Forms.ToolStripMenuItem ナビゲーションNToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem ツールTToolStripMenuItem;
 	}
 }
 
