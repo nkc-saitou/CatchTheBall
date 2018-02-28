@@ -9,7 +9,7 @@ int Handle;
 void Config_Instialize() 
 {
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
-	Handle = LoadGraph("images\\FireEmblem_Config.jpg");
+	Handle = LoadGraph("Resources\\image\\FireEmblem_Config.jpg");
 }
 
 //XV
