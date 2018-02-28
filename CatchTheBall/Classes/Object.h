@@ -6,21 +6,27 @@ public:
 	Object();
 	~Object();
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
+	virtual void Draw();
 
+	void Priority(int order);
+	int Priority();
 	void PositionX(int posX);
 	int PositionX();
 	void PositionY(int posY);
 	int PositionY();
-	void Rotation(int degree);
-	int Rotation();
+	void Rotation(double degree);
+	double Rotation();
+	void Scale(double rate);
+	double Scale();
 
 protected:
 	void GraphHandle(int graph);
 	int GraphHandle();
 
 private:
-	int handle;		//•`‰æ‰æ‘œ
-	int x, y;		//À•W
-	int rotation;	//‰ñ“]
+	int _handle;		//•`‰æ‰æ‘œ
+	int _priority;		//—Dæ‡ˆÊ
+	int _x, _y;			//À•W
+	double _rotation;	//‰ñ“]
+	double _scale;		//”{—¦
 };
