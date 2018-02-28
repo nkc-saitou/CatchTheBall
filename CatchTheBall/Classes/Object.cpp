@@ -21,19 +21,19 @@ Object::~Object()
 void Object::Draw()
 {
 	if (_rotation != 0 || _scale != 1.0)
-		DrawRotaGraph(_x, _y, _scale, _rotation, _handle, TRUE);
+		DrawRotaGraphF(_x, _y, _scale, _rotation, _handle, TRUE);
 	else
-		DrawGraph(_x, _y, _handle, TRUE);
+		DrawGraphF(_x, _y, _handle, TRUE);
 }
 //---------------------------------------------------------
 //	プロパティ
 //---------------------------------------------------------
 void Object::Priority(int order) { _priority = order; }
 int Object::Priority() { return _priority; }
-void Object::PositionX(int posX) { _x = posX; }
-int Object::PositionX() { return _x; }
-void Object::PositionY(int posY) { _y = posY; }
-int Object::PositionY() { return _y; }
+void Object::PositionX(float posX) { _x = posX; }
+float Object::PositionX() { return _x; }
+void Object::PositionY(float posY) { _y = posY; }
+float Object::PositionY() { return _y; }
 void Object::Rotation(double degree) { _rotation = degree; }
 double Object::Rotation() { return _rotation; }
 void Object::Scale(double rate) { _scale = rate; }

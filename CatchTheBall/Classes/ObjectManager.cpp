@@ -15,9 +15,9 @@ ObjectManager::~ObjectManager()
 	//破棄
 }
 //---------------------------------------------------------
-//	Public
+//	更新
 //---------------------------------------------------------
-void ObjectManager::Update() //更新
+void ObjectManager::Update()
 {
 	//更新
 	for (auto obj : objectArry)
@@ -31,12 +31,24 @@ void ObjectManager::Update() //更新
 //---------------------------------------------------------
 //	Object追加
 //---------------------------------------------------------
-void ObjectManager::Add(Object* obj)
+void ObjectManager::Add(Object* object)
 {
-	if (&obj == nullptr) return;
-
-	objectArry.push_back(obj);
-
+	if (&object == nullptr) return;
+	//空っぽの時
+	if (objectArry.begin() == objectArry.end())
+	{
+		objectArry.push_back(object);
+		return;
+	}
+	//優先順位
+	auto it = objectArry.begin();
+	for (auto obj : objectArry)
+	{
+		if (obj->Priority() > object->Priority()) break;
+		it++;
+	}
+	
+	objectArry.insert(it, object);
 }
 //---------------------------------------------------------
 //	描画
