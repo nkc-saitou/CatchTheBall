@@ -41,7 +41,7 @@
 			this.ClientSize = new System.Drawing.Size(284, 261);
 			this.Controls.Add(this.FlowLayout);
 			this.Name = "FormTool";
-			this.Text = "FormTool";
+			this.Text = "ツール";
 			this.ResumeLayout(false);
 
 		}

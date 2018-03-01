@@ -13,22 +13,25 @@ namespace CatchTheBallTool {
 	public sealed class StageData : Singleton<StageData> {
 
 		public const string STAGE_DATA_EXT = "ctbst";
+		public const string DEFAULT_STAGE_NAME = "NewStage";
 
 		readonly Size DEFAULT_MAPSIZE = new Size(10, 5);
 
 		public string StageName { get; set; }			//ファイル名
 		public string StagePath { get; set; }			//拡張子付き
-		public Size MapSize { get; set; }
+		public Size MapSize { get; private set; }
 		public List<List<int>> Map { get; private set; }
 		public List<Object> ObjectList { get; set; }
+
+		public event Action MapSizeChanged;
 
 		public StageData() { }
 
 		protected override void Initialize() {
 			base.Initialize();
 
+			StageName = DEFAULT_STAGE_NAME;
 			StagePath = "";
-			StageName = "";
 
 			MapSize = DEFAULT_MAPSIZE;
 			ObjectList = new List<Object>();
@@ -86,6 +89,9 @@ namespace CatchTheBallTool {
 			}
 
 			MapSize = newSize;
+
+			//マップサイズ変更イベント発火
+			if(MapSizeChanged != null) MapSizeChanged();
 		}
 
 		/// <summary>

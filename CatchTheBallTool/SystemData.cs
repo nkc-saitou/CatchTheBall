@@ -20,7 +20,7 @@ namespace CatchTheBallTool {
 		public const int MAPCHIP_SIZE = 64;
 		public const int MAPCHIP_COUNT = 16;
 
-		const string DEFAULT_MAPCHIP_PATH = @"\image\DefaultMapChip.png";
+		const string DEFAULT_MAPCHIP_PATH = @".\image\DefaultMapChip.png";
 
 
 
@@ -83,7 +83,8 @@ namespace CatchTheBallTool {
 		}
 
 		public void Load() {
-			MapChip = new ImageAtlas(Image.FromFile(MapChipPath), new Size(MAPCHIP_SIZE, MAPCHIP_SIZE));
+			if(File.Exists(MapChipPath))
+				MapChip = new ImageAtlas(Image.FromFile(MapChipPath), new Size(MAPCHIP_SIZE, MAPCHIP_SIZE));
 		}
 	}
 }

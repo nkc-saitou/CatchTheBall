@@ -3,77 +3,40 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CatchTheBallTool.Commnad;
 
 namespace CatchTheBallTool {
-	public partial class FormStageDataEdit : Form {
+
+	/// <summary>
+	/// ステージデータの編集用フォーム
+	/// </summary>
+	public partial class FormStageDataEdit : FormStageDataBase {
 		public FormStageDataEdit() {
 			InitializeComponent();
 
-			TextBoxStageName.Text = "NewStage";
-			TextBoxMapSizeX.Text = StageData.Instance.MapSize.Width.ToString();
-			TextBoxMapSizeY.Text = StageData.Instance.MapSize.Height.ToString();
-			TextBoxMapChipPath.Text = SystemData.Instance.MapChipPath;
+			TextBoxStageName.Text = StageData.Instance.StageName;
+			TextBoxStageName.Enabled = false;
 		}
 
-		/// <summary>
-		/// ステージの名前が正しく入力されているか調べる
-		/// </summary>
-		/// <returns></returns>
-		protected bool CheckStageName() {
-			if(TextBoxStageName.Text == "") {
-				MessageBox.Show("ステージ名を入力して下さい");
-				return false;
-			}
-			return true;
+		private void ButtonEdit_Click(object sender, EventArgs e) {
+
+			//入力されたデータが正しいかどうかチェック
+			if(!CheckMapSize()) return;
+			if(!CheckMapChipPath()) return;
+
+			//ステージデータ編集コマンドを実行
+			var mapSize = (new Size(int.Parse(TextBoxMapSizeX.Text), int.Parse(TextBoxMapSizeY.Text)));
+			CommandStream.Instance.ExecuteCommand(new CommandEditStageData(mapSize, TextBoxMapChipPath.Text));
+
+			DialogResult = DialogResult.OK;
 		}
 
-		/// <summary>
-		/// マップサイズが正しく入力されているか調べる
-		/// </summary>
-		/// <returns></returns>
-		protected bool CheckMapSize() {
-
-			int size;
-
-			if(!int.TryParse(TextBoxMapSizeX.Text, out size) || size < 1
-				|| !int.TryParse(TextBoxMapSizeY.Text, out size) || size < 1) {
-
-				MessageBox.Show("マップサイズは1以上を指定してください");
-				return false;
-			}
-			return true;
-		}
-
-		/// <summary>
-		/// マップチップのパスが正しく入力されているか調べる
-		/// </summary>
-		/// <returns></returns>
-		protected bool CheckMapChipPath() {
-
-			if(!File.Exists(TextBoxMapChipPath.Text)) {
-				MessageBox.Show("マップチップの存在が確認できませんでした");
-				return false;
-			}
-			return true;
-		}
-
-		private void ButtonMapChipPath_Click(object sender, EventArgs e) {
-			if(OpenFileMapChip.ShowDialog() != DialogResult.OK) return;
-
-			TextBoxMapChipPath.Text = OpenFileMapChip.FileName;
-		}
-
-		private void TextBoxMapSizeX_KeyPress(object sender, KeyPressEventArgs e) {
-			if(!e.KeyChar.IsNumber()) e.Handled = true;
-		}
-
-		private void TextBoxMapSizeY_KeyPress(object sender, KeyPressEventArgs e) {
-			if(!e.KeyChar.IsNumber()) e.Handled = true;
+		private void ButtonCancel_Click(object sender, EventArgs e) {
+			Close();
 		}
 	}
 }

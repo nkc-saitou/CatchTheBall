@@ -9,6 +9,9 @@ using CatchTheBallTool.Commnad;
 
 namespace CatchTheBallTool.DrawTool {
 
+	/// <summary>
+	/// ペンツール
+	/// </summary>
 	public class DrawToolPen : IDrawTool {
 
 		List<Point> position;
@@ -48,6 +51,9 @@ namespace CatchTheBallTool.DrawTool {
 			command.prevMapChip = prevMapChip.ToArray();
 
 			CommandStream.Instance.AddStream(command);
+
+			//編集フラグを変更
+			SystemData.Instance.IsEdit = true;
 		}
 
 		/// <summary>

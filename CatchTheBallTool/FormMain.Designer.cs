@@ -39,6 +39,7 @@
 			this.ビューVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.マップチップMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ナビゲーションNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ツールTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ウィンドウレイアウトToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.デフォルトレイアウトを復元ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ユーザーレイアウトの保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +51,8 @@
 			this.OpenLayoutDialog = new System.Windows.Forms.OpenFileDialog();
 			this.OpenFileStageData = new System.Windows.Forms.OpenFileDialog();
 			this.SaveFileStageData = new System.Windows.Forms.SaveFileDialog();
-			this.ツールTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.ステージデータの編集EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -137,7 +139,9 @@
 			// 
 			this.編集EToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.元に戻すUToolStripMenuItem,
-            this.やり直しRToolStripMenuItem});
+            this.やり直しRToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.ステージデータの編集EToolStripMenuItem});
 			this.編集EToolStripMenuItem.Name = "編集EToolStripMenuItem";
 			this.編集EToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
 			this.編集EToolStripMenuItem.Text = "編集(&E)";
@@ -146,7 +150,7 @@
 			// 
 			this.元に戻すUToolStripMenuItem.Name = "元に戻すUToolStripMenuItem";
 			this.元に戻すUToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.元に戻すUToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.元に戻すUToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
 			this.元に戻すUToolStripMenuItem.Text = "元に戻す(&U)";
 			this.元に戻すUToolStripMenuItem.Click += new System.EventHandler(this.元に戻すUToolStripMenuItem_Click);
 			// 
@@ -154,7 +158,7 @@
 			// 
 			this.やり直しRToolStripMenuItem.Name = "やり直しRToolStripMenuItem";
 			this.やり直しRToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.やり直しRToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.やり直しRToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
 			this.やり直しRToolStripMenuItem.Text = "やり直し(&R)";
 			this.やり直しRToolStripMenuItem.Click += new System.EventHandler(this.やり直しRToolStripMenuItem_Click);
 			// 
@@ -172,20 +176,26 @@
 			// ビューVToolStripMenuItem
 			// 
 			this.ビューVToolStripMenuItem.Name = "ビューVToolStripMenuItem";
-			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ビューVToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.ビューVToolStripMenuItem.Text = "ビュー(&V)";
 			// 
 			// マップチップMToolStripMenuItem
 			// 
 			this.マップチップMToolStripMenuItem.Name = "マップチップMToolStripMenuItem";
-			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.マップチップMToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.マップチップMToolStripMenuItem.Text = "マップチップ(&M)";
 			// 
 			// ナビゲーションNToolStripMenuItem
 			// 
 			this.ナビゲーションNToolStripMenuItem.Name = "ナビゲーションNToolStripMenuItem";
-			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ナビゲーションNToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
 			this.ナビゲーションNToolStripMenuItem.Text = "ナビゲーション(&N)";
+			// 
+			// ツールTToolStripMenuItem
+			// 
+			this.ツールTToolStripMenuItem.Name = "ツールTToolStripMenuItem";
+			this.ツールTToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+			this.ツールTToolStripMenuItem.Text = "ツール(&T)";
 			// 
 			// ウィンドウレイアウトToolStripMenuItem
 			// 
@@ -266,11 +276,17 @@
 			this.SaveFileStageData.FileName = "StageData";
 			this.SaveFileStageData.Title = "ステージデータを保存する";
 			// 
-			// ツールTToolStripMenuItem
+			// toolStripSeparator3
 			// 
-			this.ツールTToolStripMenuItem.Name = "ツールTToolStripMenuItem";
-			this.ツールTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.ツールTToolStripMenuItem.Text = "ツール(&T)";
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(190, 6);
+			// 
+			// ステージデータの編集EToolStripMenuItem
+			// 
+			this.ステージデータの編集EToolStripMenuItem.Name = "ステージデータの編集EToolStripMenuItem";
+			this.ステージデータの編集EToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.ステージデータの編集EToolStripMenuItem.Text = "ステージデータの編集(&E)...";
+			this.ステージデータの編集EToolStripMenuItem.Click += new System.EventHandler(this.ステージデータの編集EToolStripMenuItem_Click);
 			// 
 			// FormMain
 			// 
@@ -280,6 +296,7 @@
 			this.Controls.Add(this.DockPanelMain);
 			this.Controls.Add(this.MenuMain);
 			this.IsMdiContainer = true;
+			this.KeyPreview = true;
 			this.MainMenuStrip = this.MenuMain;
 			this.Name = "FormMain";
 			this.Text = "CatchTheBallStageTool";
@@ -322,6 +339,8 @@
 		public System.Windows.Forms.ToolStripMenuItem マップチップMToolStripMenuItem;
 		public System.Windows.Forms.ToolStripMenuItem ナビゲーションNToolStripMenuItem;
 		public System.Windows.Forms.ToolStripMenuItem ツールTToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem ステージデータの編集EToolStripMenuItem;
 	}
 }
 

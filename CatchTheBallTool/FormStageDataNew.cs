@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
-	public partial class FormNew : FormStageDataEdit {
 
-		public FormNew() {
+	/// <summary>
+	/// 新規作成用フォーム
+	/// </summary>
+	public partial class FormStageDataNew : FormStageDataBase {
+
+		public FormStageDataNew() {
 			InitializeComponent();
+
+			TextBoxStageName.Text = StageData.DEFAULT_STAGE_NAME;
 
 		}
 
@@ -26,8 +32,7 @@ namespace CatchTheBallTool {
 			//設定を入力して新規作成
 			StageData.Instance.StageName = TextBoxStageName.Text;
 			var mapSize = new Size(int.Parse(TextBoxMapSizeX.Text), int.Parse(TextBoxMapSizeY.Text));
-			StageData.Instance.MapSize = mapSize;
-			StageData.Instance.Load();
+			StageData.Instance.ResizeMap(mapSize);
 
 			SystemData.Instance.MapChipPath = TextBoxMapChipPath.Text;
 			SystemData.Instance.IsEdit = false;
@@ -37,6 +42,10 @@ namespace CatchTheBallTool {
 
 			//閉じる
 			DialogResult = DialogResult.OK;
+		}
+
+		private void ButtonCancel_Click(object sender, EventArgs e) {
+			Close();
 		}
 	}
 }

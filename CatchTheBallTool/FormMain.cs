@@ -174,7 +174,7 @@ namespace CatchTheBallTool {
 			}
 
 			//新規作成
-			if(new FormNew().ShowDialog() == DialogResult.OK) {
+			if(new FormStageDataNew().ShowDialog() == DialogResult.OK) {
 
 				//コマンド系をリセット
 				ResetCommand();
@@ -281,6 +281,9 @@ namespace CatchTheBallTool {
 		}
 		private void やり直しRToolStripMenuItem_Click(object sender, EventArgs e) {
 			CommandStream.Instance.RedoCommand();
+		}
+		private void ステージデータの編集EToolStripMenuItem_Click(object sender, EventArgs e) {
+			new FormStageDataEdit().ShowDialog();
 		}
 		#endregion
 

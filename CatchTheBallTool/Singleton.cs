@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CatchTheBallTool {
+
+	/// <summary>
+	/// シングルトンパターンを実装するクラス
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class Singleton<T> where T : class, new() {
 
 		static volatile T instance = new T();

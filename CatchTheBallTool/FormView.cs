@@ -20,7 +20,7 @@ namespace CatchTheBallTool {
 	}
 
 	/// <summary>
-	/// ステージを編集するウィンドウ
+	/// ステージを編集するフォーム
 	/// </summary>
 	public partial class FormView : FormResizableWindow {
 
@@ -28,6 +28,10 @@ namespace CatchTheBallTool {
 		readonly Color FADE_MASK_COLOR = Color.FromArgb(0x55, 0x00, 0x00, 0x00);
 		readonly Color LINE_COLOR = Color.FromArgb(0xff, 0x88, 0x88, 0x88);
 		const float LINE_SIZE = 1;
+
+		PictureBox PictureBoxPreview;
+		PictureBox PictureBoxMapChip;
+		PictureBox PictureBoxObject;
 
 		Rectangle drawRect;
 
@@ -41,8 +45,9 @@ namespace CatchTheBallTool {
 			InitializeComponent();
 
 			drawRect = new Rectangle();
-			CalcDrawSize();
 
+			AddPictureBox();
+			CalcDrawSize();
 			ChangeViewMode(DrawMode.Preview);
 
 			//ステージ読み込み時に描画
@@ -51,6 +56,7 @@ namespace CatchTheBallTool {
 			SystemData.Instance.ViewMagnificationChanged += ViewMagnificationChanged;
 
 			//マップサイズ変更時に再計算
+			StageData.Instance.MapSizeChanged += CalcDrawSize;
 		}
 
 		~FormView() {
@@ -58,12 +64,57 @@ namespace CatchTheBallTool {
 			//イベントの削除
 			FormMain.Instance.StageLoaded -= Draw;
 			SystemData.Instance.ViewMagnificationChanged -= ViewMagnificationChanged;
+			StageData.Instance.MapSizeChanged -= CalcDrawSize;
 		}
 
 		void CalcDrawSize() {
 			drawRect.Size = new Size(
 				StageData.Instance.MapSize.Width * SystemData.MAPCHIP_SIZE,
 				StageData.Instance.MapSize.Height * SystemData.MAPCHIP_SIZE);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void AddPictureBox() {
+
+			var panelPreview = new PanelMouseWheelDisable();
+			TabPreview.Controls.Add(panelPreview);
+			panelPreview.Dock = DockStyle.Fill;
+			panelPreview.AutoScroll = true;
+
+			PictureBoxPreview = new PictureBox();
+			panelPreview.Controls.Add(PictureBoxPreview);
+			PictureBoxPreview.MouseDown += PictureBoxPreview_MouseDown;
+			PictureBoxPreview.MouseMove += PictureBoxPreview_MouseMove;
+			PictureBoxPreview.MouseUp += PictureBoxPreview_MouseUp;
+			PictureBoxPreview.MouseWheel += OnMouseWheel;
+
+
+			var panelMapping = new PanelMouseWheelDisable();
+			TabMapping.Controls.Add(panelMapping);
+			panelMapping.Dock = DockStyle.Fill;
+			panelMapping.AutoScroll = true;
+
+			PictureBoxMapChip = new PictureBox();
+			panelMapping.Controls.Add(PictureBoxMapChip);
+			PictureBoxMapChip.MouseDown += PictureBoxMapChip_MouseDown;
+			PictureBoxMapChip.MouseMove += PictureBoxMapChip_MouseMove;
+			PictureBoxMapChip.MouseUp += PictureBoxMapChip_MouseUp;
+			PictureBoxMapChip.MouseWheel += OnMouseWheel;
+
+
+			var panelObject = new PanelMouseWheelDisable();
+			TabObject.Controls.Add(panelObject);
+			panelObject.Dock = DockStyle.Fill;
+			panelObject.AutoScroll = true;
+
+			PictureBoxObject = new PictureBox();
+			panelObject.Controls.Add(PictureBoxObject);
+			PictureBoxObject.MouseDown += PictureBoxObject_MouseDown;
+			PictureBoxObject.MouseMove += PictureBoxObject_MouseMove;
+			PictureBoxObject.MouseUp += PictureBoxObject_MouseUp;
+			PictureBoxObject.MouseWheel += OnMouseWheel;
 		}
 
 		#region Draw

@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CatchTheBallTool {
+
+	/// <summary>
+	/// コマンドパターンを実装するインターフェース
+	/// </summary>
 	public interface ICommand {
 
 		/// <summary>

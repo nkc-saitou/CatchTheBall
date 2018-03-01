@@ -32,11 +32,7 @@ namespace CatchTheBallTool {
 			CurrentSize = 1;
 
 			//マウスホイールを動かした時
-			MouseWheel += (object sender, MouseEventArgs e) => {
-				if((ModifierKeys & Keys.Alt) == Keys.Alt) {
-					ChangeSize(CurrentSize + e.Delta / Math.Abs(e.Delta) * CHANGE_SIZE_DELTA);
-				}
-			};
+			MouseWheel += OnMouseWheel;
 
 			//ビューのサイズが変更されたら自分も変更する
 			SystemData.Instance.ViewMagnificationChanged += ChangeSize;
@@ -46,6 +42,12 @@ namespace CatchTheBallTool {
 
 			//イベントの削除
 			SystemData.Instance.ViewMagnificationChanged -= ChangeSize;
+		}
+
+		protected void OnMouseWheel(object sender, MouseEventArgs e) {
+			if((ModifierKeys & Keys.Alt) == Keys.Alt) {
+				ChangeSize(CurrentSize + e.Delta / Math.Abs(e.Delta) * CHANGE_SIZE_DELTA);
+			}
 		}
 
 		/// <summary>

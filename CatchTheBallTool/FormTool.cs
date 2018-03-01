@@ -12,6 +12,9 @@ using CatchTheBallTool.DrawTool;
 
 namespace CatchTheBallTool {
 
+	/// <summary>
+	/// 描画ツールを選択できるフォーム
+	/// </summary>
 	public partial class FormTool : FormWindowBase {
 
 		readonly Point BUTTON_STARTPOSITION = new Point(6, 6);

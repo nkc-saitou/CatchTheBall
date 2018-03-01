@@ -7,6 +7,10 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace CatchTheBallTool {
+
+	/// <summary>
+	/// 描画用ツールの機能を実装するインターフェース
+	/// </summary>
 	public interface IDrawTool {
 
 		Image Icon { get; set; }
