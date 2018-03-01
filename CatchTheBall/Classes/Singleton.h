@@ -3,9 +3,13 @@
 /*
 ///////////////////////////////////////////
 Singletonクラス
-シングルトンにしたいクラスに継承させる
 
-使用例：InputクラスのButtonDownを使いたい場合
+概要：シングルトンにしたいクラスに継承させる
+
+使用例：Inputクラスに継承させたい場合
+class Input : public Singleton <Input>
+
+使用例２：シングルトンを継承したInputクラスのButtonDown関数を使いたい場合
 Input::Instance()->ButtonDown(keyCode)
 ///////////////////////////////////////////
 */

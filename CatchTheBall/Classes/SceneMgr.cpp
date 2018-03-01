@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Menu.h"
 #include "SceneMgr.h"
+#include "AudioManager.h"
 
 //シーン管理変数
 static eScene Scene = eScene_Menu;   
@@ -16,7 +17,7 @@ void SceneMgr_Instialize()
 	{       
     //シーンによって処理を分岐
 	case eScene_Menu:    //現在の画面がメニューなら
-		//Menu_Update();   //メニュー画面の更新処理をする
+		Menu_Instialize();   //メニュー画面の更新処理をする
 		break;//以下略
 	case eScene_Game:
 		Game_Instialize();
@@ -71,12 +72,12 @@ void SceneMgr_ChangeScene(eScene NextScene){
 void SceneMgr_Fade()
 {
 	// フェード用変数(透明度,フェード用画像)
-	int alpha, FadeIn;
-	FadeIn = LoadGraph("images\\test1.png");
+	int alpha, Fade;
+	Fade = LoadGraph("images\\test1.png");
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	// フェードイン
+	// フェードアウト
 	for (alpha = 0; alpha < 255; alpha += 3)
 	{
 		ClearDrawScreen();
@@ -85,18 +86,18 @@ void SceneMgr_Fade()
 
 		// フェードイン開始
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-		DrawGraph(0, 0, FadeIn, TRUE);
+		DrawGraph(0, 0, Fade, TRUE);
+		// 同時に音量もフェード
+		AudioManager::getInstance()->VolumeFade(alpha);
 		ScreenFlip();
 	}
-
-	StopMusic();
 
 	// 次のシーンに切り替え
 	Scene = nextScene;
 	// 次のシーンの初期化
 	SceneMgr_Instialize();
 
-	// フェードアウト
+	// フェードイン
 	for (alpha = 255; alpha > 0; alpha -= 3)
 	{
 		ClearDrawScreen();
@@ -105,7 +106,9 @@ void SceneMgr_Fade()
 
 		// フェードアウト開始
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-		DrawGraph(0, 0, FadeIn, TRUE);
+		DrawGraph(0, 0, Fade, TRUE);
+		// 同時に音量もフェード
+		AudioManager::getInstance()->VolumeFade(alpha);
 		ScreenFlip();
 	}
 

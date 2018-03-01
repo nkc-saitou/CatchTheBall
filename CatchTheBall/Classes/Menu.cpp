@@ -2,6 +2,7 @@
 #include "SceneMgr.h"
 #include "DxLib.h"
 #include "Keyboard.h"
+#include "AudioManager.h"
 
 const static int GAME_Y   = 240;    //「ゲーム」文字のy位置
 const static int CONFIG_Y = 270;    //「設定」文字のy位置
@@ -14,6 +15,12 @@ typedef enum{
 } eMenu ;
 
 static int NowSelect = eMenu_Game;    //現在の選択状態(初期はゲーム選択中)
+
+// 初期化
+void Menu_Instialize() 
+{
+	AudioManager::getInstance()->playBGM(BGM_Menu);
+}
 
 //更新
 void Menu_Update()
@@ -33,9 +40,11 @@ void Menu_Update()
         switch(NowSelect){
 		//現在選択中の状態によって処理を分岐
         case eMenu_Game:   //ゲーム選択中なら
+			AudioManager::getInstance()->playSE(SE_Select);
             SceneMgr_ChangeScene(eScene_Game);   //シーンをゲーム画面に変更
             break;
         case eMenu_Config:   //設定選択中なら
+			AudioManager::getInstance()->playSE(SE_Select);
             SceneMgr_ChangeScene(eScene_Config);   //シーンを設定画面に変更
             break;
         }
