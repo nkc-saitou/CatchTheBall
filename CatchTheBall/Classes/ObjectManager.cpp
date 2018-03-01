@@ -1,6 +1,6 @@
 #include "ObjectManager.h"
 #include "DxLib.h"
-#include <algorithm>
+
 
 ObjectManager::ObjectManager()
 {
@@ -15,21 +15,8 @@ ObjectManager::~ObjectManager()
 	//”jŠü
 }
 //---------------------------------------------------------
-//	XV
-//---------------------------------------------------------
-void ObjectManager::Update()
-{
-	//XV
-	for (auto obj : objectArry)
-	{
-		obj->Update();
-	}
-
-	//•`‰æ
-	Draw();
-}
-//---------------------------------------------------------
-//	Object’Ç‰Á
+//	Object‚Ì’Ç‰Á
+//	EPriority(—Dæ‡ˆÊ)‚ª’á‚¢‚à‚Ì‚©‚ç‘}“ü
 //---------------------------------------------------------
 void ObjectManager::Add(Object* object)
 {
@@ -49,6 +36,20 @@ void ObjectManager::Add(Object* object)
 	}
 	
 	objectArry.insert(it, object);
+}
+//---------------------------------------------------------
+//	XV
+//---------------------------------------------------------
+void ObjectManager::Update()
+{
+	//XV
+	for (auto obj : objectArry)
+	{
+		obj->Update();
+	}
+
+	//•`‰æ
+	Draw();
 }
 //---------------------------------------------------------
 //	•`‰æ
