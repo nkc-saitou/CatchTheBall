@@ -165,7 +165,6 @@ namespace CatchTheBallTool {
 		bool NewFile() {
 			if(SystemData.Instance.IsEdit) {
 				//編集状態なので保存を促す
-				DialogResult result = ShowEditFileClosingMessage();
 				switch(ShowEditFileClosingMessage()) {
 					case DialogResult.Yes: if(SaveFile()) break; else return false;
 					case DialogResult.No: break;

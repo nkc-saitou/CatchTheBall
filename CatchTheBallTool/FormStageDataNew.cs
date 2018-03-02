@@ -31,6 +31,7 @@ namespace CatchTheBallTool {
 			//設定を入力して新規作成
 			StageData.Instance.StageName = TextBoxStageName.Text;
 			var mapSize = new Size(int.Parse(TextBoxMapSizeX.Text), int.Parse(TextBoxMapSizeY.Text));
+			StageData.Instance.LoadMap();
 			StageData.Instance.ResizeMap(mapSize);
 
 			SystemData.Instance.IsEdit = false;
