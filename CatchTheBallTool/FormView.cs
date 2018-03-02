@@ -128,21 +128,29 @@ namespace CatchTheBallTool {
 
 			currentDraw.SuspendLayout();
 
-			//背景の描画
-			DrawAll(render, BACK_GROUND_COLOR);
-			//ステージの描画
-			DrawStage(render);
+			//プレビューを描画
+			DrawPreview();
 
 			switch(mode) {
 				case DrawMode.Preview:
-					DrawObject(render);
+					//保存データから持ってくる
+					render.DrawImage(SystemData.Instance.RenderView, new PointF());
 					break;
 				case DrawMode.MapChip:
+					//背景の描画
+					DrawBackGround(render);
+					//ステージの描画
+					DrawStage(render);
 					DrawLine(render);
 					break;
 				case DrawMode.Object:
+					//背景の描画
+					DrawBackGround(render);
+					//ステージの描画
+					DrawStage(render);
 					//ステージを暗くする
 					DrawAll(render, FADE_MASK_COLOR);
+					//オブジェクトの描画
 					DrawObject(render);
 					DrawLine(render);
 					break;
@@ -150,8 +158,6 @@ namespace CatchTheBallTool {
 					break;
 			}
 
-			//描画を保存
-			SystemData.Instance.RenderView = renderCanvas;
 
 			//サイズを調整して表示
 			var viewSize = new Size(
@@ -175,6 +181,32 @@ namespace CatchTheBallTool {
 			g.Dispose();
 			render.Dispose();
 
+		}
+		/// <summary>
+		/// プレビューを描画する
+		/// </summary>
+		void DrawPreview() {
+
+			var renderCanvas = new Bitmap(drawRect.Size.Width, drawRect.Size.Height);
+			var render = Graphics.FromImage(renderCanvas);
+
+			//背景の描画
+			DrawBackGround(render);
+			//ステージの描画
+			DrawStage(render);
+			//オブジェクトの描画
+			DrawObject(render);
+
+			//描画を保存
+			SystemData.Instance.RenderView = renderCanvas;
+
+		}
+		void DrawBackGround(Graphics g) {
+
+			var brush = new SolidBrush(BACK_GROUND_COLOR);
+			g.FillRectangle(brush, 0, 0, drawRect.Size.Width, drawRect.Size.Height);
+
+			brush.Dispose();
 		}
 		/// <summary>
 		/// 描画範囲を一色描画する

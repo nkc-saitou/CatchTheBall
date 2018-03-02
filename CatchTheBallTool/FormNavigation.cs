@@ -88,6 +88,8 @@ namespace CatchTheBallTool {
 		/// </summary>
 		void Draw() {
 
+			if(PictureBoxView.Size.Width <= 0 || PictureBoxView.Size.Height <= 0) return;
+
 			//初期設定
 			var canvas = new Bitmap(PictureBoxView.Size.Width, PictureBoxView.Size.Height);
 			var g = Graphics.FromImage(canvas);
