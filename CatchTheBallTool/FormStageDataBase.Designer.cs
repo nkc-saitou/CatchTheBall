@@ -24,11 +24,8 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.ButtonMapChipPath = new System.Windows.Forms.Button();
 			this.TextBoxStageName = new System.Windows.Forms.TextBox();
 			this.LabelStageName = new System.Windows.Forms.Label();
-			this.TextBoxMapChipPath = new System.Windows.Forms.TextBox();
-			this.LabelMapChipPath = new System.Windows.Forms.Label();
 			this.LabelMapSize = new System.Windows.Forms.Label();
 			this.TextBoxMapSizeY = new System.Windows.Forms.TextBox();
 			this.TextBoxMapSizeX = new System.Windows.Forms.TextBox();
@@ -40,11 +37,8 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.ButtonMapChipPath);
 			this.panel1.Controls.Add(this.TextBoxStageName);
 			this.panel1.Controls.Add(this.LabelStageName);
-			this.panel1.Controls.Add(this.TextBoxMapChipPath);
-			this.panel1.Controls.Add(this.LabelMapChipPath);
 			this.panel1.Controls.Add(this.LabelMapSize);
 			this.panel1.Controls.Add(this.TextBoxMapSizeY);
 			this.panel1.Controls.Add(this.TextBoxMapSizeX);
@@ -52,18 +46,8 @@
 			this.panel1.Controls.Add(this.LabelMapSizeX);
 			this.panel1.Location = new System.Drawing.Point(12, 12);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(313, 235);
+			this.panel1.Size = new System.Drawing.Size(313, 160);
 			this.panel1.TabIndex = 0;
-			// 
-			// ButtonMapChipPath
-			// 
-			this.ButtonMapChipPath.Location = new System.Drawing.Point(269, 189);
-			this.ButtonMapChipPath.Name = "ButtonMapChipPath";
-			this.ButtonMapChipPath.Size = new System.Drawing.Size(19, 19);
-			this.ButtonMapChipPath.TabIndex = 4;
-			this.ButtonMapChipPath.Text = "...";
-			this.ButtonMapChipPath.UseVisualStyleBackColor = true;
-			this.ButtonMapChipPath.Click += new System.EventHandler(this.ButtonMapChipPath_Click);
 			// 
 			// TextBoxStageName
 			// 
@@ -84,25 +68,6 @@
 			this.LabelStageName.TabIndex = 0;
 			this.LabelStageName.Text = "ステージ名";
 			this.LabelStageName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// TextBoxMapChipPath
-			// 
-			this.TextBoxMapChipPath.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-			this.TextBoxMapChipPath.Location = new System.Drawing.Point(36, 189);
-			this.TextBoxMapChipPath.Name = "TextBoxMapChipPath";
-			this.TextBoxMapChipPath.Size = new System.Drawing.Size(227, 19);
-			this.TextBoxMapChipPath.TabIndex = 3;
-			// 
-			// LabelMapChipPath
-			// 
-			this.LabelMapChipPath.AutoSize = true;
-			this.LabelMapChipPath.Font = new System.Drawing.Font("MS UI Gothic", 14F);
-			this.LabelMapChipPath.Location = new System.Drawing.Point(14, 167);
-			this.LabelMapChipPath.Name = "LabelMapChipPath";
-			this.LabelMapChipPath.Size = new System.Drawing.Size(135, 19);
-			this.LabelMapChipPath.TabIndex = 0;
-			this.LabelMapChipPath.Text = "マップチップのパス";
-			this.LabelMapChipPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// LabelMapSize
 			// 
@@ -185,14 +150,11 @@
 
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label LabelStageName;
-		private System.Windows.Forms.Label LabelMapChipPath;
 		private System.Windows.Forms.Label LabelMapSize;
 		private System.Windows.Forms.Label LabelMapSizeY;
 		private System.Windows.Forms.Label LabelMapSizeX;
-		private System.Windows.Forms.Button ButtonMapChipPath;
 		private System.Windows.Forms.OpenFileDialog OpenFileMapChip;
 		protected System.Windows.Forms.TextBox TextBoxStageName;
-		protected System.Windows.Forms.TextBox TextBoxMapChipPath;
 		protected System.Windows.Forms.TextBox TextBoxMapSizeY;
 		protected System.Windows.Forms.TextBox TextBoxMapSizeX;
 	}

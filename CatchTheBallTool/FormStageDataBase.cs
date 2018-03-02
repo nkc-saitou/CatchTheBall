@@ -20,7 +20,6 @@ namespace CatchTheBallTool {
 
 			TextBoxMapSizeX.Text = StageData.Instance.MapSize.Width.ToString();
 			TextBoxMapSizeY.Text = StageData.Instance.MapSize.Height.ToString();
-			TextBoxMapChipPath.Text = SystemData.Instance.MapChipPath;
 		}
 
 		/// <summary>
@@ -50,25 +49,6 @@ namespace CatchTheBallTool {
 				return false;
 			}
 			return true;
-		}
-
-		/// <summary>
-		/// マップチップのパスが正しく入力されているか調べる
-		/// </summary>
-		/// <returns></returns>
-		protected bool CheckMapChipPath() {
-
-			if(!File.Exists(TextBoxMapChipPath.Text)) {
-				MessageBox.Show("マップチップの存在が確認できませんでした");
-				return false;
-			}
-			return true;
-		}
-
-		private void ButtonMapChipPath_Click(object sender, EventArgs e) {
-			if(OpenFileMapChip.ShowDialog() != DialogResult.OK) return;
-
-			TextBoxMapChipPath.Text = OpenFileMapChip.FileName;
 		}
 
 		private void TextBoxMapSizeX_KeyPress(object sender, KeyPressEventArgs e) {

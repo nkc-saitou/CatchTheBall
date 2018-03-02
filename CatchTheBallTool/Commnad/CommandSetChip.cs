@@ -10,25 +10,29 @@ namespace CatchTheBallTool.Commnad {
 	/// <summary>
 	/// マップチップを配置するコマンド
 	/// </summary>
-	public class CommandSetMapChip : ICommand {
+	public class CommandSetChip : ICommand {
 
 		public int[] prevMapChip { get; set; }
 
+		List<List<int>> map;
 		Point[] position;
 		int[] mapChip;
 
-		public CommandSetMapChip(Point position, int mapChip) {
+		public CommandSetChip(List<List<int>>map, Point position, int mapChip) {
+			this.map = map;
 			this.position = new Point[] { position };
 			this.mapChip = new int[] { mapChip };
 		}
 
-		public CommandSetMapChip(Point[] position, int mapChip) {
+		public CommandSetChip(List<List<int>> map, Point[] position, int mapChip) {
+			this.map = map;
 			this.position = new Point[position.Length];
 			position.CopyTo(this.position, 0);
 			this.mapChip = Enumerable.Repeat(mapChip, position.Length).ToArray();
 		}
 
-		public CommandSetMapChip(Point[] position, int[] mapChip) {
+		public CommandSetChip(List<List<int>> map, Point[] position, int[] mapChip) {
+			this.map = map;
 			this.position = new Point[position.Length];
 			position.CopyTo(this.position, 0);
 			this.mapChip = new int[mapChip.Length];
@@ -37,7 +41,6 @@ namespace CatchTheBallTool.Commnad {
 
 		public void Execute() {
 
-			var map = StageData.Instance.Map;
 			prevMapChip = new int[position.Length];
 			for(int i = 0;i < position.Length;i++) {
 				prevMapChip[i] = map[position[i].Y][position[i].X];
@@ -52,7 +55,6 @@ namespace CatchTheBallTool.Commnad {
 
 		public void Undo() {
 
-			var map = StageData.Instance.Map;
 			for(int i = 0;i < position.Length;i++) {
 				map[position[i].Y][position[i].X] = prevMapChip[i];
 			}

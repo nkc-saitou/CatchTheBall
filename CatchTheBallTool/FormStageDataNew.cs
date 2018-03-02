@@ -27,14 +27,12 @@ namespace CatchTheBallTool {
 			//入力された情報が正しいかチェック
 			if(!CheckStageName()) return;
 			if(!CheckMapSize()) return;
-			if(!CheckMapChipPath()) return;
 
 			//設定を入力して新規作成
 			StageData.Instance.StageName = TextBoxStageName.Text;
 			var mapSize = new Size(int.Parse(TextBoxMapSizeX.Text), int.Parse(TextBoxMapSizeY.Text));
 			StageData.Instance.ResizeMap(mapSize);
 
-			SystemData.Instance.MapChipPath = TextBoxMapChipPath.Text;
 			SystemData.Instance.IsEdit = false;
 			SystemData.Instance.Load();
 

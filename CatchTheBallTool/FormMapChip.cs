@@ -18,14 +18,19 @@ namespace CatchTheBallTool {
 		readonly Color SELECT_CHIP_COLOR = Color.FromArgb(0xff, 0xff, 0x00, 0x00);
 		const float SELECT_CHIP_PENSIZE = 5;
 
+		ImageAtlas currentImageAtlas;
+		int TargetDrawMode;
+		int[] selectChipDrawMode;
+
 		Rectangle drawRect;
 		Size drawChipSize;
 
 		public FormMapChip(DockPanel dockPanel, ToolStripMenuItem item) : base(dockPanel, item) {
 			InitializeComponent();
 
-			//マップチップ読み込み時にマップチップ描画
-			SystemData.Instance.MapChipLoaded += Draw;
+			selectChipDrawMode = new int[2];
+
+			ChangeDrawChipFromDrawMode(DrawMode.Preview);
 
 			//サイズ変更時に再計算
 			DockStateChanged += (object sender, EventArgs e) => {
@@ -34,14 +39,16 @@ namespace CatchTheBallTool {
 			PictureBoxView.SizeChanged += (object sender, EventArgs e) => {
 				CalcDrawRect();
 			};
-		}
 
+			//Viewのモードが変わったときに表示するチップを変更する
+			SystemData.Instance.DrawModeChanged += ChangeDrawChipFromDrawMode;
+
+		}
 		~FormMapChip() {
-
-			//イベントの削除
-			SystemData.Instance.MapChipLoaded -= Draw;
-
+			//イベントを削除
+			SystemData.Instance.DrawModeChanged += ChangeDrawChipFromDrawMode;
 		}
+
 
 		/// <summary>
 		/// マップチップの表示サイズを計算
@@ -85,7 +92,7 @@ namespace CatchTheBallTool {
 		/// マップチップを選択する
 		/// </summary>
 		/// <param name="position">MapChip上のマウス位置</param>
-		void SelectMapChip(Point position) {
+		void SelectChip(Point position) {
 
 			var chipCount = SystemData.Instance.MapChip.ChipCount;
 
@@ -93,7 +100,7 @@ namespace CatchTheBallTool {
 				(int)((float)position.X / drawRect.Width * chipCount.Width),
 				(int)((float)position.Y / drawRect.Height * chipCount.Height));
 
-			SystemData.Instance.SelectMapChip = selectPoint.X + chipCount.Width * selectPoint.Y;
+			SystemData.Instance.SelectChip = selectChipDrawMode[TargetDrawMode] = selectPoint.X + chipCount.Width * selectPoint.Y;
 			
 			Draw();
 		}
@@ -115,11 +122,11 @@ namespace CatchTheBallTool {
 			brush.Dispose();
 
 			//マップチップを描画
-			g.DrawImage(SystemData.Instance.MapChip.AtlasImage, drawRect);
+			g.DrawImage(currentImageAtlas.AtlasImage, drawRect);
 
-			//選択を描画
+			//選択枠を描画
 			var pen = new Pen(SELECT_CHIP_COLOR, SELECT_CHIP_PENSIZE);
-			var mapChipRect = SystemData.Instance.MapChip.GetRectangleFromID(SystemData.Instance.SelectMapChip);
+			var mapChipRect = currentImageAtlas.GetRectangleFromID(SystemData.Instance.SelectChip);
 
 			var selectPoint = new Point(
 				drawRect.X + (int)((float)mapChipRect.X / mapChipRect.Width * drawChipSize.Width),
@@ -135,6 +142,35 @@ namespace CatchTheBallTool {
 			g.Dispose();
 		}
 
+		/// <summary>
+		/// 描画するマップチップを変更する
+		/// </summary>
+		/// <param name="mode"></param>
+		void ChangeDrawChipFromDrawMode(DrawMode mode) {
+
+			switch(mode) {
+				case DrawMode.Preview:
+					currentImageAtlas = SystemData.Instance.MapChip;
+					TargetDrawMode = 0;
+					break;
+				case DrawMode.MapChip:
+					currentImageAtlas = SystemData.Instance.MapChip;
+					TargetDrawMode = 0;
+					break;
+				case DrawMode.Object:
+					currentImageAtlas = SystemData.Instance.ObjectChip;
+					TargetDrawMode = 1;
+					break;
+				default:
+					return;
+			}
+
+			SystemData.Instance.SelectChip = selectChipDrawMode[TargetDrawMode];
+
+			//描画して更新
+			Draw();
+		}
+
 		#region Event
 		private void PictureBoxView_MouseDown(object sender, MouseEventArgs e) {
 
@@ -142,7 +178,7 @@ namespace CatchTheBallTool {
 			if(!drawRect.Contains(e.X, e.Y)) return;
 
 			//マップチップを選択
-			SelectMapChip(new Point(e.X - drawRect.X, e.Y - drawRect.Y));
+			SelectChip(new Point(e.X - drawRect.X, e.Y - drawRect.Y));
 		}
 		#endregion
 

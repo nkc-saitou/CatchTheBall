@@ -31,7 +31,7 @@
 			// 
 			this.ButtonNew.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.ButtonNew.Font = new System.Drawing.Font("MS UI Gothic", 16F);
-			this.ButtonNew.Location = new System.Drawing.Point(12, 253);
+			this.ButtonNew.Location = new System.Drawing.Point(12, 179);
 			this.ButtonNew.Name = "ButtonNew";
 			this.ButtonNew.Size = new System.Drawing.Size(149, 41);
 			this.ButtonNew.TabIndex = 1;
@@ -43,7 +43,7 @@
 			// 
 			this.ButtonCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.ButtonCancel.Font = new System.Drawing.Font("MS UI Gothic", 16F);
-			this.ButtonCancel.Location = new System.Drawing.Point(176, 253);
+			this.ButtonCancel.Location = new System.Drawing.Point(176, 179);
 			this.ButtonCancel.Name = "ButtonCancel";
 			this.ButtonCancel.Size = new System.Drawing.Size(149, 41);
 			this.ButtonCancel.TabIndex = 2;
@@ -55,7 +55,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(334, 306);
+			this.ClientSize = new System.Drawing.Size(334, 232);
 			this.Controls.Add(this.ButtonCancel);
 			this.Controls.Add(this.ButtonNew);
 			this.Name = "FormStageDataNew";

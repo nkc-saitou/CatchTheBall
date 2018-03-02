@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace CatchTheBallTool {
 
@@ -17,23 +18,22 @@ namespace CatchTheBallTool {
 		public const string DEFAULT_LAYOUT_FILE = @"DefaultLayout.xml";
 		public const string DEFAULT_LAYOUT_PATH = DEFAULT_LAYOUT_DIRECTORY + DEFAULT_LAYOUT_FILE;
 
-		public const int MAPCHIP_SIZE = 64;
-		public const int MAPCHIP_COUNT = 16;
+		public const int CHIP_SIZE = 64;
+		public const int CHIP_COUNT = 16;
 
-		const string DEFAULT_MAPCHIP_PATH = @".\image\DefaultMapChip.png";
-
-
-
-		public string MapChipPath { get; set; }
+		const string MAPCHIP_PATH = @".\image\MapChip.png";
+		const string OBJECTCHIP_PATH = @".\image\ObjectChip.png";
 
 		public Rectangle FocusRect { get; set; }
 		public Image RenderView { get; set; }
 
-		public int SelectMapChip { get; set; }
+		public ImageAtlas MapChip { get; private set; }
+		public ImageAtlas ObjectChip { get; private set; }
 
-		public event Action MapChipLoaded;
+		public int SelectChip { get; set; }
 
 		public event Action<float> ViewMagnificationChanged;
+		public event Action<DrawMode> DrawModeChanged;
 		public event Action StageDraw;
 
 		bool isEdit = false;
@@ -47,14 +47,6 @@ namespace CatchTheBallTool {
 			}
 		}
 
-		ImageAtlas mapChip;
-		public ImageAtlas MapChip {
-			get { return mapChip; }
-			set {
-				mapChip = value;
-				if(MapChipLoaded != null) MapChipLoaded();
-			}
-		}
 
 		float viewMagnification = 1;
 		public float ViewMagnification {
@@ -73,18 +65,39 @@ namespace CatchTheBallTool {
 		protected override void Initialize() {
 			base.Initialize();
 
-			MapChipPath = Directory.GetCurrentDirectory() + DEFAULT_MAPCHIP_PATH;
-
 			Load();
 		}
 
 		public void OnStageDraw() {
 			if(StageDraw != null) StageDraw();
 		}
+		public void OnDrawModeChanged(DrawMode mode) {
+			if(DrawModeChanged != null) DrawModeChanged(mode);
+		}
 
 		public void Load() {
-			if(File.Exists(MapChipPath))
-				MapChip = new ImageAtlas(Image.FromFile(MapChipPath), new Size(MAPCHIP_SIZE, MAPCHIP_SIZE));
+
+			//マップチップの読み込み
+			Image mapChip;
+			if(File.Exists(MAPCHIP_PATH)) {
+				mapChip = Image.FromFile(MAPCHIP_PATH);
+			}
+			else {
+				MessageBox.Show("マップチップの存在が確認できませんでした");
+				mapChip = new Bitmap(256, 256);
+			}
+			MapChip = new ImageAtlas(Image.FromFile(MAPCHIP_PATH), new Size(CHIP_SIZE, CHIP_SIZE));
+
+			//オブジェクトチップの読み込み
+			Image objectChip;
+			if(File.Exists(OBJECTCHIP_PATH)) {
+				objectChip = Image.FromFile(OBJECTCHIP_PATH);
+			}
+			else {
+				MessageBox.Show("オブジェクトチップの存在が確認できませんでした");
+				objectChip = new Bitmap(256, 256);
+			}
+			ObjectChip = new ImageAtlas(Image.FromFile(OBJECTCHIP_PATH), new Size(CHIP_SIZE, CHIP_SIZE));
 		}
 	}
 }

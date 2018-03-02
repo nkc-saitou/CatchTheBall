@@ -48,7 +48,7 @@ namespace CatchTheBallTool {
 
 			AddPictureBox();
 			CalcDrawSize();
-			ChangeViewMode(DrawMode.Preview);
+			ChangeDrawMode(DrawMode.Preview);
 
 			//ステージ読み込み時に描画
 			FormMain.Instance.StageLoaded += Draw;
@@ -69,8 +69,8 @@ namespace CatchTheBallTool {
 
 		void CalcDrawSize() {
 			drawRect.Size = new Size(
-				StageData.Instance.MapSize.Width * SystemData.MAPCHIP_SIZE,
-				StageData.Instance.MapSize.Height * SystemData.MAPCHIP_SIZE);
+				StageData.Instance.MapSize.Width * SystemData.CHIP_SIZE,
+				StageData.Instance.MapSize.Height * SystemData.CHIP_SIZE);
 		}
 
 		/// <summary>
@@ -135,6 +135,7 @@ namespace CatchTheBallTool {
 
 			switch(mode) {
 				case DrawMode.Preview:
+					DrawObject(render);
 					break;
 				case DrawMode.MapChip:
 					DrawLine(render);
@@ -142,6 +143,7 @@ namespace CatchTheBallTool {
 				case DrawMode.Object:
 					//ステージを暗くする
 					DrawAll(render, FADE_MASK_COLOR);
+					DrawObject(render);
 					DrawLine(render);
 					break;
 				default:
@@ -186,53 +188,73 @@ namespace CatchTheBallTool {
 
 			brush.Dispose();
 		}
+		/// <summary>
+		/// 枠線を描画する
+		/// </summary>
+		/// <param name="g"></param>
 		void DrawLine(Graphics g) {
 
 			var pen = new Pen(LINE_COLOR, LINE_SIZE);
 
 			for(int i = 0;i < StageData.Instance.MapSize.Width;i++) {
-				g.DrawLine(pen, i * SystemData.MAPCHIP_SIZE, 0, i * SystemData.MAPCHIP_SIZE, drawRect.Size.Height);
+				g.DrawLine(pen, i * SystemData.CHIP_SIZE, 0, i * SystemData.CHIP_SIZE, drawRect.Size.Height);
 			}
 			for(int i = 0;i < StageData.Instance.MapSize.Height;i++) {
-				g.DrawLine(pen, 0, i * SystemData.MAPCHIP_SIZE, drawRect.Size.Width, i * SystemData.MAPCHIP_SIZE);
+				g.DrawLine(pen, 0, i * SystemData.CHIP_SIZE, drawRect.Size.Width, i * SystemData.CHIP_SIZE);
 			}
 
 			pen.Dispose();
 		}
+		/// <summary>
+		/// ステージを描画する
+		/// </summary>
+		/// <param name="g"></param>
 		void DrawStage(Graphics g) {
 
-			var map = StageData.Instance.Map;
+			var map = StageData.Instance.StageMap;
 			var size = StageData.Instance.MapSize;
 
 			for(int i = 0;i < size.Height;i++) {
 				for(int j = 0;j < size.Width;j++) {
 
 					var chip = map[i][j];
-					if(chip < 0 || chip >= SystemData.MAPCHIP_COUNT) continue;
+					if(chip < 0 || chip >= SystemData.CHIP_COUNT) continue;
 
-					var position = new Point(j * SystemData.MAPCHIP_SIZE, i * SystemData.MAPCHIP_SIZE);
+					var position = new Point(j * SystemData.CHIP_SIZE, i * SystemData.CHIP_SIZE);
 					g.DrawImage(SystemData.Instance.MapChip[chip], position);
 
 				}
 			}
 
 		}
+		/// <summary>
+		/// オブジェクトを描画する
+		/// </summary>
+		/// <param name="g"></param>
+		void DrawObject(Graphics g) {
+
+			var map = StageData.Instance.ObjectMap;
+			var size = StageData.Instance.MapSize;
+
+			for(int i = 0;i < size.Height;i++) {
+				for(int j = 0;j < size.Width;j++) {
+
+					var chip = map[i][j];
+					if(chip < 0 || chip >= SystemData.CHIP_COUNT) continue;
+
+					var position = new Point(j * SystemData.CHIP_SIZE, i * SystemData.CHIP_SIZE);
+					g.DrawImage(SystemData.Instance.ObjectChip[chip], position);
+
+				}
+			}
+		}
 		#endregion
 
 		/// <summary>
-		/// スクロールする
+		/// マウスの位置からマップの位置を計算する
 		/// </summary>
-		/// <param name="deltaPosition"></param>
-		void ScrollPage(Point deltaPosition) {
-
-			var page = GetPageFromMode(mode);
-
-			page.AutoScrollPosition = new Point(
-				page.AutoScrollPosition.X + deltaPosition.X,
-				page.AutoScrollPosition.X + deltaPosition.Y);
-
-		}
-
+		/// <param name="mousePosition"></param>
+		/// <returns></returns>
 		public Point CalcMapPosition(Point mousePosition) {
 			var mapPosition = new PointF(
 				(mousePosition.X + drawRect.Location.X) / CurrentSize,
@@ -307,7 +329,7 @@ namespace CatchTheBallTool {
 		/// 描画モードを変更する
 		/// </summary>
 		/// <param name="mode"></param>
-		public void ChangeViewMode(DrawMode mode) {
+		public void ChangeDrawMode(DrawMode mode) {
 
 			this.mode = mode;
 
@@ -325,6 +347,9 @@ namespace CatchTheBallTool {
 				default:
 					break;
 			}
+
+			SystemData.Instance.OnDrawModeChanged(mode);
+
 			Draw();
 		}
 
@@ -363,7 +388,7 @@ namespace CatchTheBallTool {
 			var scrollPosition = GetPageFromMode(mode).AutoScrollPosition;
 
 			//描画モード切り替え
-			ChangeViewMode((DrawMode)TabControlView.SelectedIndex);
+			ChangeDrawMode((DrawMode)TabControlView.SelectedIndex);
 
 			//スクロール位置を反映
 			TabControlView.SelectedTab.AutoScrollPosition =
@@ -401,6 +426,15 @@ namespace CatchTheBallTool {
 		}
 
 		private void PictureBoxObject_MouseDown(object sender, MouseEventArgs e) {
+
+			//オブジェクトを配置
+			var stagePosition = CalcMapPosition(e.Location);
+
+			if(!StageData.Instance.CheckInsideMap(stagePosition)) return;
+			if(StageData.Instance.ObjectMap[stagePosition.Y][stagePosition.X] == SystemData.Instance.SelectChip) return;
+
+			CommandStream.Instance.ExecuteCommand(new CommandSetChip(StageData.Instance.ObjectMap, stagePosition, SystemData.Instance.SelectChip));
+
 			MouseDown(e.Location, e.Button);
 		}
 		private void PictureBoxObject_MouseMove(object sender, MouseEventArgs e) {

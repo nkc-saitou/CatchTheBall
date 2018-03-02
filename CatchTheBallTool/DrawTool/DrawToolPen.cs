@@ -47,7 +47,7 @@ namespace CatchTheBallTool.DrawTool {
 
 			state = MouseButtons.None;
 
-			var command = new CommandSetMapChip(position.ToArray(), chip);
+			var command = new CommandSetChip(StageData.Instance.StageMap, position.ToArray(), chip);
 			command.prevMapChip = prevMapChip.ToArray();
 
 			CommandStream.Instance.AddStream(command);
@@ -62,7 +62,7 @@ namespace CatchTheBallTool.DrawTool {
 		/// <param name="button"></param>
 		/// <returns></returns>
 		int GetMapChipFromButton(MouseButtons button) {
-			return state == MouseButtons.Left ? SystemData.Instance.SelectMapChip : -1;
+			return state == MouseButtons.Left ? SystemData.Instance.SelectChip : -1;
 		}
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace CatchTheBallTool.DrawTool {
 			if(position.Any(item => item == stagePosition)) return;
 			if(!StageData.Instance.CheckInsideMap(stagePosition)) return;
 
-			prevMapChip.Add(StageData.Instance.Map[stagePosition.Y][stagePosition.X]);
+			prevMapChip.Add(StageData.Instance.StageMap[stagePosition.Y][stagePosition.X]);
 			position.Add(stagePosition);
 
 			StageData.Instance.SetStageData(stagePosition, chip);

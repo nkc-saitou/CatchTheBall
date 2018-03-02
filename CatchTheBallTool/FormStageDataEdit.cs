@@ -26,11 +26,10 @@ namespace CatchTheBallTool {
 
 			//入力されたデータが正しいかどうかチェック
 			if(!CheckMapSize()) return;
-			if(!CheckMapChipPath()) return;
 
 			//ステージデータ編集コマンドを実行
 			var mapSize = (new Size(int.Parse(TextBoxMapSizeX.Text), int.Parse(TextBoxMapSizeY.Text)));
-			CommandStream.Instance.ExecuteCommand(new CommandEditStageData(mapSize, TextBoxMapChipPath.Text));
+			CommandStream.Instance.ExecuteCommand(new CommandEditStageData(mapSize));
 
 			DialogResult = DialogResult.OK;
 		}

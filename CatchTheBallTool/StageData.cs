@@ -20,8 +20,8 @@ namespace CatchTheBallTool {
 		public string StageName { get; set; }			//ファイル名
 		public string StagePath { get; set; }			//拡張子付き
 		public Size MapSize { get; private set; }
-		public List<List<int>> Map { get; private set; }
-		public List<Object> ObjectList { get; set; }
+		public List<List<int>> StageMap { get; private set; }
+		public List<List<int>> ObjectMap { get; private set; }
 
 		public event Action MapSizeChanged;
 
@@ -34,25 +34,26 @@ namespace CatchTheBallTool {
 			StagePath = "";
 
 			MapSize = DEFAULT_MAPSIZE;
-			ObjectList = new List<Object>();
 
-			MapSize = DEFAULT_MAPSIZE;
-
-			Load();
+			LoadMap();
 		}
 
-		public void Load() {
+		public void LoadMap() {
 
-			Map = new List<List<int>>();
+			StageMap = new List<List<int>>();
+			ObjectMap = new List<List<int>>();
 
 			for(int i = 0;i < MapSize.Height;i++) {
 
-				var column = new List<int>();
+				var stageColumn = new List<int>();
+				var objectColumn = new List<int>();
 				for(int j = 0;j < MapSize.Width;j++) {
-					column.Add(-1);
+					stageColumn.Add(-1);
+					objectColumn.Add(-1);
 				}
 
-				Map.Add(column);
+				StageMap.Add(stageColumn);
+				ObjectMap.Add(objectColumn);
 			}
 		}
 
@@ -66,9 +67,10 @@ namespace CatchTheBallTool {
 			if(newSize.Width > MapSize.Width) {
 
 				var diff = newSize.Width - MapSize.Width;
-				for(int i = 0;i < Map.Count;i++) {
+				for(int i = 0;i < StageMap.Count;i++) {
 					for(int j = 0;j < diff;j++) {
-						Map[i].Add(-1);
+						StageMap[i].Add(-1);
+						ObjectMap[i].Add(-1);
 					}
 				}
 			}
@@ -79,12 +81,15 @@ namespace CatchTheBallTool {
 				var diff = newSize.Height - MapSize.Height;
 				for(int i = 0;i < diff;i++) {
 
-					var column = new List<int>();
+					var stageColumn = new List<int>();
+					var objectColumn = new List<int>();
 					for(int j = 0;j < newSize.Width;j++) {
-						column.Add(-1);
+						stageColumn.Add(-1);
+						objectColumn.Add(-1);
 					}
 
-					Map.Add(column);
+					StageMap.Add(objectColumn);
+					ObjectMap.Add(stageColumn);
 				}
 			}
 
@@ -103,7 +108,7 @@ namespace CatchTheBallTool {
 		public bool SetStageData(Point position, int mapchipNum) {
 			if(!CheckInsideMap(position)) return false;
 
-			Map[position.Y][position.X] = mapchipNum;
+			StageMap[position.Y][position.X] = mapchipNum;
 
 			return true;
 		}
@@ -129,8 +134,8 @@ namespace CatchTheBallTool {
 
 			var count = 0;				//文字のカウンター
 			Size mapSize;
-			var map = new List<List<int>>();
-			var objectList = new List<Object>();
+			var stageMap = new List<List<int>>();
+			var objectMap = new List<List<int>>();
 
 			//改行を抜く
 			data = new string(data
@@ -143,32 +148,32 @@ namespace CatchTheBallTool {
 				//マップサイズを読み込む
 				mapSize = new Size(int.Parse(dataSet[count++]), int.Parse(dataSet[count++]));
 
-				//マップを読み込む
+				//ステージマップを読み込む
 				for(int i = 0;i < mapSize.Height;i++) {
 
 					var column = new List<int>();
 					for(int j = 0;j < mapSize.Width;j++) {
 						column.Add(int.Parse(dataSet[count++]));
 					}
-					map.Add(column);
+					stageMap.Add(column);
 				}
 
-				//オブジェクトの数を読み込む
-				var objectCount = int.Parse(dataSet[count++]);
+				//オブジェクトマップを読み込む
+				for(int i = 0;i < mapSize.Height;i++) {
 
-				//オブジェクトを読み込む
-				for(int i = 0;i < objectCount;i++) {
-					objectList.Add(new Object(
-						int.Parse(dataSet[count++]),
-						new Point(int.Parse(dataSet[count++]), int.Parse(dataSet[count++]))));
+					var column = new List<int>();
+					for(int j = 0;j < mapSize.Width;j++) {
+						column.Add(int.Parse(dataSet[count++]));
+					}
+					objectMap.Add(column);
 				}
 			}
 			catch { return false; }
 
 			//反映する
 			MapSize = mapSize;
-			Map = map;
-			ObjectList = objectList;
+			StageMap = stageMap;
+			ObjectMap = objectMap;
 
 			return true;
 		}
@@ -189,26 +194,20 @@ namespace CatchTheBallTool {
 			//ステージデータを格納
 			for(int i = 0;i < MapSize.Height;i++) {
 				for(int j = 0;j < MapSize.Width;j++) {
-					sb.Append(Map[i][j]);
+					sb.Append(StageMap[i][j]);
 					sb.Append(",");
 				}
 				sb.Append("\n");
 			}
 
-			//オブジェクトの数を格納
-			sb.Append(ObjectList.Count);
-			sb.Append(",\n");
-
-			//オブジェクトを格納
-			for(int i = 0;i < ObjectList.Count;i++) {
-				sb.Append(ObjectList[i].id);
-				sb.Append(",");
-				sb.Append(ObjectList[i].position.X);
-				sb.Append(",");
-				sb.Append(ObjectList[i].position.Y);
-				sb.Append(",\n");
+			//オブジェクトデータを格納
+			for(int i = 0;i < MapSize.Height;i++) {
+				for(int j = 0;j < MapSize.Width;j++) {
+					sb.Append(ObjectMap[i][j]);
+					sb.Append(",");
+				}
+				sb.Append("\n");
 			}
-
 			return sb.ToString();
 		}
 		#endregion

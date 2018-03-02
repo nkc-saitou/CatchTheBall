@@ -15,12 +15,8 @@ namespace CatchTheBallTool.Commnad {
 		Size newMapSize;
 		Size prevMapSize;
 
-		string newMapChipPath;
-		string prevMapChipPath;
-
-		public CommandEditStageData(Size newMapSize, string newMapChipPath) {
+		public CommandEditStageData(Size newMapSize) {
 			this.newMapSize = newMapSize;
-			this.newMapChipPath = newMapChipPath;
 		}
 
 		public void Execute() {
@@ -28,11 +24,6 @@ namespace CatchTheBallTool.Commnad {
 			//マップサイズ変更
 			prevMapSize = StageData.Instance.MapSize;
 			StageData.Instance.ResizeMap(newMapSize);
-			//マップチップ変更
-			prevMapChipPath = SystemData.Instance.MapChipPath;
-			SystemData.Instance.MapChipPath = newMapChipPath;
-
-			SystemData.Instance.Load();
 			FormMain.Instance.GetWindow<FormView>().Draw();
 
 			//編集フラグを変更
@@ -43,11 +34,6 @@ namespace CatchTheBallTool.Commnad {
 
 			//マップサイズ変更
 			StageData.Instance.ResizeMap(prevMapSize);
-			//マップチップ変更
-			SystemData.Instance.MapChipPath = prevMapChipPath;
-
-			//更新
-			SystemData.Instance.Load();
 			FormMain.Instance.GetWindow<FormView>().Draw();
 
 			//編集フラグを戻さない
