@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,6 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Classes\Collision.cpp" />
+    <ClCompile Include="Classes\CollisionManager.cpp" />
+    <ClCompile Include="Classes\Config.cpp" />
+    <ClCompile Include="Classes\Game.cpp" />
+    <ClCompile Include="Classes\Input.cpp" />
+    <ClCompile Include="Classes\Keyboard.cpp" />
+    <ClCompile Include="Classes\Main.cpp" />
+    <ClCompile Include="Classes\Menu.cpp" />
+    <ClCompile Include="Classes\Object.cpp" />
+    <ClCompile Include="Classes\ObjectManager.cpp" />
+    <ClCompile Include="Classes\SceneMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes\Collision.h" />
+    <ClInclude Include="Classes\CollisionManager.h" />
+    <ClInclude Include="Classes\Config.h" />
+    <ClInclude Include="Classes\Game.h" />
+    <ClInclude Include="Classes\Input.h" />
+    <ClInclude Include="Classes\Keyboard.h" />
+    <ClInclude Include="Classes\Menu.h" />
+    <ClInclude Include="Classes\Object.h" />
+    <ClInclude Include="Classes\ObjectManager.h" />
+    <ClInclude Include="Classes\SceneMgr.h" />
+    <ClInclude Include="Classes\Singleton.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CBC9D6E-DAAA-4149-8076-6F56ACCDB5FD}</ProjectGuid>
     <RootNamespace>CatchTheBall</RootNamespace>
@@ -33,7 +59,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -86,7 +112,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,15 +142,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
