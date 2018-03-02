@@ -62,21 +62,21 @@ namespace CatchTheBallTool {
 			var renderImage = SystemData.Instance.RenderView;
 
 			//縦が1のときの横のサイズ
-			var renderImageRatio = (float)renderImage.Size.Width / renderImage.Size.Height;
-			var viewSizeRatio = (float)viewSize.Width / viewSize.Height;
+			var renderImageAspect = (float)renderImage.Size.Width / renderImage.Size.Height;
+			var viewSizeAspect = (float)viewSize.Width / viewSize.Height;
 
 			//描画位置・サイズを求める
 			drawRect = new Rectangle();
-			if(renderImageRatio > viewSizeRatio) {
+			if(renderImageAspect > viewSizeAspect) {
 				//横が最大
 				drawRect.Size =
-					new Size(viewSize.Width, (int)(viewSize.Width / renderImageRatio));
+					new Size(viewSize.Width, (int)(viewSize.Width / renderImageAspect));
 				drawRect.Location = new Point(0, (viewSize.Height - drawRect.Size.Height) / 2);
 			}
 			else {
 				//縦が最大
 				drawRect.Size = 
-					new Size((int)(viewSize.Height * renderImageRatio), viewSize.Height);
+					new Size((int)(viewSize.Height * renderImageAspect), viewSize.Height);
 				drawRect.Location = new Point((viewSize.Width - drawRect.Size.Width) / 2, 0);
 			}
 

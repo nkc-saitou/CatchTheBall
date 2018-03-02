@@ -158,7 +158,6 @@ namespace CatchTheBallTool {
 					break;
 			}
 
-
 			//サイズを調整して表示
 			var viewSize = new Size(
 				(int)(drawRect.Size.Width * CurrentSize), 
@@ -201,12 +200,28 @@ namespace CatchTheBallTool {
 			SystemData.Instance.RenderView = renderCanvas;
 
 		}
+		//背景を描画する
 		void DrawBackGround(Graphics g) {
 
-			var brush = new SolidBrush(BACK_GROUND_COLOR);
-			g.FillRectangle(brush, 0, 0, drawRect.Size.Width, drawRect.Size.Height);
+			var bgImage = SystemData.Instance.BackgroundImage;
+			var aspect = (float)bgImage.Width / bgImage.Height;
+			//表示サイズを計算しておく
+			var drawSize = new SizeF(drawRect.Size.Height * aspect, drawRect.Size.Height);
 
-			brush.Dispose();
+			//途切れそうになるまで描画し続ける
+			var currentX = 0;
+			while(currentX + drawSize.Width < drawRect.Width) {
+				var rect = new RectangleF(new PointF(currentX, 0), drawSize);
+				currentX += (int)drawSize.Width;
+
+				g.DrawImage(bgImage, rect);
+			}
+
+			//残りの部分を計算して描画する
+			var destRect = new RectangleF(currentX, 0, drawRect.Width - currentX, drawRect.Height);
+			var srcRect = new RectangleF(0, 0, destRect.Size.Height / bgImage.Height, bgImage.Height);
+
+			g.DrawImage(bgImage, destRect, srcRect, GraphicsUnit.Pixel);
 		}
 		/// <summary>
 		/// 描画範囲を一色描画する

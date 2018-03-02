@@ -23,12 +23,14 @@ namespace CatchTheBallTool {
 
 		const string MAPCHIP_PATH = @".\image\MapChip.png";
 		const string OBJECTCHIP_PATH = @".\image\ObjectChip.png";
+		const string BACKGROUND_PATH = @".\image\BackGround.png";
 
 		public Rectangle FocusRect { get; set; }
 		public Image RenderView { get; set; }
 
 		public ImageAtlas MapChip { get; private set; }
 		public ImageAtlas ObjectChip { get; private set; }
+		public Image BackgroundImage { get; set; }
 
 		public int SelectChip { get; set; }
 
@@ -83,7 +85,7 @@ namespace CatchTheBallTool {
 				mapChip = Image.FromFile(MAPCHIP_PATH);
 			}
 			else {
-				MessageBox.Show("マップチップの存在が確認できませんでした");
+				ShowImageNotExistMessage("マップチップ", Directory.GetCurrentDirectory() + MAPCHIP_PATH);
 				mapChip = new Bitmap(256, 256);
 			}
 			MapChip = new ImageAtlas(Image.FromFile(MAPCHIP_PATH), new Size(CHIP_SIZE, CHIP_SIZE));
@@ -94,10 +96,34 @@ namespace CatchTheBallTool {
 				objectChip = Image.FromFile(OBJECTCHIP_PATH);
 			}
 			else {
-				MessageBox.Show("オブジェクトチップの存在が確認できませんでした");
+				ShowImageNotExistMessage("オブジェクトチップ", Directory.GetCurrentDirectory() + OBJECTCHIP_PATH);
 				objectChip = new Bitmap(256, 256);
 			}
 			ObjectChip = new ImageAtlas(Image.FromFile(OBJECTCHIP_PATH), new Size(CHIP_SIZE, CHIP_SIZE));
+
+			//背景の読み込み
+			Image bgImage;
+			if(File.Exists(BACKGROUND_PATH)) {
+				bgImage = Image.FromFile(BACKGROUND_PATH);
+			}
+			else {
+				ShowImageNotExistMessage("背景イメージ", Directory.GetCurrentDirectory() + BACKGROUND_PATH);
+				bgImage = new Bitmap(256, 256);
+			}
+			BackgroundImage = bgImage;
+
+		}
+
+		void ShowImageNotExistMessage(string name, string path) {
+
+			StringBuilder sb = new StringBuilder();
+			sb.Append(name);
+			sb.Append("[");
+			sb.Append(path);
+			sb.Append("]");
+			sb.Append("の存在が確認できませんでした");
+
+			MessageBox.Show(sb.ToString());
 		}
 	}
 }
