@@ -53,6 +53,9 @@
 			this.SaveFileStageData = new System.Windows.Forms.SaveFileDialog();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.ステージデータの編集EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.画像としてビューを保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.SaveFileView = new System.Windows.Forms.SaveFileDialog();
 			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -79,6 +82,8 @@
             this.上書き保存SToolStripMenuItem,
             this.名前を付けて保存AToolStripMenuItem,
             this.toolStripSeparator2,
+            this.画像としてビューを保存ToolStripMenuItem,
+            this.toolStripSeparator4,
             this.閉じるXToolStripMenuItem});
 			this.ファイルToolStripMenuItem.Name = "ファイルToolStripMenuItem";
 			this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
@@ -288,6 +293,26 @@
 			this.ステージデータの編集EToolStripMenuItem.Text = "ステージデータの編集(&E)...";
 			this.ステージデータの編集EToolStripMenuItem.Click += new System.EventHandler(this.ステージデータの編集EToolStripMenuItem_Click);
 			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
+			// 
+			// 画像としてビューを保存ToolStripMenuItem
+			// 
+			this.画像としてビューを保存ToolStripMenuItem.Name = "画像としてビューを保存ToolStripMenuItem";
+			this.画像としてビューを保存ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
+			this.画像としてビューを保存ToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+			this.画像としてビューを保存ToolStripMenuItem.Text = "画像としてビューを保存...";
+			this.画像としてビューを保存ToolStripMenuItem.Click += new System.EventHandler(this.画像としてビューを保存ToolStripMenuItem_Click);
+			// 
+			// SaveFileView
+			// 
+			this.SaveFileView.DefaultExt = "png";
+			this.SaveFileView.FileName = "View";
+			this.SaveFileView.Filter = "PNGファイル|*.png|すべてのファイル|*.*";
+			this.SaveFileView.Title = "画像としてビューを保存します";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -341,6 +366,9 @@
 		public System.Windows.Forms.ToolStripMenuItem ツールTToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem ステージデータの編集EToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 画像としてビューを保存ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.SaveFileDialog SaveFileView;
 	}
 }
 

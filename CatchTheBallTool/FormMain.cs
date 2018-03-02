@@ -232,6 +232,15 @@ namespace CatchTheBallTool {
 
 			return SaveFile();
 		}
+		bool SaveViewImage() {
+
+			if(SaveFileView.ShowDialog() != DialogResult.OK) return false;
+
+			//画像を保存
+			SystemData.Instance.RenderView.Save(SaveFileView.FileName);
+
+			return true;
+		}
 		#endregion
 
 		#region Event
@@ -268,6 +277,9 @@ namespace CatchTheBallTool {
 		}
 		private void 名前を付けて保存AToolStripMenuItem_Click(object sender, EventArgs e) {
 			SaveFileAs();
+		}
+		private void 画像としてビューを保存ToolStripMenuItem_Click(object sender, EventArgs e) {
+			SaveViewImage();
 		}
 		private void 閉じるXToolStripMenuItem_Click(object sender, EventArgs e) {
 			Close();
