@@ -474,13 +474,26 @@ namespace CatchTheBallTool {
 
 		private void PictureBoxObject_MouseDown(object sender, MouseEventArgs e) {
 
-			//オブジェクトを配置
 			var stagePosition = CalcMapPosition(e.Location);
 
 			if(!StageData.Instance.CheckInsideMap(stagePosition)) return;
-			if(StageData.Instance.ObjectMap[stagePosition.Y][stagePosition.X] == SystemData.Instance.SelectChip) return;
 
-			CommandStream.Instance.ExecuteCommand(new CommandSetChip(StageData.Instance.ObjectMap, stagePosition, SystemData.Instance.SelectChip));
+			//オブジェクトを配置
+			switch(e.Button) {
+				case MouseButtons.Left:
+					if(StageData.Instance.ObjectMap[stagePosition.Y][stagePosition.X] == SystemData.Instance.SelectChip) return;
+					CommandStream.Instance.ExecuteCommand(
+						new CommandSetChip(StageData.Instance.ObjectMap, stagePosition, SystemData.Instance.SelectChip));
+					break;
+				case MouseButtons.Right:
+					if(StageData.Instance.ObjectMap[stagePosition.Y][stagePosition.X] == -1) return;
+					CommandStream.Instance.ExecuteCommand(
+						new CommandSetChip(StageData.Instance.ObjectMap, stagePosition, -1));
+					break;
+				default:
+					break;
+			}
+
 
 			MouseDown(e.Location, e.Button);
 		}

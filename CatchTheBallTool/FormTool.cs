@@ -42,7 +42,6 @@ namespace CatchTheBallTool {
 
 			selectedTool = GetToolFromID(0);
 			DrawToolIcon(SELECTED_COLOR, button[0], GetToolFromID(0).Icon);
-
 		}
 
 		/// <summary>

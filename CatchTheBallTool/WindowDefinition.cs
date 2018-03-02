@@ -42,6 +42,11 @@ namespace CatchTheBallTool {
 				typeof(FormTool).ToString(),
 				(panel) => new FormTool(panel, FormMain.Instance.ツールTToolStripMenuItem)
 				);
+
+			windowDictionary.Add(
+				typeof(FormObjectData).ToString(),
+				(panel) => new FormObjectData(panel, FormMain.Instance.オブジェクトカウンタCToolStripMenuItem)
+				);
 		}
 	}
 }

@@ -56,6 +56,7 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.画像としてビューを保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SaveFileView = new System.Windows.Forms.SaveFileDialog();
+			this.オブジェクトカウンタCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -173,7 +174,8 @@
             this.ビューVToolStripMenuItem,
             this.マップチップMToolStripMenuItem,
             this.ナビゲーションNToolStripMenuItem,
-            this.ツールTToolStripMenuItem});
+            this.ツールTToolStripMenuItem,
+            this.オブジェクトカウンタCToolStripMenuItem});
 			this.ウィンドウWToolStripMenuItem.Name = "ウィンドウWToolStripMenuItem";
 			this.ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
 			this.ウィンドウWToolStripMenuItem.Text = "ウィンドウ(&W)";
@@ -313,6 +315,12 @@
 			this.SaveFileView.Filter = "PNGファイル|*.png|すべてのファイル|*.*";
 			this.SaveFileView.Title = "画像としてビューを保存します";
 			// 
+			// オブジェクトカウンタCToolStripMenuItem
+			// 
+			this.オブジェクトカウンタCToolStripMenuItem.Name = "オブジェクトカウンタCToolStripMenuItem";
+			this.オブジェクトカウンタCToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.オブジェクトカウンタCToolStripMenuItem.Text = "オブジェクトカウンタ(&C)";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -369,6 +377,7 @@
 		private System.Windows.Forms.ToolStripMenuItem 画像としてビューを保存ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.SaveFileDialog SaveFileView;
+		public System.Windows.Forms.ToolStripMenuItem オブジェクトカウンタCToolStripMenuItem;
 	}
 }
 
