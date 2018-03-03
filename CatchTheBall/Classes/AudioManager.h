@@ -5,51 +5,27 @@
 #include <vector>
 using namespace std;
 
-// BGMの種類
-typedef enum
-{
-	// BGMの列挙
-	BGM_Menu,   // 0
-	BGM_Game,  // 1
-
-} bgmType;
-
-// SEの種類
-typedef enum
-{
-	// SEの列挙
-	SE_Select  // 0
-
-} seType;
+#define TITLE_BGM "bgm_maoudamashii_8bit02.mp3"
+#define GAME_BGM "bgm_maoudamashii_8bit13.mp3"
+#define SE_MOVE "se_maoudamashii_se_syber02.ogg"
+#define SE_SHOT "se_maoudamashii_battle18.mp3"
+#define SE_SELECT "se_maoudamashii_retro03.mp3"
+#define SE_DESTROY "se_maoudamashii_retro12.mp3"
 
 class AudioManager : public Singleton <AudioManager>
 {
 public:
-	// インスタンスの取得
-	static AudioManager* getInstance();
-	// BGM, SEのリスト
-	vector<int> bgmSounds;
-	vector<int> seSounds;
-	// 現在のBGM
-	static int bgm;
+	AudioManager();
+	~AudioManager();
 
-	// 読み込み
-	void loadFiles();
-	// BGM, SE登録
-	int setBGM(int sHandle);
-	int setSE(int sHandle);
+	// 現在のBGM
+	static string bgm;
 	// 再生
-	void playSE(seType typeNum);
+	void playSE(string typeNum);
 	// 停止
-	void stopSound(int sNum);
+	void stopSound(string sNum);
 	// BGMの再生
-	void playBGM(bgmType typeNum);
+	void playBGM(string typeNum);
 	// 音量のフェード
     void VolumeFade(int volume);
-
-private:
-	AudioManager(void);
-	~AudioManager(void);
-
-	static AudioManager* Instance;
 };

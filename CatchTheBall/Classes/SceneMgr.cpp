@@ -1,26 +1,37 @@
 #include "DxLib.h"
 #include "Config.h"
 #include "Game.h"
-#include "Menu.h"
+#include "Title.h"
 #include "SceneMgr.h"
 #include "AudioManager.h"
+#include "FileManager.h"
 
 //シーン管理変数
-static eScene Scene = eScene_Menu;   
+static eScene Scene;   
 // 次のシーン
 static eScene nextScene;
 
+SceneMgr::SceneMgr()
+{
+	Scene = eScene_Title;
+}
+
+SceneMgr::~SceneMgr()
+{
+
+}
+
 // 初期化
-void SceneMgr_Instialize() 
+void SceneMgr::SceneMgr_Instialize() 
 {
 	switch (Scene) 
 	{       
     //シーンによって処理を分岐
-	case eScene_Menu:    //現在の画面がメニューなら
-		Menu_Instialize();   //メニュー画面の更新処理をする
+	case eScene_Title:    //現在の画面がメニューなら
+		Title::Title_Instialize();   //メニュー画面の更新処理をする
 		break;//以下略
 	case eScene_Game:
-		Game_Instialize();
+		Game::Game_Instialize();
 		break;
 	case eScene_Config:
 		Config_Instialize();
@@ -29,14 +40,14 @@ void SceneMgr_Instialize()
 }
 
 //更新
-void SceneMgr_Update(){
+void SceneMgr::SceneMgr_Update(){
     switch(Scene){      
 	//シーンによって処理を分岐
-    case eScene_Menu:    //現在の画面がメニューなら
-        Menu_Update();   //メニュー画面の更新処理をする
+    case eScene_Title:    //現在の画面がメニューなら
+        Title::Title_Update();   //メニュー画面の更新処理をする
         break;//以下略
     case eScene_Game:
-        Game_Update();
+        Game::Game_Update();
         break;
     case eScene_Config:
         Config_Update();
@@ -45,14 +56,14 @@ void SceneMgr_Update(){
 }
 
 //描画
-void SceneMgr_Draw(){
+void SceneMgr::SceneMgr_Draw(){
     switch(Scene){     
 	//シーンによって処理を分岐
-    case eScene_Menu:   //現在の画面がメニュー画面なら
-        Menu_Draw();    //メニュー画面の描画処理をする
+    case eScene_Title:   //現在の画面がメニュー画面なら
+        Title::Title_Draw();    //メニュー画面の描画処理をする
         break;//以下略
     case eScene_Game:
-		Game_Draw();
+		Game::Game_Draw();
         break;
     case eScene_Config:
         Config_Draw();
@@ -61,7 +72,7 @@ void SceneMgr_Draw(){
 }
 
 // 引数 nextScene にシーンを変更する
-void SceneMgr_ChangeScene(eScene NextScene){
+void SceneMgr::SceneMgr_ChangeScene(eScene NextScene){
 	// 次のシーンの情報を格納
 	nextScene = NextScene;
 	// シーンフェード
@@ -69,11 +80,10 @@ void SceneMgr_ChangeScene(eScene NextScene){
 }
 
 // シーンフェード
-void SceneMgr_Fade()
+void SceneMgr::SceneMgr_Fade()
 {
 	// フェード用変数(透明度,フェード用画像)
-	int alpha, Fade;
-	Fade = LoadGraph("images\\test1.png");
+	int alpha;
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -82,13 +92,13 @@ void SceneMgr_Fade()
 	{
 		ClearDrawScreen();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		SceneMgr_Draw();
+	    SceneMgr_Draw();
 
 		// フェードイン開始
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-		DrawGraph(0, 0, Fade, TRUE);
+		DrawGraph(0, 0, FileManager::Instance()->GetFileHandle(FADE_IMAGE), TRUE);
 		// 同時に音量もフェード
-		AudioManager::getInstance()->VolumeFade(alpha);
+		AudioManager::Instance()->VolumeFade(alpha);
 		ScreenFlip();
 	}
 
@@ -106,9 +116,9 @@ void SceneMgr_Fade()
 
 		// フェードアウト開始
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-		DrawGraph(0, 0, Fade, TRUE);
+		DrawGraph(0, 0, FileManager::Instance()->GetFileHandle(FADE_IMAGE), TRUE);
 		// 同時に音量もフェード
-		AudioManager::getInstance()->VolumeFade(alpha);
+		AudioManager::Instance()->VolumeFade(alpha);
 		ScreenFlip();
 	}
 
