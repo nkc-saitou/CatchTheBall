@@ -15,6 +15,18 @@ ObjectManager::~ObjectManager()
 	//”jŠü
 }
 //---------------------------------------------------------
+//	‰Šú‰»
+//---------------------------------------------------------
+void ObjectManager::Initialize()
+{
+	//—v‘f‚Ìíœ
+	while (objectArry.begin() != objectArry.end()) {
+		auto obj = objectArry.end();
+		objectArry.pop_back();
+		delete &obj;
+	}
+}
+//---------------------------------------------------------
 //	Object‚Ì’Ç‰Á
 //	EPriority(—Dæ‡ˆÊ)‚ª’á‚¢‚à‚Ì‚©‚ç‘}“ü
 //---------------------------------------------------------
@@ -34,7 +46,7 @@ void ObjectManager::Add(Object* object)
 		if (obj->Priority() > object->Priority()) break;
 		it++;
 	}
-	
+	//‘}“ü
 	objectArry.insert(it, object);
 }
 //---------------------------------------------------------
@@ -43,11 +55,9 @@ void ObjectManager::Add(Object* object)
 void ObjectManager::Update()
 {
 	//XV
-	for (auto obj : objectArry)
-	{
+	for (auto obj : objectArry) {
 		obj->Update();
 	}
-
 	//•`‰æ
 	Draw();
 }
@@ -58,13 +68,10 @@ void ObjectManager::Draw()
 {
 	//‰æ–Ê‚ð‰Šú‰»
 	ClearDrawScreen();
-
 	//•`‰æ
-	for (auto obj : objectArry)
-	{
+	for (auto obj : objectArry) {
 		obj->Draw();
 	}
-	
 	//•\Ž¦
 	ScreenFlip();
 }

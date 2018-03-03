@@ -1,13 +1,24 @@
 #include "FileManager.h"
 #include "DxLib.h"
+#include "FileList.h"
 
+int cnt;
 FileManager::FileManager()
 {
-
+	cnt = 0;
 }
 FileManager::~FileManager()
 {
 	ResetData();
+}
+//---------------------------------------------------------
+//	必要ファイルの一括読み込み
+//---------------------------------------------------------
+void FileManager::SetData(eScene scene)
+{
+	/*for (string file : UseFile_Title) {
+		LoadFile(file);
+	}*/
 }
 //---------------------------------------------------------
 //	データの解放
@@ -20,43 +31,53 @@ void FileManager::ResetData()
 //---------------------------------------------------------
 //	Fileを渡す
 //---------------------------------------------------------
-int FileManager::GetFileHandle(std::string key, FileType type)
+int FileManager::GetFileHandle(string key)
 {
 	//空の場合
-	if (fileHandleMap.begin() == fileHandleMap.end()){
-		return LoadFile(key, type);
+	if (fileHandleMap.empty()){
+		return LoadFile(key);
 	}
 
 	//探索
 	auto handle = fileHandleMap.find(key);
 	//読み込んでない場合
 	if (handle == fileHandleMap.end()) {
-		return LoadFile(key, type);
+		return LoadFile(key);
 	}
 	return handle->second;
 }
 //---------------------------------------------------------
 //	Fileの読み込み
 //---------------------------------------------------------
-int FileManager::LoadFile(std::string key, FileType type)
+int FileManager::LoadFile(string key)
 {
-	std::string directory;
+	string directory, extension;
 	int handle;
 
-	//読み込み
-	switch (type) {
-	case Graph:
-		directory = GRAPH_DIRECTORY + key; 
-		handle = LoadGraph(directory.c_str());
-		break;
+	//拡張子
+	extension = GetExtension(key);
 
-	case Audio:
-		directory = AUDIO_DIRECTORY + key; 
+	//読み込み
+	if (extension == "png" || extension == "jpg" || extension == "bmp") {
+		//グラフィック
+		directory = GRAPH_DIRECTORY + key;
+		handle = LoadGraph(directory.c_str());
+	} else
+	if (extension == "mp3" || extension == "wave" || extension == "ogg") {
+		//オーディオ
+		directory = AUDIO_DIRECTORY + key;
 		handle = LoadSoundMem(directory.c_str());
-		break;
 	}
 
 	//保存
 	fileHandleMap.emplace(key, handle);
 	return handle;
+}
+//---------------------------------------------------------
+//	拡張子の抽出
+//---------------------------------------------------------
+string FileManager::GetExtension(string file)
+{
+	file.erase(file.begin(), file.begin() + (int)file.find(".") + 1);
+	return file;
 }

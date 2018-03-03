@@ -13,11 +13,11 @@ public:
 	ObjectManager(eScene SceneName);
 	~ObjectManager();
 	
-	void Update();	//更新
-	void Add(Object* obj);	//追加
+	void Initialize();	//初期化
+	void Update();		//更新
+	void Add(Object*);	//追加
+	void Draw();		//表示
 
 private:
-	void Draw();	//表示
-
 	vector<Object*> objectArry;
 };
