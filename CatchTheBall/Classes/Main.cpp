@@ -1,5 +1,4 @@
 #include "DxLib.h"
-#include "EffekseerForDXLib.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -15,29 +14,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// DXライブラリを初期化する。
 	if (DxLib_Init() == -1) return -1;
-
-	// Effekseerを初期化する。
-	// 引数には画面に表示する最大パーティクル数を設定する。
-	if (Effkseer_Init(2000) == -1)
-	{
-		DxLib_End();
-		return -1;
-	}
-
-	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
-	// Effekseerを使用する場合は必ず設定する。
-	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
-
-	// DXライブラリのデバイスロストした時のコールバックを設定する。
-	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
-	// ただし、DirectX11を使用する場合は実行する必要はない。
-	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
-
-	// Effekseerに2D描画の設定をする。
-	Effekseer_Set2DSetting(640, 480);
-
-	// エフェクトを読み込む。
-	int effectHandle = LoadEffekseerEffect("laser.efk");
 
 	// 何でもいいので画像を読み込む。
 	int grBackgroundHandle = LoadGraph(_T("Texture/Background.png"));
@@ -84,16 +60,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// こうして描画した後でないと、Effekseerは描画できない。
 		DrawGraph(0, 0, grBackgroundHandle, TRUE);
 
-		// 再生中のエフェクトを移動する。
-		SetPosPlayingEffekseer2DEffect(playingEffectHandle, position_x, position_y, 0);
-		position_x += 2.0f;
-
-		// Effekseerにより再生中のエフェクトを更新する。
-		UpdateEffekseer2D();
-
-		// Effekseerにより再生中のエフェクトを描画する。
-		DrawEffekseer2D();
-
 		// エフェクトの上にも画像を描画できる。
 		DrawGraph(0, 0, grFrontHandle, TRUE);
 
@@ -119,10 +85,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 
 	// エフェクトを削除する。(Effekseer終了時に破棄されるので削除しなくてもいい)
-	DeleteEffekseerEffect(effectHandle);
+	//DeleteEffekseerEffect(effectHandle);
 
-	// Effekseerを終了する。
-	Effkseer_End();
+
 
 	// DXライブラリを終了する。
 	DxLib_End();
