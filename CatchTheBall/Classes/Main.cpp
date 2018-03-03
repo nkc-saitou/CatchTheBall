@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "EffectManager.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -25,36 +26,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// フルスクリーン切り替え用フラグを設定する。(F1、F2でウインドウ、フルスクリーンを切り替えれるようにする。)
 	bool isFullScreen = false;
 
-	// エフェクトの表示する位置を設定する。
-	float position_x = 100.0f;
-	float position_y = 250.0f;
+	// 再生中のエフェクトを初期化する。
+	EffectObject *obj = EffectManager::CreateEffect(EffectType::ExplosionFireworkClear);
+	obj->PositionX(100.0f);
+	obj->PositionY(250.0f);
+	obj->Scale(25.0f);
 
-	// 再生中のエフェクトのハンドルを初期化する。
-	int playingEffectHandle = -1;
-
-	// Zバッファを有効にする。
-	// Effekseerを使用する場合、2DゲームでもZバッファを使用する。
-	SetUseZBuffer3D(TRUE);
-
-	// Zバッファへの書き込みを有効にする。
-	// Effekseerを使用する場合、2DゲームでもZバッファを使用する。
-	SetWriteZBuffer3D(TRUE);
 
 	while (!ProcessMessage() && !ClearDrawScreen() && !CheckHitKey(KEY_INPUT_ESCAPE))
 	{
 		// 定期的にエフェクトを再生する
 		if (time % 60 == 0)
 		{
-			// エフェクトを再生する。
-			playingEffectHandle = PlayEffekseer2DEffect(effectHandle);
-
-			// エフェクトの拡大率を設定する。
-			// Effekseerで作成したエフェクトは2D表示の場合、小さすぎることが殆どなので必ず拡大する。
-			SetScalePlayingEffekseer2DEffect(playingEffectHandle, 25.0f, 25.0f, 25.0f);
-
 			// エフェクトの位置をリセットする。
-			position_x = 100.0f;
+			obj->PositionX(100.0f);
 		}
+
+		obj->PositionX(obj->PositionX() + 2);
+
 
 		// 何でもいいので画像を描画する。
 		// こうして描画した後でないと、Effekseerは描画できない。
@@ -86,8 +75,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// エフェクトを削除する。(Effekseer終了時に破棄されるので削除しなくてもいい)
 	//DeleteEffekseerEffect(effectHandle);
-
-
 
 	// DXライブラリを終了する。
 	DxLib_End();

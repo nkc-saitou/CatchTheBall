@@ -19,9 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Classes\AudioManager.cpp" />
     <ClCompile Include="Classes\Collision.cpp" />
     <ClCompile Include="Classes\CollisionManager.cpp" />
     <ClCompile Include="Classes\Config.cpp" />
+    <ClCompile Include="Classes\EffectManager.cpp" />
+    <ClCompile Include="Classes\FileManager.cpp" />
     <ClCompile Include="Classes\Game.cpp" />
     <ClCompile Include="Classes\Input.cpp" />
     <ClCompile Include="Classes\Keyboard.cpp" />
@@ -30,11 +33,16 @@
     <ClCompile Include="Classes\Object.cpp" />
     <ClCompile Include="Classes\ObjectManager.cpp" />
     <ClCompile Include="Classes\SceneMgr.cpp" />
+    <ClCompile Include="Classes\EffectObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Classes\AudioManager.h" />
     <ClInclude Include="Classes\Collision.h" />
     <ClInclude Include="Classes\CollisionManager.h" />
     <ClInclude Include="Classes\Config.h" />
+    <ClInclude Include="Classes\EffectManager.h" />
+    <ClInclude Include="Classes\EffectType.h" />
+    <ClInclude Include="Classes\FileManager.h" />
     <ClInclude Include="Classes\Game.h" />
     <ClInclude Include="Classes\Input.h" />
     <ClInclude Include="Classes\Keyboard.h" />
@@ -43,6 +51,7 @@
     <ClInclude Include="Classes\ObjectManager.h" />
     <ClInclude Include="Classes\SceneMgr.h" />
     <ClInclude Include="Classes\Singleton.h" />
+    <ClInclude Include="Classes\EffectObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CBC9D6E-DAAA-4149-8076-6F56ACCDB5FD}</ProjectGuid>

@@ -1,55 +1,47 @@
 #pragma once
 
-#include <iostream>
-#include "EffekseerForDXLib.h"
-#include "Singleton.h"
-
-using namespace std;
-
 //エフェクト再生用のハンドル
 typedef int EffectHandle;
 
-enum class EffectType {
-	ExplosionFireworkClear,		//花火の爆発(クリア時)
-	ExplosionFireworkGameOver,	//花火の爆発(ゲームオーバー時)
-	
-	FireworkTrailLv1,			//花火の速度確認用Lv1
-	FireworkTrailLv2,			//花火の速度確認用Lv2
-	FireworkTrailLv3,			//花火の速度確認用Lv3
+#include <iostream>
+#include <map>
+#include "EffekseerForDXLib.h"
+#include "Singleton.h"
+#include "FileManager.h"
+#include "EffectType.h"
+#include "EffectObject.h"
 
-	MazzleFlash,				//撃った時の火炎
-	PlayerActive,				//プレイヤーが乗り移ったとき
-	PlayerDeath,				//プレイヤーが死んだとき
-	PlayerMove,					//プレイヤーが動いたとき
-	PlayerJump,					//プレイヤーがジャンプしたとき
-
-};
+using namespace std;
 
 //
 // エフェクトを管理するクラス
 //
 class EffectManager final : public Singleton<EffectManager>
 {
-	const char (*effectName)[];
-	map
+	EffectHandle loadedEffect[static_cast<int>(EffectType::PlayerJump)];
 
 	bool isLoadEffect = false;
 
-	EffectManager ();
+	
+	//エフェクトの初期化
+	void Initialize();
 
-
+	//タイプからエフェクトのファイル名を返す
+	string GetEffectName(EffectType type);
 
 public:
 
+	EffectManager();
 	~EffectManager ();
 
 	// エフェクトのロード
-	void load ();
+	void Load ();
 
 	// エフェクトの更新
-	void update ();
+	void Update ();
 
 	// エフェクトの再生
-	EffectHandle playEffect (string name);
+	static EffectObject* CreateEffect(EffectType effectType);
+	static EffectObject* CreateEffect(EffectType effectType, bool autoPlay);
 };
 

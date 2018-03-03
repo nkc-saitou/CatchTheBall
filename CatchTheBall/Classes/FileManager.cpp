@@ -1,6 +1,7 @@
 #include "FileManager.h"
 #include "DxLib.h"
 #include "FileList.h"
+#include "EffekseerForDXLib.h"
 
 int cnt;
 FileManager::FileManager()
@@ -67,6 +68,11 @@ int FileManager::LoadFile(string key)
 		//オーディオ
 		directory = AUDIO_DIRECTORY + key;
 		handle = LoadSoundMem(directory.c_str());
+	}
+	else if (extension == "efk") {
+		//エフェクト
+		directory = EFFECT_DIRECTORY + key;
+		handle = LoadEffekseerEffect(directory.c_str ());
 	}
 
 	//保存

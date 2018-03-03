@@ -9,6 +9,7 @@ using namespace std;
 
 #define GRAPH_DIRECTORY "Resources\\Image\\"
 #define AUDIO_DIRECTORY "Resources\\Audio\\"
+#define EFFECT_DIRECTORY "Resources\\Effect\\"
 
 class FileManager : public Singleton<FileManager>
 {
