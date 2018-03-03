@@ -2,11 +2,7 @@
 
 EffectManager::EffectManager() {}
 
-EffectManager::~EffectManager() {
-
-	// Effekseerを終了する。
-	Effkseer_End();
-}
+EffectManager::~EffectManager() {}
 
 void EffectManager::Initialize() {
 
@@ -38,6 +34,19 @@ void EffectManager::Initialize() {
 	SetWriteZBuffer3D(TRUE);
 
 	cout << "Effect initialized." << endl;
+}
+
+void EffectManager::Finalize() {
+
+	// エフェクトを削除する。(Effekseer終了時に破棄されるので削除しなくてもいい)
+	for (auto i = 0; i < sizeof(loadedEffect) / sizeof(EffectHandle); i++) {
+		DeleteEffekseerEffect(loadedEffect[i]);
+	}
+
+	// Effekseerを終了する。
+	Effkseer_End();
+
+	cout << "Effect finalized." << endl;
 }
 
 string EffectManager::GetEffectName(EffectType type) {

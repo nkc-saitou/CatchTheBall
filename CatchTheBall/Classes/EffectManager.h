@@ -4,7 +4,6 @@
 typedef int EffectHandle;
 
 #include <iostream>
-#include <map>
 #include "EffekseerForDXLib.h"
 #include "Singleton.h"
 #include "FileManager.h"
@@ -22,17 +21,19 @@ class EffectManager final : public Singleton<EffectManager>
 
 	bool isLoadEffect = false;
 
-	
-	//エフェクトの初期化
-	void Initialize();
-
 	//タイプからエフェクトのファイル名を返す
 	string GetEffectName(EffectType type);
+
 
 public:
 
 	EffectManager();
 	~EffectManager ();
+
+	//エフェクトの初期化
+	void Initialize();
+	//エフェクトの終了
+	void Finalize();
 
 	// エフェクトのロード
 	void Load ();

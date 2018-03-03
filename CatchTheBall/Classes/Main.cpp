@@ -26,8 +26,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// フルスクリーン切り替え用フラグを設定する。(F1、F2でウインドウ、フルスクリーンを切り替えれるようにする。)
 	bool isFullScreen = false;
 
+	//エフェクトマネージャーを初期化する
+	EffectManager::Instance()->Initialize();
+	EffectManager::Instance()->Load();
+
 	// 再生中のエフェクトを初期化する。
-	EffectObject *obj = EffectManager::CreateEffect(EffectType::ExplosionFireworkClear);
+	EffectObject *obj = EffectManager::CreateEffect(EffectType::ExplosionFireworkClear, false);
 	obj->PositionX(100.0f);
 	obj->PositionY(250.0f);
 	obj->Scale(25.0f);
@@ -38,16 +42,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// 定期的にエフェクトを再生する
 		if (time % 60 == 0)
 		{
+			obj->StopEffect();
+			obj->PlayEffect();
 			// エフェクトの位置をリセットする。
 			obj->PositionX(100.0f);
 		}
 
 		obj->PositionX(obj->PositionX() + 2);
 
+		obj->Update();
 
 		// 何でもいいので画像を描画する。
 		// こうして描画した後でないと、Effekseerは描画できない。
 		DrawGraph(0, 0, grBackgroundHandle, TRUE);
+
+		EffectManager::Instance()->Update();
 
 		// エフェクトの上にも画像を描画できる。
 		DrawGraph(0, 0, grFrontHandle, TRUE);
@@ -57,6 +66,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		// 時間を経過させる。
 		time++;
+
 
 		// フルスクリーンの切り替えを行う。
 		if (CheckHitKey(KEY_INPUT_F1) && !isFullScreen)
@@ -73,8 +83,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 	}
 
-	// エフェクトを削除する。(Effekseer終了時に破棄されるので削除しなくてもいい)
-	//DeleteEffekseerEffect(effectHandle);
+	EffectManager::Instance()->Finalize();
 
 	// DXライブラリを終了する。
 	DxLib_End();

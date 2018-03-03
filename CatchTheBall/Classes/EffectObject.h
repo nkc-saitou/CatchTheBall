@@ -11,6 +11,8 @@ class EffectObject : public Object{
 	EffectHandle loadedEffectHandle;
 	EffectHandle playingEffectHandle;
 
+	bool isPlay = false;
+
 public:
 	EffectObject(EffectHandle handle);
 	~EffectObject();
