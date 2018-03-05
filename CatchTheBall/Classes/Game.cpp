@@ -1,55 +1,72 @@
+#include "DxLib.h"
 #include "Game.h"
 #include "SceneMgr.h"
-#include "DxLib.h"
 #include "AudioManager.h"
+#include "FileManager.h"
+#include "Keyboard.h"
 
 // x座標
-int PosX;
-// 画像 (C → キャラクター, B → 背景, G → マップチップ)
-int C_Handle, B_Handle, G_Handle[16];
+int PosX, BomPosX;
+// 画像 (マップチップ)
+int G_Handle[16];
 
 // 初期化
-void Game_Instialize() 
+void Game::Game_Instialize() 
 {
-	AudioManager::getInstance()->playBGM(BGM_Game);
-	// 画像の読み込み
-	C_Handle = LoadGraph("Resources\\image\\chara_64.png");
-	B_Handle = LoadGraph("Resources\\image\\test2.png");
+	AudioManager::Instance()->playBGM(GAME_BGM);
 	LoadDivGraph("Resources\\image\\mapChip.png", 16, 4, 4, 64, 64, G_Handle);
 }
 
 //更新
-void Game_Update()
+void Game::Game_Update()
 {
 	//Escキーが押されていたら
-    if(CheckHitKey(KEY_INPUT_ESCAPE)!=0){ 
-		AudioManager::getInstance()->playSE(SE_Select);
+    if(Keyboard_Get(KEY_INPUT_ESCAPE)!=0){
+		AudioManager::Instance()->playSE(SE_SELECT);
 		//シーンをメニューに変更
-		SceneMgr_ChangeScene(eScene_Menu);
+		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Title);
     }
-	if (CheckHitKey(KEY_INPUT_RIGHT) != 0) {
+	if (Keyboard_Get(KEY_INPUT_SPACE) != 0) {
+		AudioManager::Instance()->playSE(SE_SHOT);
+	}
+	if (Keyboard_Get(KEY_INPUT_RETURN) != 0) {
+		AudioManager::Instance()->playSE(SE_DESTROY);
+	}
+
+	// 右キーが押されていたら
+	if (Keyboard_Get(KEY_INPUT_RIGHT) != 0) {
 		// 移動量
 		PosX -= 3;
+
+		// 移動中の音楽が再生されていなかったら音楽再生
+		if (CheckSoundMem(FileManager::Instance()->GetFileHandle(SE_MOVE)) == 0) {
+			PlaySoundMem(FileManager::Instance()->GetFileHandle(SE_MOVE), DX_PLAYTYPE_LOOP);
+		}
 		// 背景スクロール
 		if (PosX <= -640) {
 			PosX = 0;
 		}
 	}
+	// 右キーが押されていなかったら
+	else {
+		// 移動中の音楽を止める
+		StopSoundMem(FileManager::Instance()->GetFileHandle(SE_MOVE));
+	}
 }
 
 //描画
-void Game_Draw()
+void Game::Game_Draw()
 {	
 	// 背景スクロール
-	DrawGraph(PosX, 0, B_Handle, TRUE);
-	DrawGraph(PosX + 640, 0, B_Handle, TRUE);
+	DrawGraph(PosX, 0, FileManager::Instance()->GetFileHandle(BACKGROUND_IMAGE), TRUE);
+	DrawGraph(PosX + 640, 0, FileManager::Instance()->GetFileHandle(BACKGROUND_IMAGE), TRUE);
 
 	// マップ画像(仮)
 	DrawGraph(0, 352, G_Handle[0], TRUE);
 	DrawGraph(64, 352, G_Handle[0], TRUE);
 	DrawGraph(64, 416, G_Handle[1], TRUE);
 	DrawGraph(0, 416, G_Handle[1], TRUE);
-	DrawGraph(0, 224, C_Handle, TRUE);
+	DrawGraph(0, 288, FileManager::Instance()->GetFileHandle(PLAYER_IMAGE), TRUE);
     DrawString(0, 0,"ゲーム画面です。",GetColor(255,255,255));
     DrawString(0,20,"Escキーを押すとメニュー画面に戻ります。",GetColor(255,255,255));
 }
