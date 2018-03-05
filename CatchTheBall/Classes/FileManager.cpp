@@ -1,47 +1,14 @@
 #include "FileManager.h"
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
-#include "FileList.h"
 
 FileManager::FileManager() { }
 FileManager::~FileManager() { }
 
 //---------------------------------------------------------
-//	必要ファイルの一括読み込み
+//	初期化
 //---------------------------------------------------------
-void FileManager::Initialize(eScene scene)
-{
-	return;
-
-	switch (scene)
-	{
-	case eScene_Title:
-		for (auto file : UseFile_Title) {
-			LoadFile(file);
-		}
-		for (auto dFile : UseDivFile_Title) {
-			LoadFile(dFile.name, dFile.numAll, dFile.numX, dFile.numY, dFile.sizeX, dFile.sizeY);
-		}
-		break;
-
-	case eScene_Config:
-
-		break;
-		
-	case eScene_Game:
-		for (auto file : UseFile_Game) {
-			LoadFile(file);
-		}
-		for (auto dFile : UseDivFile_Game) {
-			LoadFile(dFile.name, dFile.numAll, dFile.numX, dFile.numY, dFile.sizeX, dFile.sizeY);
-		}
-		break;
-	}
-}
-//---------------------------------------------------------
-//	データの解放
-//---------------------------------------------------------
-void FileManager::Finalize()
+void FileManager::Initialize()
 {
 	InitGraph();
 	InitSoundMem();
@@ -110,8 +77,9 @@ void FileManager::LoadFile(string file, int numAll, int numX, int numY, int size
 	LoadDivGraph(directory.c_str(), numAll, numX, numY, sizeX, sizeY, graphArr);
 
 	//保存
-	string key = GetFileName(file + "_");
+	string key = GetFileName(file) + "_";
 	for (int i = 0; i < numAll; i++) {
+		//DrawFormatString(10, 15 * i, GetColor(255, 255, 255), "%s", (key + to_string(i)).c_str());
 		fileHandleMap.emplace(key + to_string(i), graphArr[i]);
 	}
 }
@@ -120,9 +88,10 @@ void FileManager::LoadFile(string file, int numAll, int numX, int numY, int size
 //---------------------------------------------------------
 string FileManager::GetExtension(string file)
 {
-	if (file.find(".")) return "";
+	auto fileEnd = file.find(".");
+	if (fileEnd == string::npos) return "error";
 
-	file.erase(file.begin(), file.begin() + (int)file.find(".") + 1);
+	file.erase(file.begin(), file.begin() + (int)fileEnd + 1);
 	return file;
 }
 //---------------------------------------------------------
@@ -130,8 +99,9 @@ string FileManager::GetExtension(string file)
 //---------------------------------------------------------
 string FileManager::GetFileName(string file)
 {
-	if (file.find(".")) return "";
+	auto fileEnd = file.find(".");
+	if (fileEnd == string::npos) return "error";
 
-	file.erase(file.begin() + (int)file.find(".") + 1, file.end());
+	file.erase(file.begin() + (int)fileEnd, file.end());
 	return file;
 }

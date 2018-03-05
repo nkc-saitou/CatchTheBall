@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Singleton.h"
-#include "SceneMgr.h"
 #include <map>
 #include <string>
 
@@ -17,17 +16,15 @@ public:
 	FileManager();
 	~FileManager();
 
-	void Initialize(eScene);
-	void Finalize();
+	void Initialize();
 	int GetFileHandle(string);
-	
-private:
 	//File‚Ì“Ç‚İ‚İ
-	int LoadFile(string key);		
+	int LoadFile(string key);
 	void LoadFile(string file, int numAll, int numX, int numY, int sizeX, int sizeY);
-	
+
+private:
 	string GetExtension(string file);	//Šg’£q‚Ì’Šo
-	string GetFileName(string file);		//Šg’£q‚Ì”rœ
+	string GetFileName(string file);	//Šg’£q‚Ì”rœ
 
 	map<std::string, int> fileHandleMap;
 };
