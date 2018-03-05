@@ -34,6 +34,7 @@
     <ClCompile Include="Classes\ObjectManager.cpp" />
     <ClCompile Include="Classes\SceneMgr.cpp" />
     <ClCompile Include="Classes\EffectObject.cpp" />
+    <ClCompile Include="Classes\Time.cpp" />
     <ClCompile Include="Classes\Title.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +54,7 @@
     <ClInclude Include="Classes\SceneMgr.h" />
     <ClInclude Include="Classes\Singleton.h" />
     <ClInclude Include="Classes\EffectObject.h" />
+    <ClInclude Include="Classes\Time.h" />
     <ClInclude Include="Classes\Title.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
