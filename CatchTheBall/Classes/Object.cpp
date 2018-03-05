@@ -1,7 +1,8 @@
 #include "Object.h"
 #include "DxLib.h"
+#include "ObjectManager.h"
 
-Object::Object() 
+Object::Object()
 {
 	//‰Šú‰»
 	_handle = 0;
@@ -10,10 +11,20 @@ Object::Object()
 	_rotation = 0;
 	_scale = 1.0;
 }
-
 Object::~Object()
 {
-	
+	auto itr = ObjectManager::Instance()->objectArry.begin();
+	while (itr != ObjectManager::Instance()->objectArry.end()) 
+	{
+		if ((*itr) == this) 
+		{
+			itr = ObjectManager::Instance()->objectArry.erase(itr);
+		}
+		else 
+		{
+			itr++;
+		}
+	}
 }
 //---------------------------------------------------------
 //	•`‰æ
