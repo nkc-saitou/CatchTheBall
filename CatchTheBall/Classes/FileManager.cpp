@@ -1,30 +1,50 @@
 #include "FileManager.h"
 #include "DxLib.h"
-#include "FileList.h"
 #include "EffekseerForDXLib.h"
+#include "FileList.h"
 
-FileManager::FileManager()
-{
-}
-FileManager::~FileManager()
-{
-	ResetData();
-}
+FileManager::FileManager() { }
+FileManager::~FileManager() { }
+
 //---------------------------------------------------------
 //	必要ファイルの一括読み込み
 //---------------------------------------------------------
-void FileManager::SetData(eScene scene)
+void FileManager::Initialize(eScene scene)
 {
-	/*for (string file : UseFile_Title) {
-		LoadFile(file);
-	}*/
+	return;
+
+	switch (scene)
+	{
+	case eScene_Title:
+		for (auto file : UseFile_Title) {
+			LoadFile(file);
+		}
+		for (auto dFile : UseDivFile_Title) {
+			LoadFile(dFile.name, dFile.numAll, dFile.numX, dFile.numY, dFile.sizeX, dFile.sizeY);
+		}
+		break;
+
+	case eScene_Config:
+
+		break;
+		
+	case eScene_Game:
+		for (auto file : UseFile_Game) {
+			LoadFile(file);
+		}
+		for (auto dFile : UseDivFile_Game) {
+			LoadFile(dFile.name, dFile.numAll, dFile.numX, dFile.numY, dFile.sizeX, dFile.sizeY);
+		}
+		break;
+	}
 }
 //---------------------------------------------------------
 //	データの解放
 //---------------------------------------------------------
-void FileManager::ResetData()
+void FileManager::Finalize()
 {
 	InitGraph();
+	InitSoundMem();
 	fileHandleMap.clear();
 }
 //---------------------------------------------------------
@@ -61,7 +81,7 @@ int FileManager::LoadFile(string key)
 		//グラフィック
 		directory = GRAPH_DIRECTORY + key;
 		handle = LoadGraph(directory.c_str());
-	} else
+	}
 	if (extension == "mp3" || extension == "wave" || extension == "ogg") {
 		//オーディオ
 		directory = AUDIO_DIRECTORY + key;
@@ -80,14 +100,19 @@ int FileManager::LoadFile(string key)
 //---------------------------------------------------------
 //	ファイルの分割読み込み
 //---------------------------------------------------------
-void FileManager::LoadFile(string key, int numAll, int numX, int numY, int sizeX, int sizeY)
+void FileManager::LoadFile(string file, int numAll, int numX, int numY, int sizeX, int sizeY)
 {
-	string directory = GRAPH_DIRECTORY + key;
-	int graphArr[sizeof(numAll)];
+	const int NUM_ALL_MAX = 64;	//分割数の最大
+	string directory = GRAPH_DIRECTORY + file;
+	int graphArr[NUM_ALL_MAX];
+
+	//読み込み
 	LoadDivGraph(directory.c_str(), numAll, numX, numY, sizeX, sizeY, graphArr);
 
+	//保存
+	string key = GetFileName(file + "_");
 	for (int i = 0; i < numAll; i++) {
-
+		fileHandleMap.emplace(key + to_string(i), graphArr[i]);
 	}
 }
 //---------------------------------------------------------
@@ -95,6 +120,18 @@ void FileManager::LoadFile(string key, int numAll, int numX, int numY, int sizeX
 //---------------------------------------------------------
 string FileManager::GetExtension(string file)
 {
+	if (file.find(".")) return "";
+
 	file.erase(file.begin(), file.begin() + (int)file.find(".") + 1);
+	return file;
+}
+//---------------------------------------------------------
+//	拡張子の排除
+//---------------------------------------------------------
+string FileManager::GetFileName(string file)
+{
+	if (file.find(".")) return "";
+
+	file.erase(file.begin() + (int)file.find(".") + 1, file.end());
 	return file;
 }

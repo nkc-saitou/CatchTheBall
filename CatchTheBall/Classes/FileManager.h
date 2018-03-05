@@ -17,14 +17,17 @@ public:
 	FileManager();
 	~FileManager();
 
-	void SetData(eScene);
-	void ResetData();
+	void Initialize(eScene);
+	void Finalize();
 	int GetFileHandle(string);
 	
 private:
-	int LoadFile(string key);		//File‚Ì“Ç‚İ‚İ
-	void LoadFile(string key, int numAll, int numX, int numY, int sizeX, int sizeY);
-	string GetExtension(string key);	//Šg’£q‚Ìæ‚èo‚µ
+	//File‚Ì“Ç‚İ‚İ
+	int LoadFile(string key);		
+	void LoadFile(string file, int numAll, int numX, int numY, int sizeX, int sizeY);
+	
+	string GetExtension(string file);	//Šg’£q‚Ì’Šo
+	string GetFileName(string file);		//Šg’£q‚Ì”rœ
 
 	map<std::string, int> fileHandleMap;
 };
