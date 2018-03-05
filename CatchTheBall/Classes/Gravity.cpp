@@ -30,10 +30,8 @@ void Gravity::ObjGravity()
 		y += (y - y_prev) + 1;
 		y_prev = y_temp;
 
-		//元の位置に戻ってきたら再びジャンプできるようにする
-		if (y >= 360)
-		{
-			y = 360;
-		}
+		//位置調整
+		if (y >= 360) y = 360;
+
 	}
 }

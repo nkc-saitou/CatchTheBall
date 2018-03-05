@@ -31,6 +31,7 @@ class Gravity
 public:
 	//引数：スタートポジションのｙ座標
 	Gravity(int startY);
+	virtual ~Gravity(){}
 
 protected:
 	virtual void ObjGravity();
