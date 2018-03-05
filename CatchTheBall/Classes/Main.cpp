@@ -1,5 +1,7 @@
 #include "DxLib.h"
 #include "EffectManager.h"
+#include "SceneMgr.h"
+#include "Input.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -36,6 +38,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	obj->PositionY(250.0f);
 	obj->Scale(25.0f);
 
+	// シーンの初期化
+	SceneMgr::Instance()->SceneMgr_Instialize();
+
 
 	while (!ProcessMessage() && !ClearDrawScreen() && !CheckHitKey(KEY_INPUT_ESCAPE))
 	{
@@ -52,9 +57,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		obj->Update();
 
+		//---------------------------------------------
+		// シーンの更新
+		SceneMgr::Instance()->SceneMgr_Update();
+		// シーンの描画
+		SceneMgr::Instance()->SceneMgr_Draw();
+		//---------------------------------------------
+
 		// 何でもいいので画像を描画する。
 		// こうして描画した後でないと、Effekseerは描画できない。
 		DrawGraph(0, 0, grBackgroundHandle, TRUE);
+
+		//入力情報の更新
+		Input::Instance()->InputMemory();
 
 		EffectManager::Instance()->Update();
 

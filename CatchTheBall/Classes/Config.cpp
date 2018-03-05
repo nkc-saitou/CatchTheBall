@@ -17,7 +17,7 @@ void Config_Update(){
 	//Escキーが押されていたら
     if(CheckHitKey(KEY_INPUT_ESCAPE)!=0){
 		//シーンをメニューに変更
-        SceneMgr_ChangeScene(eScene_Menu);
+        SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Title);
     }
 }
 
