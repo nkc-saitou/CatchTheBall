@@ -22,8 +22,9 @@ public:
 	int GetFileHandle(string);
 	
 private:
-	int LoadFile(string key);	//Fileの読み込み
-	string GetExtension(string);		//拡張子の取り出し
+	int LoadFile(string key);		//Fileの読み込み
+	void LoadFile(string key, int numAll, int numX, int numY, int sizeX, int sizeY);
+	string GetExtension(string key);	//拡張子の取り出し
 
 	map<std::string, int> fileHandleMap;
 };

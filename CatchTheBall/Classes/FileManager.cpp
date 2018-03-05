@@ -3,10 +3,8 @@
 #include "FileList.h"
 #include "EffekseerForDXLib.h"
 
-int cnt;
 FileManager::FileManager()
 {
-	cnt = 0;
 }
 FileManager::~FileManager()
 {
@@ -72,12 +70,25 @@ int FileManager::LoadFile(string key)
 	else if (extension == "efk") {
 		//エフェクト
 		directory = EFFECT_DIRECTORY + key;
-		handle = LoadEffekseerEffect(directory.c_str ());
+		handle = LoadEffekseerEffect(directory.c_str());
 	}
 
 	//保存
 	fileHandleMap.emplace(key, handle);
 	return handle;
+}
+//---------------------------------------------------------
+//	ファイルの分割読み込み
+//---------------------------------------------------------
+void FileManager::LoadFile(string key, int numAll, int numX, int numY, int sizeX, int sizeY)
+{
+	string directory = GRAPH_DIRECTORY + key;
+	int graphArr[sizeof(numAll)];
+	LoadDivGraph(directory.c_str(), numAll, numX, numY, sizeX, sizeY, graphArr);
+
+	for (int i = 0; i < numAll; i++) {
+
+	}
 }
 //---------------------------------------------------------
 //	拡張子の抽出
