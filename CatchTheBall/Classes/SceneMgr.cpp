@@ -1,5 +1,5 @@
 #include "DxLib.h"
-#include "Config.h"
+#include "Select.h"
 #include "Game.h"
 #include "Title.h"
 #include "SceneMgr.h"
@@ -22,19 +22,19 @@ SceneMgr::~SceneMgr()
 }
 
 // 初期化
-void SceneMgr::SceneMgr_Instialize() 
+void SceneMgr::SceneMgr_Initialize() 
 {
 	switch (Scene) 
 	{       
     //シーンによって処理を分岐
 	case eScene_Title:    //現在の画面がメニューなら
-		Title::Title_Instialize();   //メニュー画面の更新処理をする
+		Title::Title_Initialize();   //メニュー画面の更新処理をする
 		break;//以下略
-	case eScene_Game:
-		Game::Game_Instialize();
+	case eScene_Select:
+		Select::Select_Initialize();
 		break;
-	case eScene_Config:
-		Config_Instialize();
+	case eScene_Game:
+		Game::Game_Initialize();
 		break;
 	}
 }
@@ -46,11 +46,11 @@ void SceneMgr::SceneMgr_Update(){
     case eScene_Title:    //現在の画面がメニューなら
         Title::Title_Update();   //メニュー画面の更新処理をする
         break;//以下略
+	case eScene_Select:
+		Select::Select_Update();
+		break;
     case eScene_Game:
         Game::Game_Update();
-        break;
-    case eScene_Config:
-        Config_Update();
         break;
     }
 }
@@ -62,11 +62,11 @@ void SceneMgr::SceneMgr_Draw(){
     case eScene_Title:   //現在の画面がメニュー画面なら
         Title::Title_Draw();    //メニュー画面の描画処理をする
         break;//以下略
+	case eScene_Select:
+		Select::Select_Draw();
+		break;
     case eScene_Game:
 		Game::Game_Draw();
-        break;
-    case eScene_Config:
-        Config_Draw();
         break;
     }
 }
@@ -105,7 +105,7 @@ void SceneMgr::SceneMgr_Fade()
 	// 次のシーンに切り替え
 	Scene = nextScene;
 	// 次のシーンの初期化
-	SceneMgr_Instialize();
+	SceneMgr_Initialize();
 
 	// フェードイン
 	for (alpha = 255; alpha > 0; alpha -= 3)

@@ -4,9 +4,9 @@
 #define FADE_IMAGE "test1.png"
 
 typedef enum {
-    eScene_Title,    //メニュー画面
+    eScene_Title,       //タイトル画面
+	eScene_Select,    //ステージセレクト画面
     eScene_Game,    //ゲーム画面
-    eScene_Config,  //設定画面
 } eScene ;
 
 class SceneMgr : public Singleton <SceneMgr>
@@ -16,7 +16,7 @@ public:
 	~SceneMgr();
 
 	// 初期化
-	void SceneMgr_Instialize();
+	void SceneMgr_Initialize();
 	//更新
 	void SceneMgr_Update();
 	//描画
