@@ -1,16 +1,18 @@
 #include "DxLib.h"
 #include "Title.h"
-#include "Keyboard.h"
+#include "Input.h"
 #include "SceneMgr.h"
 #include "AudioManager.h"
 #include "FileManager.h"
 
+// 雲のx座標
 int cloudPosX[3];
 
-void Title::Title_Instialize()
+void Title::Title_Initialize()
 {
 	AudioManager::Instance()->playBGM(TITLE_BGM);
 
+	// 座標の初期化
 	cloudPosX[0] = -100;
 	cloudPosX[1] = -300;
 	cloudPosX[2] = -500;
@@ -27,9 +29,9 @@ void Title::Title_Update()
 	}
 
 	//エンターキーが押されたら
-	if (Keyboard_Get(KEY_INPUT_RETURN) == 1) {
+	if (Input::Instance()->ButtonDown(KEY_INPUT_RETURN)) {
 		AudioManager::Instance()->playSE(SE_SELECT);
-		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Game);   //シーンをゲーム画面に変更
+		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Select);   //シーンをゲーム画面に変更
 	}
 }
 

@@ -3,7 +3,7 @@
 #include "SceneMgr.h"
 #include "AudioManager.h"
 #include "FileManager.h"
-#include "Keyboard.h"
+#include "Input.h"
 
 // x座標
 int PosX, BomPosX;
@@ -11,7 +11,7 @@ int PosX, BomPosX;
 int G_Handle[16];
 
 // 初期化
-void Game::Game_Instialize() 
+void Game::Game_Initialize() 
 {
 	AudioManager::Instance()->playBGM(GAME_BGM);
 	LoadDivGraph("Resources\\image\\mapChip.png", 16, 4, 4, 64, 64, G_Handle);
@@ -21,20 +21,20 @@ void Game::Game_Instialize()
 void Game::Game_Update()
 {
 	//Escキーが押されていたら
-    if(Keyboard_Get(KEY_INPUT_ESCAPE)!=0){
+    if(Input::Instance()->ButtonDown(KEY_INPUT_ESCAPE)){
 		AudioManager::Instance()->playSE(SE_SELECT);
 		//シーンをメニューに変更
 		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Title);
     }
-	if (Keyboard_Get(KEY_INPUT_SPACE) != 0) {
+	if (Input::Instance()->ButtonDown(KEY_INPUT_SPACE)) {
 		AudioManager::Instance()->playSE(SE_SHOT);
 	}
-	if (Keyboard_Get(KEY_INPUT_RETURN) != 0) {
+	if (Input::Instance()->ButtonDown(KEY_INPUT_RETURN)) {
 		AudioManager::Instance()->playSE(SE_DESTROY);
 	}
 
 	// 右キーが押されていたら
-	if (Keyboard_Get(KEY_INPUT_RIGHT) != 0) {
+	if (Input::Instance()->ButtonDown(KEY_INPUT_RIGHT)) {
 		// 移動量
 		PosX -= 3;
 
@@ -66,7 +66,7 @@ void Game::Game_Draw()
 	DrawGraph(64, 352, G_Handle[0], TRUE);
 	DrawGraph(64, 416, G_Handle[1], TRUE);
 	DrawGraph(0, 416, G_Handle[1], TRUE);
-	DrawGraph(0, 288, FileManager::Instance()->GetFileHandle(PLAYER_IMAGE), TRUE);
+	DrawGraph(120, 90, FileManager::Instance()->GetFileHandle(PLAYER_IMAGE), TRUE);
     DrawString(0, 0,"ゲーム画面です。",GetColor(255,255,255));
     DrawString(0,20,"Escキーを押すとメニュー画面に戻ります。",GetColor(255,255,255));
 }

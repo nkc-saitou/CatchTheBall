@@ -5,12 +5,10 @@
 //戻り値		:なし
 //動作			:値の初期化
 /////////////////////////////////////////////////////
-Gravity::Gravity(int startY)
+Gravity::Gravity()
 {
-	//初期座標
-	y = startY;
-
 	//初期化
+	y = 0;
 	y_prev = y;
 	y_temp = 0;
 }
@@ -30,10 +28,8 @@ void Gravity::ObjGravity()
 		y += (y - y_prev) + 1;
 		y_prev = y_temp;
 
-		//元の位置に戻ってきたら再びジャンプできるようにする
-		if (y >= 360)
-		{
-			y = 360;
-		}
+		//位置調整
+		if (y >= 360) y = 360;
+
 	}
 }
