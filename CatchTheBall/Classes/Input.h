@@ -68,7 +68,7 @@ class Input : public Singleton <Input>
 	void PadInputSetting(int padType);
 
 	//ˆø”‚É—^‚¦‚ç‚ê‚½keyCode‚ÆpadType‚ªˆ—”ÍˆÍ“à‚©‚Ç‚¤‚©‚ğ”»’f
-	bool InputCheck(int keyCode, int padType = NULL);
+	bool InputCheck(int keyCode, int padType = 0);
 
 public:
 
@@ -79,13 +79,13 @@ public:
 	//===ˆø”‚Å“n‚µ‚½keyCode,padType’Ê‚è‚É‚ğ“ü—Í‚µ‚Ä‚¢‚½‚ç===
 
 	//ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ
-	bool ButtonDown(int keyCode, int padType = NULL); 
+	bool ButtonDown(int keyCode, int padType = 0); 
 
 	//ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚é‚Æ‚«
-	bool Button(int keyCode, int padType = NULL); 
+	bool Button(int keyCode, int padType = 0); 
 
 	//ƒ{ƒ^ƒ“‚ğ—£‚µ‚½uŠÔ
-	bool ButtonUp(int keyCode, int padType = NULL); 
+	bool ButtonUp(int keyCode, int padType = 0); 
 
 
 	//=====‚Æ‚É‚©‚­‰½‚©‚ğ“ü—Í‚ğ‚µ‚Ä‚¢‚½‚ç=====

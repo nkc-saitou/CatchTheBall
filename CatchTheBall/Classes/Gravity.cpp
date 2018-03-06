@@ -5,12 +5,10 @@
 //–ß‚è’l		:‚È‚µ
 //“®ì			:’l‚Ì‰Šú‰»
 /////////////////////////////////////////////////////
-Gravity::Gravity(int startY)
+Gravity::Gravity()
 {
-	//‰ŠúÀ•W
-	y = startY;
-
 	//‰Šú‰»
+	y = 0;
 	y_prev = y;
 	y_temp = 0;
 }

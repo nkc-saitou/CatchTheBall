@@ -218,6 +218,8 @@ void Input::InputSetting()
 /////////////////////////////////////////////////////
 void Input::PadInputSetting(int padType)
 {
+	if (padType >= 0) return;
+
 	//パッド配列の添字用変数
 	int padInput = 0;
 
@@ -258,7 +260,7 @@ bool Input::InputCheck(int keyCode, int padType)
 {
 	if (padType == 0 && keyCode > KEY_STATE_BUFFER_SIZE) return false;
 	if (padType != 0 && keyCode > PAD_BUTTON_NUM) return false;
-	if (padType > MAX_JOYPAD_NUM) return false;
+	if (padType > MAX_JOYPAD_NUM || padType < 0) return false;
 
 	return true;
 }
@@ -271,7 +273,7 @@ bool Input::InputCheck(int keyCode, int padType)
 void Input::InputMemory()
 {
 	oldMouse = mouse;
-	memcpy(oldKey, &key, sizeof(key));
-	memcpy(oldInput, &input, sizeof(input));
+	memcpy(oldKey, key, sizeof(key));
+	memcpy(oldInput, input, sizeof(input));
 	oldAllInput = allInput;
 }
