@@ -23,6 +23,7 @@ public:
 	void LoadFile(string file, int numAll, int numX, int numY, int sizeX, int sizeY);
 
 private:
+	bool LoadCheck(string key);			//“Ç‚İ‚İ‚Ì—L–³
 	string GetExtension(string file);	//Šg’£q‚Ì’Šo
 	string GetFileName(string file);	//Šg’£q‚Ì”rœ
 

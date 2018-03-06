@@ -19,18 +19,10 @@ void FileManager::Initialize()
 //---------------------------------------------------------
 int FileManager::GetFileHandle(string key)
 {
-	//空の場合
-	if (fileHandleMap.empty()){
-		return LoadFile(key);
-	}
-
-	//探索
-	auto handle = fileHandleMap.find(key);
+	//読み込み済み
+	if (LoadCheck(key)) return fileHandleMap.at(key);
 	//読み込んでない場合
-	if (handle == fileHandleMap.end()) {
-		return LoadFile(key);
-	}
-	return handle->second;
+	return LoadFile(key);
 }
 //---------------------------------------------------------
 //	Fileの読み込み
@@ -48,16 +40,20 @@ int FileManager::LoadFile(string key)
 		//グラフィック
 		directory = GRAPH_DIRECTORY + key;
 		handle = LoadGraph(directory.c_str());
-	}
+	} else
 	if (extension == "mp3" || extension == "wave" || extension == "ogg") {
 		//オーディオ
 		directory = AUDIO_DIRECTORY + key;
 		handle = LoadSoundMem(directory.c_str());
-	}
-	else if (extension == "efk") {
+	}else
+	if (extension == "efk") {
 		//エフェクト
 		directory = EFFECT_DIRECTORY + key;
 		handle = LoadEffekseerEffect(directory.c_str());
+	} else
+	if (extension == "error") {
+		printfDx("Load:Error");
+		return -1;
 	}
 
 	//保存
@@ -79,9 +75,21 @@ void FileManager::LoadFile(string file, int numAll, int numX, int numY, int size
 	//保存
 	string key = GetFileName(file) + "_";
 	for (int i = 0; i < numAll; i++) {
-		//DrawFormatString(10, 15 * i, GetColor(255, 255, 255), "%s", (key + to_string(i)).c_str());
+		DrawFormatString(10, 15 * i, GetColor(255, 255, 255), "%s", (key + to_string(i)).c_str());
 		fileHandleMap.emplace(key + to_string(i), graphArr[i]);
 	}
+}
+//---------------------------------------------------------
+//	読み込みの有無（有:true 無:false）
+//---------------------------------------------------------
+bool FileManager::LoadCheck(string key)
+{
+	//まだ何も読み込んでない時
+	if (fileHandleMap.empty()) return false;
+	//探索
+	auto handle = fileHandleMap.find(key);
+	if (handle == fileHandleMap.end()) return false;
+	return true;
 }
 //---------------------------------------------------------
 //	拡張子の抽出
