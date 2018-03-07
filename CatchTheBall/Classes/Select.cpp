@@ -1,7 +1,6 @@
 #include "DxLib.h"
 #include "Select.h"
 #include "AudioManager.h"
-#include "SceneMgr.h"
 #include "FileManager.h"
 #include "Input.h"
 
@@ -28,8 +27,18 @@ bool isMove;
 // 移動方向 (0 → 左、1 → 右)
 int direction;
 
+Select::Select()
+{
+	Initialize();
+}
+
+Select::~Select()
+{
+
+}
+
 // 初期化
-void Select::Select_Initialize()
+void Select::Initialize()
 {
 	AudioManager::Instance()->playBGM(SELECT_BGM);
 
@@ -42,11 +51,11 @@ void Select::Select_Initialize()
 }
 
 // 更新
-void Select::Select_Update()
+void Select::Update()
 {
-	//auto t = Input::Instance()->ButtonDown(KEY_INPUT_P);
 	if (Input::Instance()->ButtonDown(KEY_INPUT_RETURN)) {
-		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Game);
+		// シーンフェードしてからシーンをゲームに変更
+		Scene::SceneFade(Scene::GAME);
 	}
 
 	if (Input::Instance()->ButtonDown(KEY_INPUT_RIGHT)) {
@@ -102,7 +111,7 @@ void Select::Select_Update()
 }
 
 // 描画
-void Select::Select_Draw()
+void Select::Draw()
 {
 	DrawGraph(0, 0, FileManager::Instance()->GetFileHandle(STAGESELECT_BACK), TRUE);
 	DrawGraph(ArrowPos[0], 200, FileManager::Instance()->GetFileHandle(SELECT_LEFTARROW), TRUE);

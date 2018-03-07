@@ -8,7 +8,18 @@
 // 雲のx座標
 int cloudPosX[3];
 
-void Title::Title_Initialize()
+Title::Title()
+{
+	Initialize();
+}
+
+Title::~Title()
+{
+
+}
+
+
+void Title::Initialize()
 {
 	AudioManager::Instance()->playBGM(TITLE_BGM);
 
@@ -18,7 +29,7 @@ void Title::Title_Initialize()
 	cloudPosX[2] = -500;
 }
 
-void Title::Title_Update()
+void Title::Update()
 {
 	// バックの雲を動かす
 	for (int i = 0; i < 3; i++) {
@@ -31,11 +42,12 @@ void Title::Title_Update()
 	//エンターキーが押されたら
 	if (Input::Instance()->ButtonDown(KEY_INPUT_RETURN)) {
 		AudioManager::Instance()->playSE(SE_SELECT);
-		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Select);   //シーンをゲーム画面に変更
+		// シーンフェードしてからシーンをセレクトに変更
+		Scene::SceneFade(Scene::SELECT);
 	}
 }
 
-void Title::Title_Draw()
+void Title::Draw()
 {
 	DrawGraph(0, 0, FileManager::Instance()->GetFileHandle(TITLE_IMAGE), FALSE);
 	DrawGraph(cloudPosX[0], 100, FileManager::Instance()->GetFileHandle(CLOUD_IMAGE), TRUE);
