@@ -4,6 +4,7 @@ class Object
 {
 public:
 	Object();
+	Object(int order = 0);
 	~Object();
 	virtual void Update() = 0;
 	virtual void Draw();

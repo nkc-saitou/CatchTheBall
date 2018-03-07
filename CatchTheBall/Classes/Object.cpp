@@ -4,27 +4,21 @@
 
 Object::Object()
 {
-	//‰Šú‰»
-	_handle = 0;
-	_priority = 0;
+	_handle = 0; _priority = 0;
 	_x = 0; _y = 0;
-	_rotation = 0;
-	_scale = 1.0;
+	_rotation = 0; _scale = 1.0;
+	ObjectManager::Instance()->Add(this);
+}
+Object::Object(int order)
+{
+	_handle = 0; _priority = order;
+	_x = 0; _y = 0;
+	_rotation = 0; _scale = 1.0;
+	ObjectManager::Instance()->Add(this);
 }
 Object::~Object()
 {
-	auto itr = ObjectManager::Instance()->objectArry.begin();
-	while (itr != ObjectManager::Instance()->objectArry.end()) 
-	{
-		if ((*itr) == this) 
-		{
-			itr = ObjectManager::Instance()->objectArry.erase(itr);
-		}
-		else 
-		{
-			itr++;
-		}
-	}
+	ObjectManager::Instance()->Destroy(this);
 }
 //---------------------------------------------------------
 //	•`‰æ

@@ -14,6 +14,8 @@ public:
 	void DrawScreen(std::vector<Object*>);
 	bool DrawCheck(Object*);
 
+	static Camera* MainCamera;
+
 private:
 	int SCREEN_WIDTH;	//‰æ–Ê”ÍˆÍ@‰¡
 	int SCREEN_HEIGHT;	//‰æ–Ê”ÍˆÍ@c

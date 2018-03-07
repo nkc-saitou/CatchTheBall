@@ -1,5 +1,6 @@
 #include "ObjectManager.h"
 #include "DxLib.h"
+#include "Camera.h"
 
 //---------------------------------------------------------
 //	初期化
@@ -26,7 +27,7 @@ void ObjectManager::Finalize()
 //---------------------------------------------------------
 void ObjectManager::Add(Object* object)
 {
-	if (&object == nullptr) return;
+	if (object == nullptr) return;
 	//空っぽの時
 	if (objectArry.empty())
 	{
@@ -42,6 +43,22 @@ void ObjectManager::Add(Object* object)
 	}
 	//挿入
 	objectArry.insert(it, object);
+}
+//---------------------------------------------------------
+//	削除
+//---------------------------------------------------------
+void ObjectManager::Destroy(Object* object)
+{
+	if (object == nullptr) return;
+	if (objectArry.empty()) return;
+
+	auto itr = objectArry.begin();
+	while (itr != objectArry.end()) 
+	{
+		if (*itr == object) break;
+		else itr++;
+	}
+	objectArry.erase(itr);
 }
 //---------------------------------------------------------
 //	更新
@@ -75,12 +92,14 @@ void ObjectManager::Reopening()
 //---------------------------------------------------------
 void ObjectManager::Draw()
 {
-	//画面を初期化
-	//ClearDrawScreen();
-	//描画
-	for (auto obj : objectArry) {
-		obj->Draw();
+	if (Camera::MainCamera == nullptr)  {
+		//カメラ無
+		for (auto obj : objectArry) {
+			obj->Draw();
+		}
 	}
-	//表示
-	//ScreenFlip();
+	else {
+		//カメラ有
+		Camera::MainCamera->DrawScreen(objectArry);
+	}
 }

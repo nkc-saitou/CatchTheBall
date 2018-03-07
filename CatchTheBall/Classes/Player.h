@@ -13,7 +13,7 @@ class Player : public Object
 {
 public:
 	Player();
-	Player(float x, float y);
+	Player(float x, float y, int order = 0);
 	~Player();
 
 	void Update();		//XV

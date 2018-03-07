@@ -2,12 +2,12 @@
 #include "FileManager.h"
 #include "Input.h"
 
-Player::Player()
+Player::Player() : Object(0)
 {
 	//GraphHandle(FileManager::Instance()->GetFileHandle("Player_01_Right.png"));
 	state = Wait;
 }
-Player::Player(float x, float y)
+Player::Player(float x, float y, int order) : Object(order)
 {
 	//GraphHandle(FileManager::Instance()->GetFileHandle("Player_01_Right.png"));
 	PositionX(x); PositionY(y);

@@ -1,9 +1,9 @@
 #include "DxLib.h"
 #include "Title.h"
 #include "Input.h"
-#include "SceneMgr.h"
 #include "AudioManager.h"
 #include "FileManager.h"
+#include "Player.h"
 
 // 雲のx座標
 int cloudPosX[3];
@@ -11,6 +11,8 @@ int cloudPosX[3];
 Title::Title()
 {
 	LoadFile();
+
+	Player* player = new Player(0, 0);
 }
 
 Title::~Title()
@@ -21,19 +23,18 @@ Title::~Title()
 // タイトルに使用するファイルの読み込み
 void Title::LoadFile()
 {
-	FileManager::Instance()->GetFileHandle(TITLE_IMAGE);
-	FileManager::Instance()->GetFileHandle(TITLE_TEXT);
-	FileManager::Instance()->GetFileHandle(PLAYER_IMAGE);
-	FileManager::Instance()->GetFileHandle(CLOUD_IMAGE);
-
-	// 読み込み終わったら初期化
-	Initialize();
+	for (char* file : UseFile) {
+		FileManager::Instance()->LoadFile(file);
+	}
+	for (DivFile dFile : UseDivFile) {
+		FileManager::Instance()->LoadFile(dFile.name, dFile.numAll, dFile.numX, dFile.numY, dFile.sizeX, dFile.sizeY);
+	}
 }
 
 //タイトルで使用したファイルの破棄
 void Title::UnLoadFile()
 {
-	FileManager::Instance()->ResetData();
+	FileManager::Instance()->Initialize();
 }
 
 void Title::Initialize()
