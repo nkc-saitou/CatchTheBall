@@ -8,7 +8,7 @@ void EffectManager::Initialize() {
 
 	// Effekseerを初期化する。
 	// 引数には画面に表示する最大パーティクル数を設定する。
-	if (Effkseer_Init(2000) == -1) {
+	if (Effkseer_Init(10000) == -1) {
 		cout << "警告 : Effekseerの初期化に失敗しました" << endl;
 		return;
 	}
@@ -52,19 +52,37 @@ void EffectManager::Finalize() {
 string EffectManager::GetEffectName(EffectType type) {
 	switch (type) {
 		case EffectType::ExplosionFireworkClear:
+			return "ClearFirework.efk";
 		case EffectType::ExplosionFireworkGameOver:
+			return "GameOverFirework.efk";
 		case EffectType::FireworkTrailLv1:
+			return "Trail1.efk";
 		case EffectType::FireworkTrailLv2:
+			return "Trail2.efk";
 		case EffectType::FireworkTrailLv3:
-		case EffectType::MazzleFlash:
-		case EffectType::PlayerActive:
+			return "Trail3.efk";
+		case EffectType::FireworkTrailClear:
+			return "TrailClear.efk";
+		case EffectType::Player1Active:
+			return "Player1Active.efk";
+		case EffectType::Player2Active:
+			return "Player2Active.efk";
+		case EffectType::Player3Active:
+			return "Player3Active.efk";
+		case EffectType::Player4Active:
+			return "Player4Active.efk";
 		case EffectType::PlayerDeath:
+			return "PlayerDeath.efk";
 		case EffectType::PlayerMove:
+			return "PlayerMove.efk";
 		case EffectType::PlayerJump:
-			return "laser.efk";
+			return "PlayerJump.efk";
+		case EffectType::MuzzleFlash:
+			return "MuzzleFlash.efk";
 		default:
 			return "";
 	}
+
 }
 
 void EffectManager::Load() {
@@ -78,7 +96,6 @@ void EffectManager::Load() {
 	cout << "Effect loaded." << endl;
 }
 
-
 void EffectManager::Update() {
 
 	// Effekseerにより再生中のエフェクトを更新する。
@@ -89,17 +106,17 @@ void EffectManager::Update() {
 
 }
 
-EffectObject* EffectManager::CreateEffect(EffectType effectType) {
-	return CreateEffect(effectType, true);
-}
+EffectObject* EffectManager::CreateEffect(EffectType effectType, bool autoPlay, bool autoDestroy){
 
-EffectObject* EffectManager::CreateEffect(EffectType effectType, bool autoPlay){
+	if (Instance()->isLoadEffect == false) return nullptr;
 
-	if (Instance()->isLoadEffect == false) return NULL;
-
+	auto effetct1 = Instance()->loadedEffect[static_cast<int>(effectType)];
+	auto effetct2 = Instance()->loadedEffect[static_cast<int>(EffectType::ExplosionFireworkClear)];
 	EffectObject *effectObject = new EffectObject(Instance()->loadedEffect[static_cast<int>(effectType)]);
 
 	if (autoPlay) effectObject->PlayEffect();
+	
+	effectObject->autoDestroy = autoDestroy;
 
 	return effectObject;
 }
