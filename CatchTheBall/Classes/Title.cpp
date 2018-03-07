@@ -10,14 +10,31 @@ int cloudPosX[3];
 
 Title::Title()
 {
-	Initialize();
+	LoadFile();
 }
 
 Title::~Title()
 {
-
+	UnLoadFile();
 }
 
+// タイトルに使用するファイルの読み込み
+void Title::LoadFile()
+{
+	FileManager::Instance()->GetFileHandle(TITLE_IMAGE);
+	FileManager::Instance()->GetFileHandle(TITLE_TEXT);
+	FileManager::Instance()->GetFileHandle(PLAYER_IMAGE);
+	FileManager::Instance()->GetFileHandle(CLOUD_IMAGE);
+
+	// 読み込み終わったら初期化
+	Initialize();
+}
+
+//タイトルで使用したファイルの破棄
+void Title::UnLoadFile()
+{
+	FileManager::Instance()->ResetData();
+}
 
 void Title::Initialize()
 {

@@ -29,12 +29,32 @@ int direction;
 
 Select::Select()
 {
-	Initialize();
+	LoadFile();
 }
 
 Select::~Select()
 {
+	UnLoadFile();
+}
 
+// セレクトシーンで使用するファイルの読み込み
+void Select::LoadFile()
+{
+	FileManager::Instance()->GetFileHandle(STAGESELECT_TEXT);
+	FileManager::Instance()->GetFileHandle(STAGESELECT_BACK);
+	FileManager::Instance()->GetFileHandle(SELECT_RIGHTARROW);
+	FileManager::Instance()->GetFileHandle(SELECT_LEFTARROW);
+	FileManager::Instance()->GetFileHandle(STAGE_BOARD);
+	FileManager::Instance()->GetFileHandle(START_TEXT);
+
+	// 読み込み終わったら初期化
+	Initialize();
+}
+
+// セレクトシーンで使用したファイルの破棄
+void Select::UnLoadFile()
+{
+	FileManager::Instance()->ResetData();
 }
 
 // 初期化
