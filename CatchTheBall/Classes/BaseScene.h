@@ -2,22 +2,6 @@
 
 #define FADE_IMAGE "test1.png"
 
-#pragma region DivFile
-
-struct DivFile {
-	DivFile(char* name, int nAll, int nX, int nY, int sX, int sY);
-
-	char* name;
-	int numAll, numX, numY;
-	int sizeX, sizeY;
-};
-DivFile::DivFile(char* name, int nAll, int nX, int nY, int sX, int sY) {
-	numAll = nAll; numX = nX; numY = nY;
-	sizeX = sX; sizeY = sY;
-}
-
-#pragma endregion
-
 // シーンのもととなるクラス(継承させる)
 class BaseScene
 {

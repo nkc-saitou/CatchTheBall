@@ -1,6 +1,6 @@
 #include "MapObject.h"
 
-MapObject::MapObject(float x, float y, double scale, int handle)
+MapObject::MapObject(float x, float y, double scale, int handle) : Object(-1)
 {
 	Scale(scale);
 	GraphHandle(handle);

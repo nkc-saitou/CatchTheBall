@@ -1,14 +1,21 @@
 #include "Camera.h"
 #include "ObjectManager.h"
 
+Camera* Camera::MainCamera;
+
 Camera::Camera(float x, float y) : Object(15)
 {
-	Camera::MainCamera = this;
+	if (MainCamera == nullptr) {
+		MainCamera = this;
+	}
+
 	PositionX(x); PositionY(y);
 }
 Camera::~Camera()
 {
-	Camera::MainCamera = nullptr;
+	if (MainCamera == this) {
+		MainCamera = nullptr;
+	}
 }
 //---------------------------------------------------------
 //	çXêV

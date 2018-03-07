@@ -54,13 +54,13 @@ void Select::LoadFile()
 // セレクトシーンで使用したファイルの破棄
 void Select::UnLoadFile()
 {
-	FileManager::Instance()->ResetData();
+	FileManager::Instance()->Initialize();
 }
 
 // 初期化
 void Select::Initialize()
 {
-	AudioManager::Instance()->playBGM(SELECT_BGM);
+	AudioManager::Instance()->playBGM(GAME_BGM);
 
 	isMove = FALSE;
 

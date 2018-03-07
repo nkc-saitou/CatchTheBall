@@ -92,14 +92,14 @@ void ObjectManager::Reopening()
 //---------------------------------------------------------
 void ObjectManager::Draw()
 {
-	if (Camera::MainCamera == nullptr)  {
-		//カメラ無
-		for (auto obj : objectArry) {
-			obj->Draw();
-		}
-	}
-	else {
-		//カメラ有
-		Camera::MainCamera->DrawScreen(objectArry);
-	}
+	//if (Camera::MainCamera == nullptr)  {
+	//	//カメラ無
+	//	for (auto obj : objectArry) {
+	//		obj->Draw();
+	//	}
+	//}
+	//else {
+	//	//カメラ有
+	//	Camera::MainCamera->DrawScreen(objectArry);
+	//}
 }

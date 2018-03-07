@@ -6,10 +6,10 @@ UIManager::UIManager()
 
 }
 
-UIManager::UIManager(eScene SceneName)
-{
-
-}
+//UIManager::UIManager(eScene SceneName)
+//{
+//
+//}
 
 UIManager::~UIManager()
 {

@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\AudioManager.cpp" />
+    <ClCompile Include="Classes\Camera.cpp" />
     <ClCompile Include="Classes\Collision.cpp" />
     <ClCompile Include="Classes\CollisionManager.cpp" />
-    <ClCompile Include="Classes\Config.cpp" />
     <ClCompile Include="Classes\EffectManager.cpp" />
     <ClCompile Include="Classes\FileManager.cpp" />
     <ClCompile Include="Classes\Game.cpp" />
@@ -30,18 +30,24 @@
     <ClCompile Include="Classes\Input.cpp" />
     <ClCompile Include="Classes\Keyboard.cpp" />
     <ClCompile Include="Classes\Main.cpp" />
+    <ClCompile Include="Classes\MapObject.cpp" />
     <ClCompile Include="Classes\Object.cpp" />
     <ClCompile Include="Classes\ObjectManager.cpp" />
-    <ClCompile Include="Classes\SceneMgr.cpp" />
     <ClCompile Include="Classes\EffectObject.cpp" />
+    <ClCompile Include="Classes\Player.cpp" />
+    <ClCompile Include="Classes\Scene.cpp" />
+    <ClCompile Include="Classes\Select.cpp" />
     <ClCompile Include="Classes\Time.cpp" />
     <ClCompile Include="Classes\Title.cpp" />
+    <ClCompile Include="Classes\UI.cpp" />
+    <ClCompile Include="Classes\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\AudioManager.h" />
+    <ClInclude Include="Classes\BaseScene.h" />
+    <ClInclude Include="Classes\Camera.h" />
     <ClInclude Include="Classes\Collision.h" />
     <ClInclude Include="Classes\CollisionManager.h" />
-    <ClInclude Include="Classes\Config.h" />
     <ClInclude Include="Classes\EffectManager.h" />
     <ClInclude Include="Classes\EffectType.h" />
     <ClInclude Include="Classes\FileManager.h" />
@@ -49,13 +55,18 @@
     <ClInclude Include="Classes\Gravity.h" />
     <ClInclude Include="Classes\Input.h" />
     <ClInclude Include="Classes\Keyboard.h" />
+    <ClInclude Include="Classes\LoadFileList.h" />
+    <ClInclude Include="Classes\MapObject.h" />
     <ClInclude Include="Classes\Object.h" />
     <ClInclude Include="Classes\ObjectManager.h" />
-    <ClInclude Include="Classes\SceneMgr.h" />
+    <ClInclude Include="Classes\Player.h" />
+    <ClInclude Include="Classes\Select.h" />
     <ClInclude Include="Classes\Singleton.h" />
     <ClInclude Include="Classes\EffectObject.h" />
     <ClInclude Include="Classes\Time.h" />
     <ClInclude Include="Classes\Title.h" />
+    <ClInclude Include="Classes\UI.h" />
+    <ClInclude Include="Classes\UIManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CBC9D6E-DAAA-4149-8076-6F56ACCDB5FD}</ProjectGuid>

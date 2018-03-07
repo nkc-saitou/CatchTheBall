@@ -4,6 +4,7 @@
 #include "AudioManager.h"
 #include "FileManager.h"
 #include "Player.h"
+#include "LoadFileList.h"
 
 // 雲のx座標
 int cloudPosX[3];
@@ -11,8 +12,9 @@ int cloudPosX[3];
 Title::Title()
 {
 	LoadFile();
+	AudioManager::Instance()->playBGM(TITLE_BGM);
 
-	Player* player = new Player(0, 0);
+	//Player* player = new Player(0, 0);
 }
 
 Title::~Title()
@@ -23,10 +25,10 @@ Title::~Title()
 // タイトルに使用するファイルの読み込み
 void Title::LoadFile()
 {
-	for (char* file : UseFile) {
+	for (char* file : UseFile_Title) {
 		FileManager::Instance()->LoadFile(file);
 	}
-	for (DivFile dFile : UseDivFile) {
+	for (DivFile dFile : UseDivFile_Title) {
 		FileManager::Instance()->LoadFile(dFile.name, dFile.numAll, dFile.numX, dFile.numY, dFile.sizeX, dFile.sizeY);
 	}
 }

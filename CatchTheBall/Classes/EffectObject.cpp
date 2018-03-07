@@ -1,7 +1,8 @@
 #include "EffectObject.h"
 #include "Time.h"
 
-EffectObject::EffectObject(EffectHandle handle) {
+EffectObject::EffectObject(EffectHandle handle) : Object(10)
+{
 	loadedEffectHandle = handle;
 }
 

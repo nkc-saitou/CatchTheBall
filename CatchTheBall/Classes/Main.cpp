@@ -1,6 +1,6 @@
 #include "DxLib.h"
+#include "BaseScene.h"
 #include "EffectManager.h"
-#include "SceneMgr.h"
 #include "Input.h"
 #include "Time.h"
 
@@ -40,8 +40,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	obj->Scale(25.0f);
 
 	// シーンの初期化
-	SceneMgr::Instance()->SceneMgr_Instialize();
+	Scene* scene = new Scene();
 
+	ScreenFlip();
+	WaitKey();
 
 	while (!ProcessMessage() && !ClearDrawScreen() && !CheckHitKey(KEY_INPUT_ESCAPE))
 	{
@@ -60,9 +62,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//---------------------------------------------
 		// シーンの更新
-		SceneMgr::Instance()->SceneMgr_Update();
+		scene->Update();
 		// シーンの描画
-		SceneMgr::Instance()->SceneMgr_Draw();
+		scene->Draw();
 		//---------------------------------------------
 
 		// 何でもいいので画像を描画する。

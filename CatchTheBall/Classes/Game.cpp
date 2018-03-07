@@ -1,6 +1,5 @@
 #include "DxLib.h"
 #include "Game.h"
-#include "SceneMgr.h"
 #include "AudioManager.h"
 #include "FileManager.h"
 #include "Input.h"
@@ -33,7 +32,7 @@ void Game::LoadFile()
 // ゲームシーンで使用したファイルの破棄
 void Game::UnLoadFile()
 {
-	FileManager::Instance()->ResetData();
+	FileManager::Instance()->Initialize();
 }
 
 // 初期化
