@@ -1,20 +1,26 @@
 #pragma once
+#include "BaseScene.h"
 
 // 画像データの string 
 #define BACKGROUND_IMAGE "test2.png"
 #define PLAYER_IMAGE "player.png"
 #define BOM_IMAGE "Bom.png"
 
-class Game
+class Game : public BaseScene
 {
 public:
+	Game();
+	~Game();
+
+	// ファイル読み込み
+	void LoadFile();
+	// 読み込んだファイルの破棄
+	void UnLoadFile();
 	// 初期化
-	static void Game_Instialize();
-
+	void Initialize();
 	//更新
-	static void Game_Update();
-
+	void Update();
 	//描画
-	static void Game_Draw();
+	void Draw();
 };
 

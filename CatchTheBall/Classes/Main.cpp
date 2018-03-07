@@ -2,14 +2,12 @@
 #include "EffectManager.h"
 #include "SceneMgr.h"
 #include "Input.h"
+#include "Time.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// DXライブラリの表示方法をウィンドウモードに変更する。
 	ChangeWindowMode(true);
-
-	//描画先を裏画面に変更する。
-	SetDrawScreen(DX_SCREEN_BACK);
 
 	// DirectX9を使用するようにする。(DirectX11も可)
 	// Effekseerを使用するには必ず設定する。
@@ -17,6 +15,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// DXライブラリを初期化する。
 	if (DxLib_Init() == -1) return -1;
+
+	//描画先を裏画面に変更する。
+	SetDrawScreen(DX_SCREEN_BACK);
 
 	// 何でもいいので画像を読み込む。
 	int grBackgroundHandle = LoadGraph(_T("Texture/Background.png"));
@@ -76,6 +77,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// エフェクトの上にも画像を描画できる。
 		DrawGraph(0, 0, grFrontHandle, TRUE);
 
+		//FPSを左上に表示
+		Time::Draw();
+
 		// スクリーンを入れ替える。
 		ScreenFlip();
 
@@ -96,6 +100,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			SetDrawScreen(DX_SCREEN_BACK);
 			isFullScreen = false;
 		}
+
+		//-------------------------
+		//FPS安定させるやつ
+		Time::Update();
+		Time::Wait();
 	}
 
 	EffectManager::Instance()->Finalize();

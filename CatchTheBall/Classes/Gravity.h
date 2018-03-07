@@ -14,8 +14,6 @@ Gravityクラス
 #include "DxLib.h"
 #include "Input.h"
 
-#define GRAVITY_ACCEL -9.8
-
 class Gravity
 {
 	//プレイヤーのy座標
@@ -30,9 +28,9 @@ class Gravity
 
 public:
 	//引数：スタートポジションのｙ座標
-	Gravity(int startY);
+	Gravity();
 
 protected:
-	virtual void ObjGravity();
+	void ObjGravity();
 	int fall_y(){ return y; }
 };

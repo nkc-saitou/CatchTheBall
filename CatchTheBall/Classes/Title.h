@@ -1,17 +1,26 @@
 #pragma once
+#include "BaseScene.h"
  
+// 画像データの string
 #define TITLE_IMAGE "TitleTest.png"
 #define TITLE_TEXT "TitleText.png"
 #define PLAYER_IMAGE "player.png"
 #define CLOUD_IMAGE "scene_01_cloud.png"
 
-class Title
+class Title : public BaseScene
 {
 public:
+	Title();
+	~Title();
+
+	// ファイル読み込み
+	void LoadFile();
+	// 読み込んだファイルの破棄
+	void UnLoadFile();
 	// 初期化
-	static void Title_Instialize();
+	void Initialize();
 	// 更新
-	static void Title_Update();
+	void Update();
 	// 描画
-	static void Title_Draw();
+	void Draw();
 };

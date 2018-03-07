@@ -1,22 +1,52 @@
 #include "DxLib.h"
 #include "Title.h"
-#include "Keyboard.h"
+#include "Input.h"
 #include "SceneMgr.h"
 #include "AudioManager.h"
 #include "FileManager.h"
 
+// 雲のx座標
 int cloudPosX[3];
 
-void Title::Title_Instialize()
+Title::Title()
+{
+	LoadFile();
+}
+
+Title::~Title()
+{
+	UnLoadFile();
+}
+
+// タイトルに使用するファイルの読み込み
+void Title::LoadFile()
+{
+	FileManager::Instance()->GetFileHandle(TITLE_IMAGE);
+	FileManager::Instance()->GetFileHandle(TITLE_TEXT);
+	FileManager::Instance()->GetFileHandle(PLAYER_IMAGE);
+	FileManager::Instance()->GetFileHandle(CLOUD_IMAGE);
+
+	// 読み込み終わったら初期化
+	Initialize();
+}
+
+//タイトルで使用したファイルの破棄
+void Title::UnLoadFile()
+{
+	FileManager::Instance()->ResetData();
+}
+
+void Title::Initialize()
 {
 	AudioManager::Instance()->playBGM(TITLE_BGM);
 
+	// 座標の初期化
 	cloudPosX[0] = -100;
 	cloudPosX[1] = -300;
 	cloudPosX[2] = -500;
 }
 
-void Title::Title_Update()
+void Title::Update()
 {
 	// バックの雲を動かす
 	for (int i = 0; i < 3; i++) {
@@ -27,13 +57,14 @@ void Title::Title_Update()
 	}
 
 	//エンターキーが押されたら
-	if (Keyboard_Get(KEY_INPUT_RETURN) == 1) {
+	if (Input::Instance()->ButtonDown(KEY_INPUT_RETURN)) {
 		AudioManager::Instance()->playSE(SE_SELECT);
-		SceneMgr::Instance()->SceneMgr_ChangeScene(eScene_Game);   //シーンをゲーム画面に変更
+		// シーンフェードしてからシーンをセレクトに変更
+		Scene::SceneFade(Scene::SELECT);
 	}
 }
 
-void Title::Title_Draw()
+void Title::Draw()
 {
 	DrawGraph(0, 0, FileManager::Instance()->GetFileHandle(TITLE_IMAGE), FALSE);
 	DrawGraph(cloudPosX[0], 100, FileManager::Instance()->GetFileHandle(CLOUD_IMAGE), TRUE);
