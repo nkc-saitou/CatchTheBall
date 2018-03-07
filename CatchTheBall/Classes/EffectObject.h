@@ -5,6 +5,8 @@ typedef int EffectHandle;
 
 #include "EffekseerForDXLib.h"
 #include "Object.h"
+#include "Input.h"
+#include <math.h>
 
 class EffectObject : public Object{
 
@@ -13,7 +15,12 @@ class EffectObject : public Object{
 
 	bool isPlay = false;
 
+	bool _isleft = false;
+
 public:
+
+	bool autoDestroy;
+
 	EffectObject(EffectHandle handle);
 	~EffectObject();
 

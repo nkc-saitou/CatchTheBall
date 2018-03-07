@@ -17,7 +17,7 @@ using namespace std;
 //
 class EffectManager final : public Singleton<EffectManager>
 {
-	EffectHandle loadedEffect[static_cast<int>(EffectType::PlayerJump)];
+	EffectHandle loadedEffect[static_cast<int>(EffectType::MuzzleFlash) + 1];
 
 	bool isLoadEffect = false;
 
@@ -42,7 +42,6 @@ public:
 	void Update ();
 
 	// エフェクトの再生
-	static EffectObject* CreateEffect(EffectType effectType);
-	static EffectObject* CreateEffect(EffectType effectType, bool autoPlay);
+	static EffectObject* CreateEffect(EffectType effectType, bool autoPlay = true, bool autoDestroy = true);
 };
 
