@@ -6,7 +6,7 @@ public:
 	Object();
 	Object(int order);
 	~Object();
-	virtual void Update() = 0;
+	virtual void Update();
 	virtual void Draw();
 	virtual void Draw(float cameraX, float cameraY);
 

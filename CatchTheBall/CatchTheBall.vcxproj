@@ -29,6 +29,7 @@
     <ClCompile Include="Classes\Gravity.cpp" />
     <ClCompile Include="Classes\Input.cpp" />
     <ClCompile Include="Classes\Keyboard.cpp" />
+    <ClCompile Include="Classes\Label.cpp" />
     <ClCompile Include="Classes\Main.cpp" />
     <ClCompile Include="Classes\MapObject.cpp" />
     <ClCompile Include="Classes\Object.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Classes\Gravity.h" />
     <ClInclude Include="Classes\Input.h" />
     <ClInclude Include="Classes\Keyboard.h" />
+    <ClInclude Include="Classes\Label.h" />
     <ClInclude Include="Classes\LoadFileList.h" />
     <ClInclude Include="Classes\MapObject.h" />
     <ClInclude Include="Classes\Object.h" />

@@ -9,6 +9,8 @@ Camera::Camera(float x, float y) : Object(15)
 		MainCamera = this;
 	}
 
+	SCREEN_WIDTH = 640;
+	SCREEN_HEIGHT = 480;
 	PositionX(x); PositionY(y);
 }
 Camera::~Camera()
@@ -22,7 +24,10 @@ Camera::~Camera()
 //---------------------------------------------------------
 void Camera::Update()
 {
-
+	float posX = PositionX();
+	posX += 1;
+	if (posX > 320) posX = 0;
+	PositionX(posX);
 }
 //---------------------------------------------------------
 //	•`‰æ

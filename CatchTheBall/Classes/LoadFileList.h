@@ -17,7 +17,7 @@ DivFile::DivFile(char* file, int nAll, int nX, int nY, int sX, int sY) {
 
 char* UseFile_Title[] = 
 {
-	"TitleTes.png",
+	"TitleTest.png",
 	"TitleText.png",
 	"player.png",
 	"scene_01_cloud.png",
