@@ -29,6 +29,8 @@ int FileManager::GetFileHandle(string key)
 //---------------------------------------------------------
 int FileManager::LoadFile(string key)
 {
+	if (LoadCheck(key)) return 0;
+
 	string directory, extension;
 	int handle;
 

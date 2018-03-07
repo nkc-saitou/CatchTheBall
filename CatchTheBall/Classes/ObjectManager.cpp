@@ -16,7 +16,7 @@ void ObjectManager::Finalize()
 	//—v‘f‚Ì‘Síœ
 	while (objectArry.empty()) {
 		auto obj = objectArry.end();
-		objectArry.pop_back();
+		//objectArry.pop_back();
 		delete &obj;
 	}
 }
@@ -48,12 +48,9 @@ void ObjectManager::Add(Object* object)
 //---------------------------------------------------------
 void ObjectManager::Update()
 {
-	const int UI_NO = 20;
+	if (isStop) return;
 	//XV
 	for (auto obj : objectArry) {
-		if (isStop && obj->Priority() < UI_NO) {
-			continue;
-		}
 		obj->Update();
 	}
 	//•`‰æ
@@ -79,11 +76,11 @@ void ObjectManager::Reopening()
 void ObjectManager::Draw()
 {
 	//‰æ–Ê‚ð‰Šú‰»
-	ClearDrawScreen();
+	//ClearDrawScreen();
 	//•`‰æ
 	for (auto obj : objectArry) {
 		obj->Draw();
 	}
 	//•\Ž¦
-	ScreenFlip();
+	//ScreenFlip();
 }
