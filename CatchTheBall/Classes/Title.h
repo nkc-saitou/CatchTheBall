@@ -1,4 +1,5 @@
 #pragma once
+#include "BaseScene.h"
  
 // 画像データの string
 #define TITLE_IMAGE "TitleTest.png"
@@ -6,13 +7,16 @@
 #define PLAYER_IMAGE "player.png"
 #define CLOUD_IMAGE "scene_01_cloud.png"
 
-class Title
+class Title : public BaseScene
 {
 public:
+	Title();
+	~Title();
+
 	// 初期化
-	static void Title_Initialize();
+	void Initialize();
 	// 更新
-	static void Title_Update();
+	void Update();
 	// 描画
-	static void Title_Draw();
+	void Draw();
 };
