@@ -1,4 +1,5 @@
 #pragma once
+#include "BaseScene.h"
 
 #define STAGESELECT_TEXT "Stage_Select.png"
 #define STAGESELECT_BACK "TitleTest.png"
@@ -7,13 +8,16 @@
 #define STAGE_BOARD "frame.png"
 #define START_TEXT "Start.png"
 
-class Select
+class Select : public BaseScene
 {
 public:
+	Select();
+	~Select();
+
 	// èâä˙âª
-	static void Select_Initialize();
+	void Initialize();
 	// çXêV
-	static void Select_Update();
+	void Update();
 	// ï`âÊ
-	static void Select_Draw();
+	void Draw();
 };
