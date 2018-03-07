@@ -12,12 +12,14 @@ public:
 	Game();
 	~Game();
 
+	// ファイル読み込み
+	void LoadFile();
+	// 読み込んだファイルの破棄
+	void UnLoadFile();
 	// 初期化
 	void Initialize();
-
 	//更新
 	void Update();
-
 	//描画
 	void Draw();
 };

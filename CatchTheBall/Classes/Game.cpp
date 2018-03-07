@@ -12,12 +12,28 @@ int G_Handle[16];
 
 Game::Game()
 {
-	Initialize();
+	LoadFile();
 }
 
 Game::~Game()
 {
+	UnLoadFile();
+}
 
+// ゲームシーンで使用するファイルの読み込み
+void Game::LoadFile()
+{
+	FileManager::Instance()->GetFileHandle(BACKGROUND_IMAGE);
+	FileManager::Instance()->GetFileHandle(PLAYER_IMAGE);
+
+	// 読み込み終わったら初期化
+	Initialize();
+}
+
+// ゲームシーンで使用したファイルの破棄
+void Game::UnLoadFile()
+{
+	FileManager::Instance()->ResetData();
 }
 
 // 初期化
