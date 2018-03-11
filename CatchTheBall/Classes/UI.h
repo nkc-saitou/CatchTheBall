@@ -1,32 +1,24 @@
 #pragma once
 
-class UI
+#include "FileManager.h"
+#include "Object.h"
+
+class UI : public Object
 {
+	bool _display;
+
+	void Draw() override;
+
+
 public:
-	UI();
-	~UI();
-	virtual void Update() = 0;
-	virtual void Draw();
+	UI(string s, float x, float y, bool drawFlg = true, double rotation = 0, double scale = 1.0, int priority = 20);
+	~UI() {};
 
-	void Priority(int order);
-	int Priority();
-	void PositionX(float posX);
-	float PositionX();
-	void PositionY(float posY);
-	float PositionY();
-	void Rotation(double degree);
-	double Rotation();
-	void Scale(double rate);
-	double Scale();
+	void UIMove(float x , float y , double rotation = 0, double scale = 1.0, int priority = 20);
+	void Update() override {};
+	void DrawDisplay(bool drawFlg = true);
+	void Delete();
 
-protected:
-	void GraphHandle(int graph);
-	int GraphHandle();
-
-private:
-	int _handle;		//ï`âÊâÊëú
-	int _priority;		//óDêÊèáà 
-	float _x, _y;			//ç¿ïW
-	double _rotation;	//âÒì]
-	double _scale;		//î{ó¶
+	void DisplayFlg(bool drawFlg);
+	bool DisplayFlg();
 };
