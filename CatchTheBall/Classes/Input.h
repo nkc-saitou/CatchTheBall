@@ -61,6 +61,9 @@ class Input : public Singleton <Input>
 	//パッド配列の添字用配列
 	int padInputNum;
 
+	//入力角度を保存
+	int InputX, InputY;
+
 	//入力状態を更新
 	void InputSetting();
 
@@ -74,7 +77,10 @@ public:
 
 	//過去の入力情報の取得
 	void InputMemory();
-
+	
+	//入力角度の取得
+	int AngleInputX(int padType);
+	int AngleInputY(int padType);
 
 	//===引数で渡したkeyCode,padType通りにを入力していたら===
 
