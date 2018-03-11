@@ -42,6 +42,7 @@ public:
 	void Update ();
 
 	// エフェクトの再生
-	static EffectObject* CreateEffect(EffectType effectType, bool autoPlay = true, bool autoDestroy = true);
+	static void CreateEffect(EffectType effectType, float x, float y);
+	static EffectObject* CreateEffect(EffectType effectType, float x, float y, bool autoDestroy = false);
 };
 

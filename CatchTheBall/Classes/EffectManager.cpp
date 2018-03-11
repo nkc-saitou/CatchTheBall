@@ -106,15 +106,18 @@ void EffectManager::Update() {
 
 }
 
-EffectObject* EffectManager::CreateEffect(EffectType effectType, bool autoPlay, bool autoDestroy){
+void EffectManager::CreateEffect(EffectType effectType, float x, float y){
+	CreateEffect(effectType, x, y, true);
+}
+EffectObject* EffectManager::CreateEffect(EffectType effectType, float x, float y, bool autoDestroy){
 
 	if (Instance()->isLoadEffect == false) return nullptr;
 
-	auto effetct1 = Instance()->loadedEffect[static_cast<int>(effectType)];
-	auto effetct2 = Instance()->loadedEffect[static_cast<int>(EffectType::ExplosionFireworkClear)];
 	EffectObject *effectObject = new EffectObject(Instance()->loadedEffect[static_cast<int>(effectType)]);
 
-	if (autoPlay) effectObject->PlayEffect();
+	effectObject->PositionX(x);
+	effectObject->PositionY(y);
+	effectObject->PlayEffect();
 	
 	effectObject->autoDestroy = autoDestroy;
 

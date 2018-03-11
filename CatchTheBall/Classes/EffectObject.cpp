@@ -54,11 +54,14 @@ void EffectObject::Update() {
 		//çÌèúèàóù
 		delete this;
 	}
+}
+void EffectObject::Draw(float cameraX, float cameraY) {
 
-	SetPosPlayingEffekseer2DEffect(playingEffectHandle, PositionX(), PositionY(), 0);
+	SetPosPlayingEffekseer2DEffect(playingEffectHandle, PositionX() + cameraX, PositionY() + cameraY, 0);
 	SetRotationPlayingEffekseer2DEffect(playingEffectHandle, 0, 0, Rotation());
 	float scale = EFFECT_SCALE * Scale();
 	SetScalePlayingEffekseer2DEffect(playingEffectHandle, scale, scale, scale);
+
 }
 
 void EffectObject::PlayEffect() {
