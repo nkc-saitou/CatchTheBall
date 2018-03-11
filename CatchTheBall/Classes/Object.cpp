@@ -53,9 +53,9 @@ void Object::Draw()
 void Object::Draw(float cameraX, float cameraY)
 {
 	if (_rotation != 0 || _scale != 1.0)
-		DrawRotaGraphF(_x + cameraX, _y + cameraY, _scale, _rotation, _handle, TRUE);
+		DrawRotaGraphF(_x - cameraX, _y - cameraY, _scale, _rotation, _handle, TRUE);
 	else
-		DrawGraphF(_x + cameraX, _y + cameraY, _handle, TRUE);
+		DrawGraphF(_x - cameraX, _y - cameraY, _handle, TRUE);
 }
 //---------------------------------------------------------
 //	êeéqä÷åW
@@ -182,5 +182,8 @@ double Object::Scale() { return ConvertToWorldScale(); }
 void Object::LocalScale(double rate) { _scale = rate; }
 double Object::LocalScale() { return _scale; }
 
-void Object::GraphHandle(int graph) { _handle = graph; }
+void Object::GraphHandle(int graph) { 
+	_handle = graph;
+	GetGraphSize(_handle, &_gWidth, &_gHeight);
+}
 int Object::GraphHandle() { return _handle; }

@@ -20,6 +20,8 @@ public:
 	Object* GetChild(int num);		// 子オブジェクトの取得
 	const int GetChildCount();		// 子オブジェクトの数の取得
 
+	string GetTag() { return tag; }
+
 	#pragma region Priority
 	void Priority(int order);		// 優先順位
 	int Priority();					// 優先順位
@@ -58,6 +60,9 @@ public:
 	#pragma endregion
 
 protected:
+
+	string tag;						//ユーザー定義のデータ
+
 	void GraphHandle(int graph);	// 描画画像
 	int GraphHandle();				// 描画画像
 
@@ -66,7 +71,7 @@ private:
 	vector<Object*> _child;		// 子オブジェクト
 	int _handle;				// 描画画像
 	int _priority;				// 優先順位
-	float _gWidth, _gHeight;	// 画像サイズ
+	int _gWidth, _gHeight;		// 画像サイズ(ピクセル)
 	float _x, _y;				// 座標(相対)
 	double _rotation;			// 回転(相対)
 	double _scale;				// 拡大率(相対)

@@ -218,7 +218,7 @@ void Input::InputSetting()
 /////////////////////////////////////////////////////
 void Input::PadInputSetting(int padType)
 {
-	if (padType >= 0) return;
+	if (padType <= 0) return;
 
 	//パッド配列の添字用変数
 	int padInput = 0;
