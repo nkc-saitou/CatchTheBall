@@ -11,6 +11,7 @@ Gravity::Gravity()
 	y = 0;
 	y_prev = y;
 	y_temp = 0;
+	gravity = -1;
 }
 
 /////////////////////////////////////////////////////
@@ -20,11 +21,16 @@ Gravity::Gravity()
 /////////////////////////////////////////////////////
 void Gravity::ObjGravity()
 {
-	//Verlet–@
-	//http://d.hatena.ne.jp/Gemma/20080517/1211010942
-	y_temp = y;
-	y += (y - y_prev) + 1;
-	y_prev = y_temp;
+	if (y < 360)
+	{
+		gravity -= 1;
+		y_temp =  gravity;
+		y -= y_temp;
+	}
+	else
+	{
+		y = 360;
+	}
 }
 
 /////////////////////////////////////////////////////

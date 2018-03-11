@@ -17,13 +17,15 @@ Gravityクラス
 class Gravity
 {
 	//プレイヤーのy座標
-	int y;
+	double y;
 
 	//落下した際の前回のy座標を保存
-	int y_prev;
+	double y_prev;
 
 	//現在のy座標を保存
-	int y_temp;
+	double y_temp;
+
+	int gravity;
 
 public:
 	Gravity();
@@ -33,5 +35,5 @@ protected:
 	void GravityReset();
 
 	int Fall_y(){ return y; }
-	void Fall_y(int fallY) { y = fallY; }
+	void Fall_y(double fallY) { y = fallY; }
 };
