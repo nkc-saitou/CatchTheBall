@@ -53,9 +53,9 @@ void Object::Draw()
 void Object::Draw(float cameraX, float cameraY)
 {
 	if (_rotation != 0 || _scale != 1.0)
-		DrawRotaGraphF(_x + cameraX, _y + cameraY, _scale, _rotation, _handle, TRUE);
+		DrawRotaGraphF(_x - cameraX, _y - cameraY, _scale, _rotation, _handle, TRUE);
 	else
-		DrawGraphF(_x + cameraX, _y + cameraY, _handle, TRUE);
+		DrawGraphF(_x - cameraX, _y - cameraY, _handle, TRUE);
 }
 //---------------------------------------------------------
 //	êeéqä÷åW
