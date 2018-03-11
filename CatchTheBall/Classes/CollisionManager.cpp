@@ -13,8 +13,8 @@ void CollisionManager::HitCollision()
 			{
 				if (HitBoxToBox(*collision[i], *collision[j]))
 				{
-					collision[i]->onHit(*collision[j]);
-					collision[j]->onHit(*collision[i]);
+					collision[i]->onHit(collision[j]);
+					collision[j]->onHit(collision[i]);
 				}
 			}
 			//‰~Œ`“¯Žm
@@ -22,8 +22,8 @@ void CollisionManager::HitCollision()
 			{
 				if ((HitCircleToCircle(*collision[i], *collision[j])))
 				{
-					collision[i]->onHit(*collision[j]);
-					collision[j]->onHit(*collision[i]);
+					collision[i]->onHit(collision[j]);
+					collision[j]->onHit(collision[i]);
 				}
 			}
 			//‰~Œ`‚Æ‹éŒ`
@@ -33,16 +33,16 @@ void CollisionManager::HitCollision()
 				{
 					if (HitCircleToBox(*collision[j], *collision[i]))
 					{
-						collision[i]->onHit(*collision[j]);
-						collision[j]->onHit(*collision[i]);
+						collision[i]->onHit(collision[j]);
+						collision[j]->onHit(collision[i]);
 					}
 				}
 				else
 				{
 					if (HitCircleToBox(*collision[i], *collision[j]))
 					{
-						collision[i]->onHit(*collision[j]);
-						collision[j]->onHit(*collision[i]);
+						collision[i]->onHit(collision[j]);
+						collision[j]->onHit(collision[i]);
 					}
 				}
 			}
@@ -50,11 +50,6 @@ void CollisionManager::HitCollision()
 	}
 }
 
-void CollisionManager::hit(Collision* a,Collision* b)
-{
-	a->onHit(*b);
-	b->onHit(*a);
-}
 
 //------------------------------
 //‹éŒ`“¯Žm‚Ì‚ ‚½‚è”»’è
