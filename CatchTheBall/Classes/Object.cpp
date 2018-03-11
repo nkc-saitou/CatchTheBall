@@ -182,5 +182,8 @@ double Object::Scale() { return ConvertToWorldScale(); }
 void Object::LocalScale(double rate) { _scale = rate; }
 double Object::LocalScale() { return _scale; }
 
-void Object::GraphHandle(int graph) { _handle = graph; }
+void Object::GraphHandle(int graph) { 
+	_handle = graph;
+	GetGraphSize(_handle, &_gWidth, &_gHeight);
+}
 int Object::GraphHandle() { return _handle; }
