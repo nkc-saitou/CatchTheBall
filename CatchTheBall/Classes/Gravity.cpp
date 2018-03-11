@@ -21,16 +21,9 @@ Gravity::Gravity()
 /////////////////////////////////////////////////////
 void Gravity::ObjGravity()
 {
-	if (y < 360)
-	{
 		gravity -= 1;
 		y_temp =  gravity;
 		y -= y_temp;
-	}
-	else
-	{
-		y = 360;
-	}
 }
 
 /////////////////////////////////////////////////////
@@ -40,5 +33,5 @@ void Gravity::ObjGravity()
 /////////////////////////////////////////////////////
 void Gravity::GravityReset()
 {
-	y_prev = y;
+	gravity = -1;
 }
