@@ -12,11 +12,10 @@ void EffectObject::Update() {
 
 	if (_canControl) {
 		//ˆÚ“®
-		int movespeed = 4;
+		float movespeed = 50 * Time::GetDeltaTime();
 		if (Input::Instance()->Button(KEY_INPUT_D)) {
 			_isleft = false;
-			float posX = PositionX() + movespeed;
-			PositionX(posX);
+			PositionX(PositionX() + movespeed);
 		}
 
 		if (Input::Instance()->Button(KEY_INPUT_A)) {
@@ -31,7 +30,7 @@ void EffectObject::Update() {
 		}
 
 		//‰ñ“]
-		float rotSpeed = 0.1f;
+		float rotSpeed = 1.5f * Time::GetDeltaTime();
 		if (Input::Instance()->Button(KEY_INPUT_Q)) {
 			Rotation(Rotation() + rotSpeed);
 		}
@@ -40,7 +39,7 @@ void EffectObject::Update() {
 		}
 
 		//Šg‘å
-		float scaleSpeed = 0.1f;
+		float scaleSpeed = 1.5f * Time::GetDeltaTime();
 		if (Input::Instance()->Button(KEY_INPUT_SPACE)) {
 			Scale(Scale() + scaleSpeed);
 		}

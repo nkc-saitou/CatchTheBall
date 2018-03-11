@@ -6,6 +6,7 @@ typedef int EffectHandle;
 #include "EffekseerForDXLib.h"
 #include "Object.h"
 #include "Input.h"
+#include "Time.h"
 #include <math.h>
 
 class EffectObject : public Object{
