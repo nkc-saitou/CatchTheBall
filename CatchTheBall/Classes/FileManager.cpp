@@ -60,7 +60,7 @@ int FileManager::LoadFile(string key)
 	}
 
 	//•Û‘¶
-	DrawFormatString(10, 15 * cnt++, GetColor(255, 255, 255), "%s", key.c_str());
+	//DrawFormatString(10, 15 * cnt++, GetColor(255, 255, 255), "%s", key.c_str());
 	fileHandleMap.emplace(key, handle);
 	return handle;
 }
@@ -79,7 +79,7 @@ void FileManager::LoadFile(string file, int numAll, int numX, int numY, int size
 	//•Û‘¶
 	string key = GetFileName(file) + "_";
 	for (int i = 0; i < numAll; i++) {
-		DrawFormatString(10, 15 * cnt++, GetColor(255, 255, 255), "%s", (key + to_string(i)).c_str());
+		//DrawFormatString(10, 15 * cnt++, GetColor(255, 255, 255), "%s", (key + to_string(i)).c_str());
 		fileHandleMap.emplace(key + to_string(i), graphArr[i]);
 	}
 }
