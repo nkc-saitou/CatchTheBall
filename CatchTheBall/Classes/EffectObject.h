@@ -10,6 +10,8 @@ typedef int EffectHandle;
 
 class EffectObject : public Object{
 
+	const float EFFECT_SCALE = 25.0f;
+
 	EffectHandle loadedEffectHandle;
 	EffectHandle playingEffectHandle;
 
@@ -20,6 +22,7 @@ class EffectObject : public Object{
 public:
 
 	bool autoDestroy;
+	bool _canControl = false;
 
 	EffectObject(EffectHandle handle);
 	~EffectObject();

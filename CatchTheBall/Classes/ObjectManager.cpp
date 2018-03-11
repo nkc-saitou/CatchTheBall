@@ -66,9 +66,20 @@ void ObjectManager::Destroy(Object* object)
 void ObjectManager::Update()
 {
 	if (isStop) return;
-	//更新
+	//更新(親オブジェクトが一番先にUpdateする必要あり)
 	for (auto obj : objectArry) {
+
+		//親オブジェクトが存在するオブジェクトは飛ばす(後で更新する)
+		if (obj->Parent() != nullptr) continue;
+
+		//親をUpdateする
 		obj->Update();
+
+		auto cnt = obj->GetChildCount();
+		for (int i = 0; i < cnt; i++) {
+			//更新
+			obj->GetChild(i)->Update();
+		}
 	}
 	//描画
 	Draw();
