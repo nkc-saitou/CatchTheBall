@@ -17,7 +17,7 @@ Gravityクラス
 class Gravity
 {
 	//プレイヤーのy座標
-	double y;
+	double vecY;
 
 	double gravity;
 
@@ -28,5 +28,7 @@ protected:
 	void ObjGravity();
 	void GravityReset();
 
-	int Fall_y(){ return y; }
+	//ベクトル
+	double Fall_y() { return vecY; }
+	void Fall_y(double vecY) { Gravity::vecY = vecY; }
 };

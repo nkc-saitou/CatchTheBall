@@ -26,29 +26,21 @@ void FireworkObject::Update() {
 	_t += Time::GetDeltaTime();
 	if (_t > 5) return;
 
-	float prevX = PositionX();
-	float prevY = PositionY();
-
-	float nextX = prevX;
-	float nextY = prevY;
-
 	//重力の更新
 	ObjGravity();
-	nextY += Fall_y();
+	moveVecY = Fall_y();
 
 	//移動後の位置を計算
-	nextX += moveVecX * force * Time::GetDeltaTime();
-	nextY += moveVecY * force * Time::GetDeltaTime();
-
-	PositionX(nextX);
-	PositionY(nextY);
+	PositionX(PositionX() + moveVecX * Time::GetDeltaTime());
+	PositionY(PositionY() + moveVecY * Time::GetDeltaTime());
 
 	//向き計算
 	if (child != nullptr) {
 
+		//移動ベクトルを計算
 		VECTOR in;
-		in.x = nextX - prevX;
-		in.y = nextY - prevY;
+		in.x = moveVecX;
+		in.y = moveVecY;
 		in.z = 0;
 
 		VECTOR out;
@@ -63,13 +55,24 @@ void FireworkObject::Update() {
 }
 
 void FireworkObject::SetForce(float force, float moveVecX, float moveVecY) {
-	FireworkObject::moveVecX = moveVecX;
-	FireworkObject::moveVecY = moveVecY;
+
+	VECTOR in;
+	in.x = moveVecX;
+	in.y = moveVecY;
+	in.z = 0;
+
+	VECTOR out;
+
+	VectorNormalize(&out, &in);
+
+	FireworkObject::moveVecX = out.x * force;
+	FireworkObject::moveVecY = out.y * force;
 	FireworkObject::force = force;
 
 	//重力をリセット
 	GravityReset();
-	
+	Fall_y(FireworkObject::moveVecY);
+
 	CheckEffect();
 }
 
