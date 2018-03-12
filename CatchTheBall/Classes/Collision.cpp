@@ -1,7 +1,7 @@
 #include "Collision.h"
 
 
-Collision::Collision(float x, float y, float sizeX, float sizeY, CollisionType type, Object* object, void(*func)(Collision))
+Collision::Collision(float x, float y, float sizeX, float sizeY, CollisionType type, Object* object, function<void(Collision*)> onHit)
 {
 	Collision::x = x;
 	Collision::y = y;
@@ -9,7 +9,7 @@ Collision::Collision(float x, float y, float sizeX, float sizeY, CollisionType t
 	Collision::sizeY = sizeY;
 	Collision::type = type;
 	Collision::object = object;
-	Collision::onHit = func;
+	Collision::onHit = onHit;
 
 	CollisionManager::Instance()->collision.push_back(this);
 }

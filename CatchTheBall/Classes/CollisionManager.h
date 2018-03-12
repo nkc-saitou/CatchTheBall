@@ -11,7 +11,6 @@ class CollisionManager : public Singleton<CollisionManager>
 public:
 	std::vector<Collision*> collision;
 	void HitCollision();
-	void hit(Collision* a, Collision* b);
 
 private:
 

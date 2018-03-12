@@ -12,7 +12,7 @@ void EffectObject::Update() {
 
 	if (_canControl) {
 		//ˆÚ“®
-		float movespeed = 50 * Time::GetDeltaTime();
+		float movespeed = 100 * Time::GetDeltaTime();
 		if (Input::Instance()->Button(KEY_INPUT_D)) {
 			_isleft = false;
 			PositionX(PositionX() + movespeed);
@@ -54,9 +54,15 @@ void EffectObject::Update() {
 		delete this;
 	}
 }
+void EffectObject::Draw() {
+	Draw(0, 0);
+}
 void EffectObject::Draw(float cameraX, float cameraY) {
 
-	SetPosPlayingEffekseer2DEffect(playingEffectHandle, PositionX() + cameraX, PositionY() + cameraY, 0);
+	cameraX = 0;
+	cameraY = 0;
+
+	SetPosPlayingEffekseer2DEffect(playingEffectHandle, PositionX() - cameraX, PositionY() - cameraY, 0);
 	SetRotationPlayingEffekseer2DEffect(playingEffectHandle, 0, 0, Rotation());
 	float scale = EFFECT_SCALE * Scale();
 	SetScalePlayingEffekseer2DEffect(playingEffectHandle, scale, scale, scale);

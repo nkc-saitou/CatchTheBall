@@ -18,7 +18,7 @@ Title::Title()
 	auto backGround = new Label(FileManager::Instance()->GetFileHandle(TITLE_IMAGE), 0, 0);
 	auto Title = new Label(FileManager::Instance()->GetFileHandle(TITLE_TEXT), 0, 0);
 	auto PlayerImage = new Label(FileManager::Instance()->GetFileHandle(PLAYER_IMAGE), 280, 288);
-	auto camera = new Camera(0, 100);
+	auto camera = new Camera(0, 0);
 }
 
 Title::~Title()

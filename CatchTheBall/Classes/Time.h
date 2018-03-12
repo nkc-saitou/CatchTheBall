@@ -1,19 +1,20 @@
 #pragma once
 #include <math.h>
 #include "DxLib.h"
+#include <string>
 
 static class Time {
-	static const int N = 60;		//平均を取るサンプル数
-	static const int FPS = 10;		//設定したFPS
+	static const int N = 60;			//平均を取るサンプル数
+	static const int FPS = 60;			//設定したFPS
 
-	static int mGameStartTime;		//起動開始時間
-	static int mCurrentTime;		//現在のフレームの時間
-	static int mPrevTime;			//前のフレームの時間
-	static int mCountStartTime;		//測定開始時刻
-	static int mCount;				//カウンタ
-	static float mFps;				//fps
-	static float mDeltaTime;		//フレーム間の時間
-	static float mTime;				//起動してからの経過時間
+	static LONGLONG mGameStartTime;		//起動開始時間
+	static LONGLONG mCurrentTime;		//現在のフレームの時間
+	static LONGLONG mPrevTime;			//前のフレームの時間
+	static LONGLONG mCountStartTime;	//測定開始時刻
+	static int mCount;					//カウンタ
+	static float mFps;					//fps
+	static float mDeltaTime;			//フレーム間の時間
+	static float mTime;					//起動してからの経過時間
 
 public:
 

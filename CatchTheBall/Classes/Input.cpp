@@ -214,6 +214,34 @@ void Input::InputSetting()
 /////////////////////////////////////////////////////
 //引数			:対応パッド
 //戻り値		:なし
+//動作			:ジョイパッドのアナログ的なレバー入力情報のX軸を得る
+/////////////////////////////////////////////////////
+int Input::AngleInputX(int padType)
+{
+	if (padType <= 0) return 0;
+
+	PadInputSetting(padType);
+
+	return InputX;
+}
+
+/////////////////////////////////////////////////////
+//引数			:対応パッド
+//戻り値		:なし
+//動作			:ジョイパッドのアナログ的なレバー入力情報のY軸を得る
+/////////////////////////////////////////////////////
+int Input::AngleInputY(int padType)
+{
+	if (padType <= 0) return 0;
+
+	PadInputSetting(padType);
+
+	return InputY;
+}
+
+/////////////////////////////////////////////////////
+//引数			:対応パッド
+//戻り値		:なし
 //動作			:現在の各パッドの入力状態を格納
 /////////////////////////////////////////////////////
 void Input::PadInputSetting(int padType)
@@ -249,6 +277,9 @@ void Input::PadInputSetting(int padType)
 
 	// パッドの入力状態を取得
 	GetJoypadXInputState(padInput, &input[padInputNum]);
+
+	//アナログパッドの入力状態を取得
+	GetJoypadAnalogInput(&InputX, &InputY, padInput);
 }
 
 /////////////////////////////////////////////////////
