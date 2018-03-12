@@ -18,14 +18,15 @@ DivFile::DivFile(char* file, int nAll, int nX, int nY, int sX, int sY) {
 char* UseFile_Title[] = 
 {
 	"TitleTest.png",
-	"TitleText.png",
-	"player.png",
-	"scene_01_cloud.png",
-	"bgm_maoudamashii_8bit02.mp3"
+	"Title_Logp.png",
+	"BGM_Title.mp3"
 };
 DivFile UseDivFile_Title[] =
 {
-	DivFile("mapChip.png", 10, 4, 4, 64, 64)
+	DivFile("Player_A.png", 2, 2, 1, 64, 64),
+	DivFile("Player_B.png", 2, 2, 1, 64, 64),
+	DivFile("Player_C.png", 2, 2, 1, 64, 64),
+	DivFile("Player_D.png", 2, 2, 1, 64, 64)
 };
 
 #pragma endregion
