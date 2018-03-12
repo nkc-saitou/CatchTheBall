@@ -2,8 +2,8 @@
 #include <string>
 using namespace std;
 
-#define STAGE_FILE_1 "Resources\\StageData.ctbst"
-#define STAGE_FILE_2 "Resources\\StageLong.ctbst"
+#define STAGE_FILE_1 "Resources\\StageData\\StageData.ctbst"
+#define STAGE_FILE_2 "Resources\\StageData\\StageLong.ctbst"
 #define BACKGROUND "Resources\\image\\BackGround.png"
 
 #define STAGE1_SIZE 20
