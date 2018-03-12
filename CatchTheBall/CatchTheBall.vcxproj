@@ -42,6 +42,7 @@
     <ClCompile Include="Classes\Title.cpp" />
     <ClCompile Include="Classes\UI.cpp" />
     <ClCompile Include="Classes\FireworkObject.cpp" />
+    <ClCompile Include="Classes\GoalObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\AudioManager.h" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Classes\EffectType.h" />
     <ClInclude Include="Classes\FileManager.h" />
     <ClInclude Include="Classes\Game.h" />
+    <ClInclude Include="Classes\GoalObject.h" />
     <ClInclude Include="Classes\Gravity.h" />
     <ClInclude Include="Classes\Input.h" />
     <ClInclude Include="Classes\Keyboard.h" />

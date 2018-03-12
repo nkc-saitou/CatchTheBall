@@ -55,10 +55,13 @@ void ObjectManager::Destroy(Object* object)
 	auto itr = objectArry.begin();
 	while (itr != objectArry.end()) 
 	{
-		if (*itr == object) break;
+		if (*itr == object) {
+			itr = objectArry.erase(itr);
+			break;
+		}
 		else itr++;
 	}
-	objectArry.erase(itr);
+	
 }
 //---------------------------------------------------------
 //	çXêV

@@ -5,6 +5,8 @@
 #include "Input.h"
 #include "Time.h"
 #include "FireworkObject.h"
+#include "GoalObject.h"
+#include "CollisionManager.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -43,6 +45,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// シーンの初期化
 	Scene* scene = new Scene();
 
+	//ゴールを生成
+	new GoalObject(200, 200);
+
 	ScreenFlip();
 	WaitKey();
 
@@ -72,6 +77,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//---------------------------------------------
 		// シーンの更新
 		scene->Update();
+
+		//当たり判定
+		CollisionManager::Instance()->HitCollision();
+
 		// シーンの描画
 		scene->Draw();
 		//---------------------------------------------

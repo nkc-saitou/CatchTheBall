@@ -10,10 +10,11 @@ FireworkObject::FireworkObject() {
 	playEffectType = EffectType::ExplosionFireworkClear;
 	CheckEffect();
 	
-	GraphHandle(FileManager::Instance()->GetFileHandle("Ball.png"));
+	GraphHandle(FileManager::Instance()->GetFileHandle("FireWorkBall.png"));
 
 	collider = new Collision(16, 16, 32, 32, CollisionType::Circle, this, [this](Collision* other) { OnHit(other); });
 
+	tag = GetTagName();
 }
 
 
