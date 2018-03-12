@@ -29,6 +29,7 @@ public:
 	~EffectObject();
 
 	virtual void Update() override;
+	virtual void Draw() override;
 	virtual void Draw(float cameraX, float cameraY) override;
 
 	//エフェクトの再生

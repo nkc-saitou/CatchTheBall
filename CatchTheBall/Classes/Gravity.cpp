@@ -9,9 +9,7 @@ Gravity::Gravity()
 {
 	//èâä˙âª
 	y = 0;
-	y_prev = y;
-	y_temp = 0;
-	gravity = -1;
+	gravity = 0;
 }
 
 /////////////////////////////////////////////////////
@@ -21,9 +19,8 @@ Gravity::Gravity()
 /////////////////////////////////////////////////////
 void Gravity::ObjGravity()
 {
-		gravity -= 1;
-		y_temp =  gravity;
-		y -= y_temp;
+		gravity += Time::GetDeltaTime() * 0.1f;
+		y += gravity;
 }
 
 /////////////////////////////////////////////////////
@@ -33,5 +30,6 @@ void Gravity::ObjGravity()
 /////////////////////////////////////////////////////
 void Gravity::GravityReset()
 {
-	gravity = -1;
+	gravity = 0;
+	y = 0;
 }

@@ -33,6 +33,9 @@ void EffectManager::Initialize() {
 	// Effekseerを使用する場合、2DゲームでもZバッファを使用する。
 	SetWriteZBuffer3D(TRUE);
 
+	//レンダラーを取得
+	renderer = GetEffekseer2DRenderer();
+
 	cout << "Effect initialized." << endl;
 }
 
@@ -97,6 +100,19 @@ void EffectManager::Load() {
 }
 
 void EffectManager::Update() {
+
+	//カメラ位置の設定
+	auto mainCam = Camera::MainCamera;
+	if (mainCam != nullptr) {
+		float x = mainCam->PositionX();
+		float y = mainCam->PositionY();
+
+		//Effekseerのレンダラーにセット
+		Effekseer::Matrix44* m = new Effekseer::Matrix44();
+		m->Translation(-SCREEN_WIDTH / 2 - x, +SCREEN_HEIGHT / 2 + y, 10);
+		renderer->SetCameraMatrix(*m);
+		delete m;
+	}
 
 	// Effekseerにより再生中のエフェクトを更新する。
 	UpdateEffekseer2D();
