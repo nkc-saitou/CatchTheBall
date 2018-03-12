@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "Gravity.h"
 
 enum PlayerState {
 	Wait,
@@ -9,7 +10,7 @@ enum PlayerState {
 	Dead
 };
 
-class Player : public Object
+class Player : public Object, public Gravity
 {
 public:
 	Player();
@@ -28,4 +29,7 @@ private:
 
 	PlayerState state;	//ó‘Ô
 	int padNo;			//‘€ìƒpƒbƒh
+
+	bool isTouchBall;	//‰Ô‰Î‹Ê‚ÉG‚ê‚Ä‚¢‚é‚©
+	float ballPower;	//•Û‚µ‚½‰Ô‰Î‹Ê‚É‰Á‚í‚Á‚Ä‚¢‚é—Í
 };
