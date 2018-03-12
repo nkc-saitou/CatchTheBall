@@ -58,6 +58,9 @@ class Input : public Singleton <Input>
 	int allInput;
 	int oldAllInput;
 
+	//対応パッド
+	int padInput = 0;
+
 	//パッド配列の添字用配列
 	int padInputNum;
 
@@ -81,6 +84,12 @@ public:
 	//入力角度の取得
 	int AngleInputX(int padType);
 	int AngleInputY(int padType);
+
+	//パッドを振動させる
+	void PadStartVibration(int padType, int Power = 1000, int Time = -1);
+
+	//振動しているパッドを止める
+	void PadStopVibration(int padType);
 
 	//===引数で渡したkeyCode,padType通りにを入力していたら===
 

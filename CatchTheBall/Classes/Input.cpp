@@ -212,6 +212,28 @@ void Input::InputSetting()
 }
 
 /////////////////////////////////////////////////////
+//引数			:振動させるパッド、振動の強さ(デフォルトは1000)、振動させる時間(デフォルトは-1(PadStopVibrationを呼ぶまで止まらない))
+//戻り値		:なし
+//動作			:振動させる
+/////////////////////////////////////////////////////
+void Input::PadStartVibration(int padType, int Power, int Time)
+{
+	PadInputSetting(padType);
+	StartJoypadVibration(padInput, Power, Time);
+}
+
+/////////////////////////////////////////////////////
+//引数			:振動をとめるパッド
+//戻り値		:なし
+//動作			:振動を止める
+/////////////////////////////////////////////////////
+void Input::PadStopVibration(int padType)
+{
+	PadInputSetting(padType);
+	StopJoypadVibration(padInput);
+}
+
+/////////////////////////////////////////////////////
 //引数			:対応パッド
 //戻り値		:なし
 //動作			:ジョイパッドのアナログ的なレバー入力情報のX軸を得る
@@ -222,7 +244,9 @@ int Input::AngleInputX(int padType)
 
 	PadInputSetting(padType);
 
-	return InputX;
+	float angleInput_x = InputX / 1000;
+	
+	return angleInput_x;
 }
 
 /////////////////////////////////////////////////////
@@ -236,7 +260,9 @@ int Input::AngleInputY(int padType)
 
 	PadInputSetting(padType);
 
-	return InputY;
+	float angleInput_y = InputY / 1000;
+
+	return angleInput_y;
 }
 
 /////////////////////////////////////////////////////
@@ -247,9 +273,6 @@ int Input::AngleInputY(int padType)
 void Input::PadInputSetting(int padType)
 {
 	if (padType <= 0) return;
-
-	//パッド配列の添字用変数
-	int padInput = 0;
 
 	//対応パッドを判別
 	switch (padType)
