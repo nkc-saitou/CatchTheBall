@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Time.h"
 #include "EntryData.h"
+#include "Camera.h"
 
 #pragma region P_Input
 
@@ -24,7 +25,8 @@ Player::Player() : Object(0)
 	GraphHandle(bodyHandle[RIGHT]);
 
 	state = Wait;
-	isTouchBall = false; isGround = true;
+	isTouchBall = isGround = isJumpUp = isJump = false;
+	isGravity = true;
 	moveSpeed = 0;
 	memoryInput = P_InputState();
 
@@ -39,7 +41,8 @@ Player::Player(float x, float y, int order) : Object(order)
 
 	PositionX(x); PositionY(y);
 	state = Wait;
-	isTouchBall = false; isGround = false;
+	isTouchBall = isGround = isJump = isJumpUp = false;
+	isGravity = true;
 	moveSpeed = 0;
 	memoryInput = P_InputState();
 
@@ -49,28 +52,6 @@ Player::Player(float x, float y, int order) : Object(order)
 Player::~Player() 
 {
 	delete collider;
-}
-//---------------------------------------------------------
-//	更新
-//---------------------------------------------------------
-void Player::Update()
-{
-	//行動
-	switch (state) {
-	case Wait: break;					// 待機
-	case Move: MoveAction(); break;		// 移動
-	case Shot: ShotAction(); break;		// 射撃
-	case Dead: DeadAction(); break;		// 死亡
-	}
-
-	
-	//重力
-	if (!isGround) {
-		float nextY = PositionY();
-		ObjGravity();
-		nextY += Fall_y();
-		PositionY(nextY);
-	}
 }
 //---------------------------------------------------------
 //	プレイヤーを設定
@@ -94,6 +75,8 @@ void Player::SetPadNo(int no)
 		"Player_D_1"
 	};
 
+	if (state != Wait) return;
+
 	playerNo = no;
 	//padNo = EntryData::GetController(playerNo);
 	padNo = no;
@@ -101,28 +84,57 @@ void Player::SetPadNo(int no)
 	/*
 	//画像を変更
 	switch(playerNo) {
-	case 0: 
-		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_1_IMAGE[RIGHT]); 
-		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_1_IMAGE[LEFT]);
-		break;
-	case 1: 
-		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_2_IMAGE[RIGHT]);
-		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_2_IMAGE[LEFT]);
-		break;
+	case 0:
+	bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_1_IMAGE[RIGHT]);
+	bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_1_IMAGE[LEFT]);
+	break;
+	case 1:
+	bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_2_IMAGE[RIGHT]);
+	bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_2_IMAGE[LEFT]);
+	break;
 	case 2:
-		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_3_IMAGE[RIGHT]);
-		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_3_IMAGE[LEFT]);
-		break;
-	case 3:    
-		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_4_IMAGE[RIGHT]);
-		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_4_IMAGE[LEFT]);
-		break;
+	bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_3_IMAGE[RIGHT]);
+	bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_3_IMAGE[LEFT]);
+	break;
+	case 3:
+	bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_4_IMAGE[RIGHT]);
+	bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_4_IMAGE[LEFT]);
+	break;
 	}
 	GraphHandle(bodyHandle[RIGHT]);
 	*/
 
 	state = Move;
 	Input::Instance()->PadStartVibration(padNo, 1000, 500);
+}
+//---------------------------------------------------------
+//	更新
+//---------------------------------------------------------
+void Player::Update()
+{
+	//行動
+	switch (state) {
+	case Wait: break;					// 待機
+	case Move: MoveAction(); break;		// 移動
+	case Shot: ShotAction(); break;		// 射撃
+	case Dead: DeadAction(); break;		// 死亡
+	}
+
+	// ジャンプ
+	if (isJumpUp) {	
+		Jump();
+	}
+
+	// 重力
+	if (isGravity) {
+		isGround = false;
+		float nextY = PositionY();
+		ObjGravity();
+		nextY += Fall_y();
+		PositionY(nextY);
+	}
+
+	if(isTouchBall) isTouchBall = false;
 }
 //---------------------------------------------------------
 //	移動
@@ -135,28 +147,33 @@ void Player::MoveAction()
 	P_InputState input = PlayerInput();
 
 	// 捕球
-	if (input.ActionKeyDown) {
+	if (input.ActionKeyDown && isTouchBall) 
+	{
 		
+		state = Shot;
 		return;
 	}
 
 	// ジャンプ
-	if (isGround && input.JumpKeyDown) {
-		Jump();
+	if (input.JumpKeyDown && isJump && isGround) 
+	{
+		isGround = isGravity = isJump = false;
+		isJumpUp = true;
+		jumpStartTime = GetNowCount();
 	}
 
 	// 移動
-	if (isGround && input.Right) 
+	if (input.Right) 
 	{
 		if (input.RightDown) GraphHandle(bodyHandle[RIGHT]);
 		moveSpeed += ADD_ACCEL * Time::GetDeltaTime();
 	} else
-	if (isGround && input.Left) 
+	if (input.Left) 
 	{
 		if (input.LeftDown) GraphHandle(bodyHandle[LEFT]);
 		moveSpeed -= ADD_ACCEL * Time::GetDeltaTime();
-	} 
-	else	// 入力がなかった場合、減速
+	} else
+	if (isGround)// 入力がなかった場合、減速
 	{
 		if (moveSpeed > 0) 
 		{
@@ -173,6 +190,19 @@ void Player::MoveAction()
 	// 移動速度の制限
 	if (moveSpeed > 0) moveSpeed = (moveSpeed > MOVE_SPEED_MAX) ? MOVE_SPEED_MAX : moveSpeed;
 	else if (moveSpeed < 0) moveSpeed = (moveSpeed < -MOVE_SPEED_MAX) ? -MOVE_SPEED_MAX : moveSpeed;
+
+	// 移動範囲の制限
+	float LimitMinX = (Camera::MainCamera == nullptr) ? Camera::MainCamera->PositionX() : 0;
+	float LimitMaxX = (Camera::MainCamera == nullptr) ? Camera::MainCamera->PositionX() + SCREEN_WIDTH - GraphWidth() : SCREEN_WIDTH - GraphWidth();
+
+	if (nextX < LimitMinX) { 
+		nextX = LimitMinX;
+		moveSpeed = 0;
+	}else 
+	if (nextX > LimitMaxX) { 
+		nextX = LimitMaxX;
+		moveSpeed = 0;
+	}
 	
 	nextX += moveSpeed * Time::GetDeltaTime();
 	PositionX(nextX);
@@ -196,12 +226,21 @@ void Player::DeadAction()
 //---------------------------------------------------------
 void Player::Jump()
 {
-	/*if (PositionY() <= 240) {
-		PositionY(PositionY() + Fall_y() * Time::GetDeltaTime());
+	const float JUMP_POWER = 1300;
+	const int JUMP_UP_TIME = 100;
+	const int JUMP_WAIT_TIME = 200;
+	
+	// 上昇
+	if (GetNowCount() - jumpStartTime < JUMP_UP_TIME) {
+		float nextY = PositionY();
+		nextY -= JUMP_POWER * Time::GetDeltaTime();
+		PositionY(nextY);
 	}
-	else if (PositionY() >= 240) {
-		PositionY(PositionY() - 200 * Time::GetDeltaTime());
-	}*/
+	// ジャンプ終了
+	if (GetNowCount() - jumpStartTime > JUMP_WAIT_TIME) {
+		isJumpUp = false;
+		isGravity = true;
+	}
 }
 //---------------------------------------------------------
 //	プレイヤーからの入力
@@ -259,21 +298,27 @@ void Player::OnHit(Collision * other)
 		float otherPivotX = other->getObject()->PositionX() + other->getX();// 相手中心 X
 		float otherPivotY = other->getObject()->PositionY() + other->getY();// 相手中心 Y
 
+		float myToOtherDisY = myPivotY - otherPivotY;						// 中心の距離 Y
+		if (myToOtherDisY < 0) myToOtherDisY = -myToOtherDisY;				
+
 		// 上下
-		if (myPivotX < otherPivotX + (otherPivotY - myPivotY) && myPivotX > otherPivotX - (otherPivotY - myPivotY))
+		if (myPivotX <= otherPivotX + myToOtherDisY && myPivotX >= otherPivotX - myToOtherDisY)
 		{
 			if (myPivotY <= otherPivotY) {
 				isGround = true;
+				if (!isJump) isJump = true;
 				nextY = other->getObject()->PositionY() - GraphHeight();
 			}
 			else {
+				isJumpUp = false;
+				isGravity = true;
 				nextY = other->getObject()->PositionY() + other->getSizeY();
 			}
 			// 重力をリセット
 			GravityReset();
-		}
+		} else 
 		// 左右
-		else
+		if(otherPivotY - myPivotY < (collider->getSizeY() / 2 + other->getSizeY() / 2) * 0.5f)
 		{
 			if (myPivotX <= otherPivotX) {
 				nextX = other->getObject()->PositionX() - GraphWidth();
@@ -290,6 +335,6 @@ void Player::OnHit(Collision * other)
 	// 花火玉
 	if (other->getObject()->GetTag() == "Firework")
 	{
-
+		isTouchBall = true;
 	}
 }
