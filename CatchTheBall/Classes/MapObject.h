@@ -8,6 +8,8 @@ public:
 	MapObject(float x, float y, double scale, int handle, int order = -1);
 	~MapObject();
 
+	Collision* col;
+
 private:
 
 };

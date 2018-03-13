@@ -35,7 +35,7 @@ public:
 	// シーン変更
 	static void ChangeScene(SCENE scene);
 	// シーンフェード
-	static void SceneFade(SCENE nextScene);
+	static void SceneFade(SCENE nextScene,int stageNum = 0);
 	// 更新
 	static void Update();
 	// 描画
