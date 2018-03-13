@@ -4,7 +4,7 @@
 PlayerManager::PlayerManager(int num)
 {
 	playerNum = num;	//プレイ人数
-	nextActive = 0;		//次に有効になるプレイヤー
+	isFreeze = false;
 
 	for (int i = 0; i < PLAYER_NUM_MAX; i++) {
 		playerStock[i] = i;
@@ -18,12 +18,22 @@ PlayerManager::~PlayerManager()
 {
 
 }
+
+void PlayerManager::Reset() {
+
+	for (int i = 0; i < playerNum; i++) {
+		playerStock[i] = i;
+		PlayerNonActive(i);
+	}
+
+
+}
 //---------------------------------------------------------
 //	更新
 //---------------------------------------------------------
 void PlayerManager::Update()
 {
-	if (CheckFull()) return;
+	if (isFreeze || CheckFull()) return;
 
 	vector<Player*> canActivePlayer;
 
@@ -98,8 +108,8 @@ void PlayerManager::RemovePlayerTank(Player* player) {
 //---------------------------------------------------------
 bool PlayerManager::CheckFull()
 {
-	for (auto item : activePlayer) {
-		if (!item) return false;
+	for (int i = 0; i < playerNum; i++) {
+		if (!activePlayer[i]) return false;
 	}
 	
 	return true;
@@ -109,14 +119,20 @@ bool PlayerManager::CheckFull()
 //---------------------------------------------------------
 void PlayerManager::PlayerActive(int playerNum, Player *player)
 {
-
+	if (playerNum < 0 || playerNum >= PlayerManager::playerNum) return;
 	if (activePlayer[playerNum]) return;
 
+	//操作を割り当てる
 	activePlayer[playerNum] = player;
-	activePlayer[playerNum]->SetPadNo(0);	//現在は1P固定
+	activePlayer[playerNum]->SetPadNo(playerNum);
 }
 
 void PlayerManager::PlayerNonActive(int playerNum) {
+
+	if (!activePlayer[playerNum]) return;
+
+	//操作を無効にしたい
+	//activePlayer[playerNum]->SetPadNo(-1);
 	activePlayer[playerNum] = nullptr;
 }
 
@@ -125,10 +141,10 @@ int PlayerManager::GetNextPlayer() {
 	auto next = playerStock[0];
 
 	//後ろに移動
-	for (int i = 1; i < PLAYER_NUM_MAX; i++) {
+	for (int i = 1; i < PlayerManager::playerNum; i++) {
 		playerStock[i - 1] = playerStock[i];
 	}
-	playerStock[PLAYER_NUM_MAX - 1] = next;
+	playerStock[PlayerManager::playerNum - 1] = next;
 	
 	return next;
 }

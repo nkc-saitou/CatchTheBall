@@ -7,9 +7,13 @@ const int PLAYER_NUM_MAX = 4;
 
 class PlayerManager {
 public:
+
+	bool isFreeze;					//更新するかどうか
+
 	PlayerManager(int);
 	~PlayerManager();
 
+	void Reset();					//割当をすべてリセット
 	void Update();					//更新
 	void AddPlayerTank(Player*);	//無人戦車の追加
 	void RemovePlayerTank(Player*);	//無人戦車の削除
