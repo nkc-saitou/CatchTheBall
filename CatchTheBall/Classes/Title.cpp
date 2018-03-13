@@ -10,14 +10,16 @@
 
 Title::Title()
 {
+	isMovingScene = false;
+
 	LoadFile();
 
 	//BGMçƒê∂
 	AudioManager::Instance()->playBGM(TITLE_BGM);
 	//Objectê∂ê¨
 	auto backGround = new Label(FileManager::Instance()->GetFileHandle(TITLE_IMAGE), 0, 0);
-	auto Title = new Label(FileManager::Instance()->GetFileHandle(TITLE_TEXT), 0, 0);
-	auto PlayerImage = new Label(FileManager::Instance()->GetFileHandle(PLAYER_IMAGE), 280, 288);
+	auto title = new Label(FileManager::Instance()->GetFileHandle(TITLE_LOGO), (SCREEN_WIDTH - 525) / 2, 30);
+	auto startText = new Label(FileManager::Instance()->GetFileHandle(START_TEXT), (SCREEN_WIDTH - 320) / 2, 380);
 	auto camera = new Camera(0, 0);
 }
 
@@ -50,16 +52,18 @@ void Title::Initialize()
 
 void Title::Update()
 {
+	//ÉVÅ[ÉìÉåÉxÉãÇ≈é¿ëï
+	if (Input::Instance()->PadAnyButtonDown(MOVE_SCENE_PAD)
+		|| Input::Instance()->ButtonDown(MOVE_SCENE_KEY)) {
+
+		//printfDx("Button1\n");
+		Scene::SceneFade(Scene::SELECT);
+	}
+
 	ObjectManager::Instance()->Update();
 }
 
 void Title::Draw()
 {
 	ObjectManager::Instance()->Draw();
-
-	//DrawGraph(cloudPosX[0], 100, FileManager::Instance()->GetFileHandle(CLOUD_IMAGE), TRUE);
-	//DrawGraph(cloudPosX[1], 40, FileManager::Instance()->GetFileHandle(CLOUD_IMAGE), TRUE);
-	//DrawGraph(cloudPosX[2], 160, FileManager::Instance()->GetFileHandle(CLOUD_IMAGE), TRUE);
-
-	//DrawString(230, 410, "Å°", GetColor(0, 0, 0));
 }

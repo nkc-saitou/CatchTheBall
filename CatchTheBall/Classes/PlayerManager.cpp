@@ -59,7 +59,7 @@ void PlayerManager::Update()
 		Player *nearTank = nullptr;
 		float x;
 		for (auto item : canActivePlayer) {
-			if (nearTank == nullptr || item->PositionX < x) {
+			if (nearTank == nullptr || item->PositionX() < x) {
 				nearTank = item;
 			}
 			x = nearTank->PositionX();

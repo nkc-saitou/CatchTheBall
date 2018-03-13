@@ -31,4 +31,4 @@ private:
 	void PlayerActive(int playerNum, Player *player);					//‘€ì‚ğ—LŒø‚É
 	void PlayerNonActive(int playerNum);
 	int GetNextPlayer();
-}
+};
