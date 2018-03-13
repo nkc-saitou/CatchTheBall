@@ -1,13 +1,16 @@
 #include "GameManager.h"
 #include "UI.h"
 #include "Time.h"
+#include "PlayerManager.h"
+
+PlayerManager *playerMana;
 
 void GameManager::GameStart()
 {
 	if (!stateFlg) 
 	{
 		state = GameState::GAMESTART;
-		timeInterval = 3.0f;
+		timeInterval = 5.0f;
 		timer = 0.0f;
 		stateFlg = true;
 	}
@@ -46,6 +49,7 @@ void GameManager::Update()
 		{
 		case GameState::GAMESTART:
 			stateFlg = false;
+			playerMana->isFreeze = true;
 			break;
 		case GameState::GAMECLEAR:
 			stateFlg = false;
