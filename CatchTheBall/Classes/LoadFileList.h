@@ -26,7 +26,8 @@ DivFile UseDivFile_Title[] =
 	DivFile("Player_A.png", 2, 2, 1, 64, 64),
 	DivFile("Player_B.png", 2, 2, 1, 64, 64),
 	DivFile("Player_C.png", 2, 2, 1, 64, 64),
-	DivFile("Player_D.png", 2, 2, 1, 64, 64)
+	DivFile("Player_D.png", 2, 2, 1, 64, 64),
+	DivFile("MapChip.png", 2, 4, 4, 64, 64)
 };
 
 #pragma endregion

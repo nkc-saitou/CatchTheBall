@@ -27,6 +27,9 @@ Player::Player() : Object(0)
 	isTouchBall = false; isGround = true;
 	moveSpeed = 0;
 	memoryInput = P_InputState();
+
+	collider = new Collision(GraphWidth() / 2, GraphHeight() / 2, GraphWidth(), GraphHeight(), Square, this, [this](Collision* other) { OnHit(other); });
+	tag = GetTagName();
 }
 Player::Player(float x, float y, int order) : Object(order)
 {
@@ -36,15 +39,16 @@ Player::Player(float x, float y, int order) : Object(order)
 
 	PositionX(x); PositionY(y);
 	state = Wait;
-	isTouchBall = false; isGround = true;
+	isTouchBall = false; isGround = false;
 	moveSpeed = 0;
 	memoryInput = P_InputState();
 
-	collider = new Collision(16, 16, 32, 32, CollisionType::Circle, this, [this](Collision* other) { OnHit(other); });
+	collider = new Collision(GraphWidth() / 2, GraphHeight() / 2, GraphWidth(), GraphHeight(), Square, this, [this](Collision* other) { OnHit(other); });
+	tag = GetTagName();
 }
 Player::~Player() 
 {
-
+	delete collider;
 }
 //---------------------------------------------------------
 //	更新
@@ -59,24 +63,65 @@ void Player::Update()
 	case Dead: DeadAction(); break;		// 死亡
 	}
 
-	//float nextY = PositionY();
-	////重力
-	//ObjGravity();
-	//nextY += Fall_y();
-	//PositionY(nextY);
+	
+	//重力
+	if (!isGround) {
+		float nextY = PositionY();
+		ObjGravity();
+		nextY += Fall_y();
+		PositionY(nextY);
+	}
 }
 //---------------------------------------------------------
 //	プレイヤーを設定
 //---------------------------------------------------------
 void Player::SetPadNo(int no)
 {
+	const char* PLAYER_1_IMAGE[2] = {
+		"Player_A_0",
+		"Player_A_1"
+	};
+	const char* PLAYER_2_IMAGE[2] = {
+		"Player_B_0",
+		"Player_B_1"
+	};
+	const char* PLAYER_3_IMAGE[2] = {
+		"Player_C_0",
+		"Player_C_1"
+	};
+	const char* PLAYER_4_IMAGE[2] = {
+		"Player_D_0",
+		"Player_D_1"
+	};
+
 	playerNo = no;
-	padNo = EntryData::GetController(playerNo);
+	//padNo = EntryData::GetController(playerNo);
+	padNo = no;
 
-
+	/*
+	//画像を変更
+	switch(playerNo) {
+	case 0: 
+		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_1_IMAGE[RIGHT]); 
+		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_1_IMAGE[LEFT]);
+		break;
+	case 1: 
+		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_2_IMAGE[RIGHT]);
+		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_2_IMAGE[LEFT]);
+		break;
+	case 2:
+		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_3_IMAGE[RIGHT]);
+		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_3_IMAGE[LEFT]);
+		break;
+	case 3:    
+		bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle(PLAYER_4_IMAGE[RIGHT]);
+		bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle(PLAYER_4_IMAGE[LEFT]);
+		break;
+	}
+	GraphHandle(bodyHandle[RIGHT]);
+	*/
 
 	state = Move;
-
 	Input::Instance()->PadStartVibration(padNo, 1000, 500);
 }
 //---------------------------------------------------------
@@ -94,21 +139,19 @@ void Player::MoveAction()
 		
 		return;
 	}
-	// 地面に接していないなら
-	if (!isGround) return;
 
 	// ジャンプ
-	if (input.JumpKeyDown) {
+	if (isGround && input.JumpKeyDown) {
 		Jump();
 	}
 
 	// 移動
-	if (input.Right) 
+	if (isGround && input.Right) 
 	{
 		if (input.RightDown) GraphHandle(bodyHandle[RIGHT]);
 		moveSpeed += ADD_ACCEL * Time::GetDeltaTime();
 	} else
-	if (input.Left) 
+	if (isGround && input.Left) 
 	{
 		if (input.LeftDown) GraphHandle(bodyHandle[LEFT]);
 		moveSpeed -= ADD_ACCEL * Time::GetDeltaTime();
@@ -201,7 +244,52 @@ P_InputState Player::PlayerInput()
 	memoryInput = input;
 	return input;
 }
-
+//---------------------------------------------------------
+//	当たり判定
+//---------------------------------------------------------
 void Player::OnHit(Collision * other)
 {
+	// 地面
+	if (other->getObject()->GetTag() == "Wall") 
+	{
+		float nextX = PositionX(), nextY = PositionY();
+
+		float myPivotX = nextX + collider->getX();							// 自分中心 X
+		float myPivotY = nextY + collider->getY();							// 自分中心 Y
+		float otherPivotX = other->getObject()->PositionX() + other->getX();// 相手中心 X
+		float otherPivotY = other->getObject()->PositionY() + other->getY();// 相手中心 Y
+
+		// 上下
+		if (myPivotX < otherPivotX + (otherPivotY - myPivotY) && myPivotX > otherPivotX - (otherPivotY - myPivotY))
+		{
+			if (myPivotY <= otherPivotY) {
+				isGround = true;
+				nextY = other->getObject()->PositionY() - GraphHeight();
+			}
+			else {
+				nextY = other->getObject()->PositionY() + other->getSizeY();
+			}
+			// 重力をリセット
+			GravityReset();
+		}
+		// 左右
+		else
+		{
+			if (myPivotX <= otherPivotX) {
+				nextX = other->getObject()->PositionX() - GraphWidth();
+			}
+			else {
+				nextX = other->getObject()->PositionX() + other->getSizeX();
+			}
+			// 加速度をリセット
+			moveSpeed = 0;
+		}
+
+		PositionX(nextX); PositionY(nextY);
+	} else
+	// 花火玉
+	if (other->getObject()->GetTag() == "Firework")
+	{
+
+	}
 }

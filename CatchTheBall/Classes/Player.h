@@ -4,14 +4,15 @@
 #include "Gravity.h"
 #include "Collision.h"
 
+#pragma region ’è”
+
 const int RIGHT = 0;	// ‰E
-const int LEFT  = 1;	// ¶
+const int LEFT = 1;	// ¶
 
 const float MOVE_SPEED_MAX = 300;	// Å‚ˆÚ“®‘¬“x
 const float ADD_ACCEL = 450;		// ‰Á‘¬“x
 
-#define PLAYER_1_RIGHT ""
-#define PLAYER_1_LEFT ""
+#pragma endregion
 
 enum PlayerState {
 	Wait,
@@ -36,9 +37,11 @@ struct P_InputState {
 	float AngleY;
 };
 
-class Player : public Object, public Gravity
+class Player : public Object, Gravity
 {
 public:
+	static const string GetTagName() { return "Player"; }
+
 	Player();
 	Player(float x, float y, int order = 0);
 	~Player();
