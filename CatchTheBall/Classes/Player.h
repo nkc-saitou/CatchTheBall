@@ -10,6 +10,9 @@ const int LEFT  = 1;	// ç∂
 const float MOVE_SPEED_MAX = 300;	// ç≈çÇà⁄ìÆë¨ìx
 const float ADD_ACCEL = 450;		// â¡ë¨ìx
 
+#define PLAYER_1_RIGHT ""
+#define PLAYER_1_LEFT ""
+
 enum PlayerState {
 	Wait,
 	Move,

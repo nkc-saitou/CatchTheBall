@@ -1,5 +1,8 @@
 #include "EntryData.h"
 
+int EntryData::entryData[MAX_ENTRY];
+int EntryData::entryCount;
+
 void EntryData::ClearEntry() {
 
 	entryCount = 0;

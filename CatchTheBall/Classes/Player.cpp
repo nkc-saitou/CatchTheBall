@@ -2,6 +2,7 @@
 #include "FileManager.h"
 #include "Input.h"
 #include "Time.h"
+#include "EntryData.h"
 
 #pragma region P_Input
 
@@ -70,10 +71,13 @@ void Player::Update()
 void Player::SetPadNo(int no)
 {
 	playerNo = no;
+	padNo = EntryData::GetController(playerNo);
+
+
 
 	state = Move;
 
-	Input::Instance()->PadStartVibration(no, 1000, 500);
+	Input::Instance()->PadStartVibration(padNo, 1000, 500);
 }
 //---------------------------------------------------------
 //	ˆÚ“®

@@ -24,8 +24,10 @@
     <ClCompile Include="Classes\Collision.cpp" />
     <ClCompile Include="Classes\CollisionManager.cpp" />
     <ClCompile Include="Classes\EffectManager.cpp" />
+    <ClCompile Include="Classes\EntryData.cpp" />
     <ClCompile Include="Classes\FileManager.cpp" />
     <ClCompile Include="Classes\Game.cpp" />
+    <ClCompile Include="Classes\GameManager.cpp" />
     <ClCompile Include="Classes\Gravity.cpp" />
     <ClCompile Include="Classes\Input.cpp" />
     <ClCompile Include="Classes\Keyboard.cpp" />
@@ -52,8 +54,10 @@
     <ClInclude Include="Classes\CollisionManager.h" />
     <ClInclude Include="Classes\EffectManager.h" />
     <ClInclude Include="Classes\EffectType.h" />
+    <ClInclude Include="Classes\EntryData.h" />
     <ClInclude Include="Classes\FileManager.h" />
     <ClInclude Include="Classes\Game.h" />
+    <ClInclude Include="Classes\GameManager.h" />
     <ClInclude Include="Classes\GoalObject.h" />
     <ClInclude Include="Classes\Gravity.h" />
     <ClInclude Include="Classes\Input.h" />
