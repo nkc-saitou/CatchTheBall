@@ -81,7 +81,10 @@
     <ClCompile Include="Classes\Label.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\PlayerManager.cpp">
+    <ClCompile Include="Classes\FireworkObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\GoalObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,7 +161,10 @@
     <ClInclude Include="Classes\Label.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\PlayerManager.h">
+    <ClInclude Include="Classes\FireworkObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\GoalObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

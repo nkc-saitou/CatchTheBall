@@ -8,7 +8,7 @@
 Gravity::Gravity()
 {
 	//èâä˙âª
-	y = 0;
+	vecY = 0;
 	gravity = 0;
 }
 
@@ -19,8 +19,8 @@ Gravity::Gravity()
 /////////////////////////////////////////////////////
 void Gravity::ObjGravity()
 {
-		gravity += Time::GetDeltaTime() * 0.1f;
-		y += gravity;
+		gravity += Time::GetDeltaTime() * 10.0f;
+		vecY += gravity;
 }
 
 /////////////////////////////////////////////////////
@@ -31,5 +31,5 @@ void Gravity::ObjGravity()
 void Gravity::GravityReset()
 {
 	gravity = 0;
-	y = 0;
+	vecY = 0;
 }

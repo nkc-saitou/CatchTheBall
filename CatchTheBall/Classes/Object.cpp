@@ -20,9 +20,19 @@ Object::~Object()
 	Parent(nullptr);
 
 	//q‚ğæ‚Éíœ
-	for(auto item : _child) {
-		delete item;
+	Object *children[100];
+
+	int count = _child.size();
+	for (int i = 0; i < count;i++) {
+		children[i] = _child[i];
 	}
+
+	_child.clear();
+
+	for (int i = 0; i < count; i++) {
+		delete children[i];
+	}	
+
 	ObjectManager::Instance()->Destroy(this);
 }
 

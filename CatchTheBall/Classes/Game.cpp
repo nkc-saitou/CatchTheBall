@@ -3,6 +3,7 @@
 #include "AudioManager.h"
 #include "FileManager.h"
 #include "Input.h"
+#include "GameManager.h"
 
 // xÀ•W
 int PosX, BomPosX;
@@ -90,6 +91,8 @@ void Game::Update()
 		// ˆÚ“®’†‚Ì‰¹Šy‚ðŽ~‚ß‚é
 		StopSoundMem(FileManager::Instance()->GetFileHandle(SE_MOVE));
 	}
+
+	GameManager::Instance()->Update();
 }
 
 //•`‰æ

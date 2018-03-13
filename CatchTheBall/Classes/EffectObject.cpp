@@ -6,7 +6,9 @@ EffectObject::EffectObject(EffectHandle handle) : Object(10)
 	loadedEffectHandle = handle;
 }
 
-EffectObject::~EffectObject() {}
+EffectObject::~EffectObject() {
+	StopEffect();
+}
 
 void EffectObject::Update() {
 
