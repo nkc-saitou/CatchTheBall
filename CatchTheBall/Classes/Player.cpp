@@ -3,23 +3,47 @@
 #include "Input.h"
 #include "Time.h"
 
+#pragma region P_Input
+
+P_InputState::P_InputState()
+{
+	ActionKey	= ActionKeyDown = false;
+	JumpKey		= JumpKeyDown   = false;
+	Right		= RightDown		= false;
+	Left		= LeftDown		= false;
+	AngleX		= AngleY        = 0;
+}
+
+#pragma endregion
+
 Player::Player() : Object(0)
 {
-	GraphHandle(FileManager::Instance()->GetFileHandle("Player_A_0"));
+	bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle("Player_A_0");
+	bodyHandle[LEFT] = FileManager::Instance()->GetFileHandle("Player_A_1");
+	GraphHandle(bodyHandle[RIGHT]);
+
 	state = Wait;
+	isTouchBall = false; isGround = true;
+	moveSpeed = 0;
+	memoryInput = P_InputState();
 }
 Player::Player(float x, float y, int order) : Object(order)
 {
-	GraphHandle(FileManager::Instance()->GetFileHandle("Player_A_0"));
+	bodyHandle[RIGHT] = FileManager::Instance()->GetFileHandle("Player_A_0");
+	bodyHandle[LEFT]  = FileManager::Instance()->GetFileHandle("Player_A_1");
+	GraphHandle(bodyHandle[RIGHT]);
 
 	PositionX(x); PositionY(y);
 	state = Wait;
 	isTouchBall = false; isGround = true;
+	moveSpeed = 0;
+	memoryInput = P_InputState();
 
+	collider = new Collision(16, 16, 32, 32, CollisionType::Circle, this, [this](Collision* other) { OnHit(other); });
 }
-Player::~Player()
+Player::~Player() 
 {
-	printfDx("デス");
+
 }
 //---------------------------------------------------------
 //	更新
@@ -34,15 +58,19 @@ void Player::Update()
 	case Dead: DeadAction(); break;		// 死亡
 	}
 
-	//重力
-	ObjGravity();
+	//float nextY = PositionY();
+	////重力
+	//ObjGravity();
+	//nextY += Fall_y();
+	//PositionY(nextY);
 }
 //---------------------------------------------------------
 //	プレイヤーを設定
 //---------------------------------------------------------
 void Player::SetPadNo(int no)
 {
-	padNo = no;
+	playerNo = no;
+
 	state = Move;
 
 	Input::Instance()->PadStartVibration(no, 1000, 500);
@@ -52,32 +80,55 @@ void Player::SetPadNo(int no)
 //---------------------------------------------------------
 void Player::MoveAction()
 {
-	const float MOVE_SPEED = 200;
-	float pointX = PositionX();
+	// 位置
+	float nextX = PositionX();
+	// 入力
+	P_InputState input = PlayerInput();
 
-	//捕球
-	if (isTouchBall && Input::Instance()->ButtonDown(XINPUT_BUTTON_B, padNo)) {
-		//printfDx("B_BUTTON");
+	// 捕球
+	if (input.ActionKeyDown) {
+		
 		return;
 	}
-	//地面に接していないなら
+	// 地面に接していないなら
 	if (!isGround) return;
 
-	//ジャンプ
-	if (Input::Instance()->Button(XINPUT_BUTTON_A, padNo)) {
+	// ジャンプ
+	if (input.JumpKeyDown) {
 		Jump();
 	}
 
-	//移動	右
-	if (Input::Instance()->AngleInputX(padNo) > 0.8f) {
-		pointX += MOVE_SPEED * Time::GetDeltaTime();
+	// 移動
+	if (input.Right) 
+	{
+		if (input.RightDown) GraphHandle(bodyHandle[RIGHT]);
+		moveSpeed += ADD_ACCEL * Time::GetDeltaTime();
 	} else
-	//移動　左
-	if (Input::Instance()->AngleInputX(padNo) < -0.8f) {
-		pointX -= MOVE_SPEED * Time::GetDeltaTime();
+	if (input.Left) 
+	{
+		if (input.LeftDown) GraphHandle(bodyHandle[LEFT]);
+		moveSpeed -= ADD_ACCEL * Time::GetDeltaTime();
+	} 
+	else	// 入力がなかった場合、減速
+	{
+		if (moveSpeed > 0) 
+		{
+			moveSpeed -= ADD_ACCEL * Time::GetDeltaTime();
+			if (moveSpeed < 0) moveSpeed = 0;
+		} else 
+		if (moveSpeed < 0)
+		{
+			moveSpeed += ADD_ACCEL * Time::GetDeltaTime();
+			if (moveSpeed > 0) moveSpeed = 0;
+		}
 	}
 
-	PositionX(pointX);
+	// 移動速度の制限
+	if (moveSpeed > 0) moveSpeed = (moveSpeed > MOVE_SPEED_MAX) ? MOVE_SPEED_MAX : moveSpeed;
+	else if (moveSpeed < 0) moveSpeed = (moveSpeed < -MOVE_SPEED_MAX) ? -MOVE_SPEED_MAX : moveSpeed;
+	
+	nextX += moveSpeed * Time::GetDeltaTime();
+	PositionX(nextX);
 }
 //---------------------------------------------------------
 //	射撃
@@ -98,10 +149,55 @@ void Player::DeadAction()
 //---------------------------------------------------------
 void Player::Jump()
 {
-	if (PositionY() <= 240) {
+	/*if (PositionY() <= 240) {
 		PositionY(PositionY() + Fall_y() * Time::GetDeltaTime());
 	}
 	else if (PositionY() >= 240) {
 		PositionY(PositionY() - 200 * Time::GetDeltaTime());
+	}*/
+}
+//---------------------------------------------------------
+//	プレイヤーからの入力
+//---------------------------------------------------------
+P_InputState Player::PlayerInput()
+{
+	P_InputState input;
+
+	// コントローラー
+	if (padNo != 0)	{
+		const float RIGHT_PUT_ANGLE = 0.8f;		// 入力判断
+		const float LEFT_PUT_ANGLE = -0.8f;		// 入力判断
+
+		input.ActionKey = Input::Instance()->Button(XINPUT_BUTTON_B, padNo);
+		input.ActionKeyDown = Input::Instance()->ButtonDown(XINPUT_BUTTON_B, padNo);
+		input.JumpKey = Input::Instance()->Button(XINPUT_BUTTON_A, padNo);
+		input.JumpKeyDown = Input::Instance()->ButtonDown(XINPUT_BUTTON_A, padNo);
+
+		input.AngleX = Input::Instance()->AngleInputX(padNo);
+		input.AngleY = Input::Instance()->AngleInputY(padNo);
+
+		(input.AngleX > RIGHT_PUT_ANGLE) ? input.Right = true : input.Right = false;
+		(input.AngleX < LEFT_PUT_ANGLE) ? input.Left = true : input.Left = false;
+		(!memoryInput.Right && input.Right) ? input.RightDown = true : input.RightDown = false;
+		(!memoryInput.Left && input.Left) ? input.LeftDown = true : input.LeftDown = false;
+	} 
+	// キーボード
+	else {
+		input.ActionKey = Input::Instance()->Button(MOUSE_INPUT_LEFT);
+		input.ActionKeyDown = Input::Instance()->ButtonDown(MOUSE_INPUT_LEFT);
+		input.JumpKey = Input::Instance()->Button(KEY_INPUT_SPACE);
+		input.JumpKeyDown = Input::Instance()->ButtonDown(KEY_INPUT_SPACE);
+
+		input.Right = Input::Instance()->Button(KEY_INPUT_D);
+		input.RightDown = Input::Instance()->ButtonDown(KEY_INPUT_D);
+		input.Left = Input::Instance()->Button(KEY_INPUT_A);
+		input.LeftDown = Input::Instance()->ButtonDown(KEY_INPUT_A);
 	}
+
+	memoryInput = input;
+	return input;
+}
+
+void Player::OnHit(Collision * other)
+{
 }
