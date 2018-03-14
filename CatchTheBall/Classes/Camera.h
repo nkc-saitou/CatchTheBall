@@ -3,6 +3,9 @@
 #include "Object.h"
 #include <vector>
 
+const static int SCREEN_WIDTH = 640;	//画面範囲　横
+const static int SCREEN_HEIGHT = 480;	//画面範囲　縦
+
 class Camera : public Object
 {
 public:
@@ -17,6 +20,4 @@ public:
 	static Camera* MainCamera;
 
 private:
-	int SCREEN_WIDTH;	//画面範囲　横
-	int SCREEN_HEIGHT;	//画面範囲　縦
 };

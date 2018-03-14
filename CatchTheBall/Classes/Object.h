@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ public:
 	Object();
 	Object(int order);
 	Object(Object* parent, int order = 0);
-	~Object();
+	virtual ~Object();
 	virtual void Update();
 	virtual void Draw();
 	virtual void Draw(float cameraX, float cameraY);

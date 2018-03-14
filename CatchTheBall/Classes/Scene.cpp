@@ -2,11 +2,13 @@
 #include "AudioManager.h"
 #include "FileManager.h"
 #include "BaseScene.h"
+#include "ObjectManager.h"
 #include "Title.h"
 #include "Select.h"
 #include "Game.h"
+#include "Map.h"
 
-BaseScene *Scene::c_Scene;
+BaseScene* Scene::c_Scene;
 
 Scene::Scene()
 {
@@ -26,7 +28,7 @@ void Scene::ChangeScene(SCENE scene)
 		delete c_Scene;
 	}
 
-	switch (scene){
+	switch (scene) {
 	case SCENE::TITLE:
 		c_Scene = new Title();
 		break;
@@ -40,7 +42,7 @@ void Scene::ChangeScene(SCENE scene)
 }
 
 // 更新
-void Scene::Update(){
+void Scene::Update() {
 	// 現在のシーンの更新
 	c_Scene->Update();
 }
@@ -52,7 +54,7 @@ void Scene::Draw() {
 }
 
 // シーンフェード (引数　変更先のシーン)
-void Scene::SceneFade(SCENE nextScene)
+void Scene::SceneFade(SCENE nextScene, int stageNum)
 {
 	// フェード用変数(透明度,フェード用画像)
 	int alpha;
@@ -75,7 +77,28 @@ void Scene::SceneFade(SCENE nextScene)
 	}
 
 	// 次のシーンの初期化
+	c_Scene->UnLoadFile();
 	ChangeScene(nextScene);
+
+	// GAMEシーンならマップ読み込み
+	switch (nextScene)
+	{
+	case SCENE::GAME:
+		switch (stageNum)
+		{
+			// ステージ1を読み込む
+		case 0:
+			Map::Open(STAGE_FILE_1);
+			break;
+			// ステージ2を読み込む
+		case 1:
+			Map::Open(STAGE_FILE_2);
+			break;
+		}
+		break;
+	default:
+		break;
+	}
 
 	// フェードイン
 	for (alpha = 255; alpha > 0; alpha -= 3)
@@ -96,4 +119,3 @@ void Scene::SceneFade(SCENE nextScene)
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	ScreenFlip();
 }
-

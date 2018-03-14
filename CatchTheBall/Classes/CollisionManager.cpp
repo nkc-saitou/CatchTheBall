@@ -14,7 +14,7 @@ void CollisionManager::HitCollision()
 				if (HitBoxToBox(*collision[i], *collision[j]))
 				{
 					collision[i]->onHit(collision[j]);
-					collision[j]->onHit(collision[i]);
+					if (collision.size() > j)collision[j]->onHit(collision[i]);
 				}
 			}
 			//‰~Œ`“¯Žm
@@ -23,7 +23,7 @@ void CollisionManager::HitCollision()
 				if ((HitCircleToCircle(*collision[i], *collision[j])))
 				{
 					collision[i]->onHit(collision[j]);
-					collision[j]->onHit(collision[i]);
+					if (collision.size() > j)collision[j]->onHit(collision[i]);
 				}
 			}
 			//‰~Œ`‚Æ‹éŒ`
@@ -34,7 +34,7 @@ void CollisionManager::HitCollision()
 					if (HitCircleToBox(*collision[j], *collision[i]))
 					{
 						collision[i]->onHit(collision[j]);
-						collision[j]->onHit(collision[i]);
+						if (collision.size() > j) collision[j]->onHit(collision[i]);
 					}
 				}
 				else
@@ -42,7 +42,7 @@ void CollisionManager::HitCollision()
 					if (HitCircleToBox(*collision[i], *collision[j]))
 					{
 						collision[i]->onHit(collision[j]);
-						collision[j]->onHit(collision[i]);
+						if (collision.size() > j)collision[j]->onHit(collision[i]);
 					}
 				}
 			}
@@ -134,8 +134,8 @@ bool CollisionManager::HitCircleToBox(Collision firstCollision, Collision second
 	{
 		if ((firstPosX - firstCollision.getSizeX() / 2) < (pX[1]) &&
 			(firstPosX + firstCollision.getSizeX() / 2) > (pX[0]) &&
-			(firstPosX - firstCollision.getSizeX() / 2) < (pY[1]) &&
-			(firstPosX + firstCollision.getSizeX() / 2) > (pY[0]))
+			(firstPosY - firstCollision.getSizeX() / 2) < (pY[1]) &&
+			(firstPosY + firstCollision.getSizeX() / 2) > (pY[0]))
 		{
 			return true;
 		}

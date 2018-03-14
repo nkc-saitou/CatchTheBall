@@ -5,22 +5,30 @@
 
 const int PLAYER_NUM_MAX = 4;
 
-class PlayerManager
-{
+class PlayerManager {
 public:
+
+	bool isFreeze;					//更新するかどうか
+
 	PlayerManager(int);
 	~PlayerManager();
 
+	void Reset();					//割当をすべてリセット
 	void Update();					//更新
 	void AddPlayerTank(Player*);	//無人戦車の追加
+	void RemovePlayerTank(Player*);	//無人戦車の削除
 
 private:
+
+	Player *activePlayer[PLAYER_NUM_MAX];
+
 	std::vector<Player*> tankList;			//無人戦車のリスト
 	int playerNum;							//参加人数
-	int playerPadAry[PLAYER_NUM_MAX];		//プレイヤーの登録パッド
-	bool playerActiveAry[PLAYER_NUM_MAX];	//プレイヤー操作、有効無効
+	int playerStock[PLAYER_NUM_MAX];
 	int nextActive;							//次に有効になるプレイヤー
-	
-	bool CheckActive();						//操作を有効にするかどうか
-	void PlayerActive();					//操作を有効に
+
+	bool CheckFull();						//操作を有効にするかどうか
+	void PlayerActive(int playerNum, Player *player);					//操作を有効に
+	void PlayerNonActive(int playerNum);
+	int GetNextPlayer();
 };
