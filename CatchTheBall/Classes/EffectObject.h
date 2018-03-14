@@ -32,6 +32,9 @@ public:
 	virtual void Draw() override;
 	virtual void Draw(float cameraX, float cameraY) override;
 
+	//エフェクトが再生中かどうか　true:再生中　false:再生されていない
+	bool PlayEffectFlg();
+
 	//エフェクトの再生
 	void PlayEffect();
 

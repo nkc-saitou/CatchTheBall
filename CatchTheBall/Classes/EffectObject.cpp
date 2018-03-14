@@ -54,6 +54,13 @@ void EffectObject::Update() {
 		delete this;
 	}
 }
+
+bool EffectObject::PlayEffectFlg()
+{
+	if (IsEffekseer2DEffectPlaying(playingEffectHandle) == 0) return true;
+	else return false;
+}
+
 void EffectObject::Draw() {
 	Draw(0, 0);
 }
